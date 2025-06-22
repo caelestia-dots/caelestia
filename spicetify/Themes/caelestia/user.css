@@ -27,3 +27,24 @@ button,
 #recent-searches-dropdown > div {
     background-color: var(--spice-main-elevated) !important;
 }
+
+/* Hide the main header on the home page */
+.main-home-homeHeader {
+  display: none !important;
+}
+
+/* Remove any decorative pseudo-elements inside the home header */
+.search-searchCategory-contentArea::before,
+.search-searchCategory-contentArea::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Hide the gradient background bar that appears between the playlist/album header and the song list */
+.main-actionBarBackground-background {
+  display: none !important;
+}
+
+.main-view-container__scroll-node-child div[style*="--background-base"]:not([style*="--background-base-min-contrast"]) {
+  display: none !important;
+}
