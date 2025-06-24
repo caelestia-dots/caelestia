@@ -257,7 +257,7 @@ if set -q _flag_zen
     end
 
     # Install native app
-    set -l hosts $HOME/.zen/native-messaging-hosts
+    set -l hosts $HOME/.mozilla/native-messaging-hosts
     set -l lib $HOME/.local/lib/caelestia
 
     if confirm-overwrite $hosts/caelestiafox.json
