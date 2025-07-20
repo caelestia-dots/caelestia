@@ -127,7 +127,7 @@ end
 
 # Install AUR helper if not already installed
 if ! pacman -Q $aur_helper &> /dev/null
-    log '$aur_helper not installed. Installing...'
+    log "$aur_helper not installed. Installing..."
 
     # Install
     sudo pacman -S --needed git base-devel $noconfirm
