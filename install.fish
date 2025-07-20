@@ -71,16 +71,9 @@ end
 
 # Variables
 set -q _flag_noconfirm && set noconfirm '--noconfirm'
+set -q _flag_paru && set -l aur_helper paru || set -l aur_helper yay
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
-
-# Determine AUR helper
-
-set -l aur_helper yay
-if set -q _flag_paru
-    set aur_helper paru
-end
-
 
 # Startup prompt
 set_color magenta
@@ -132,15 +125,7 @@ if ! pacman -Q $aur_helper &> /dev/null
     # Install
     sudo pacman -S --needed git base-devel $noconfirm
     cd /tmp
-    if test $aur_helper = yay
-      git clone https://aur.archlinux.org/yay.git
-    else if test $aur_helper = paru
-      git clone https://aur.archlinux.org/paru.git
-    else
-      log "Unknown AUR helper: $aur_helper"
-      exit 1
-    end
-
+    git clone https://aur.archlinux.org/$aur_helper.git
     cd $aur_helper
     makepkg -si
     cd ..
