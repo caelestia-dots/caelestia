@@ -19,6 +19,17 @@
   "languages": {
     "Nix": {
       "language_servers": ["nixd", "!nil"]
+    },
+    "QML": {
+      "formatter": {
+        "external": {
+          "command": "sh",
+          "arguments": [
+            "-c",
+            "tmp=$(mktemp --suffix .qml); cat > $tmp; qmlformat $tmp"
+          ]
+        }
+      }
     }
   },
   "lsp": {
@@ -30,6 +41,11 @@
         "formatting": {
           "command": ["alejandra"]
         }
+      }
+    },
+    "qml": {
+      "binary": {
+        "arguments": ["-E"]
       }
     }
   }
