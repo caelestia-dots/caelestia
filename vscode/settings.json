@@ -40,5 +40,12 @@
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
     "ruff.lineLength": 120,
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "go.toolsManagement.autoUpdate": true,
+    "editor.fontFamily": "\"MesloLGS NF\"",
+    "diffEditor.experimental.useTrueInlineView": true,
+    "diffEditor.experimental.showMoves": true,
+    "diffEditor.renderSideBySide": false,
+    "security.allowedUNCHosts": ["sg.com"],
+    "files.autoSave": "afterDelay"
 }
