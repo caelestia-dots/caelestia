@@ -7,13 +7,14 @@ argparse -n 'install.fish' -X 0 \
     'vscode=?!contains -- "$_flag_value" codium code' \
     'discord' \
     'zen' \
+    'greetd' \
     'aur-helper=!contains -- "$_flag_value" yay paru' \
     -- $argv
 or exit
 
 # Print help
 if set -q _flag_h
-    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]'
+    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--zen] [--greetd] [--aur-helper]'
     echo
     echo 'options:'
     echo '  -h, --help                  show this help message and exit'
@@ -22,6 +23,7 @@ if set -q _flag_h
     echo '  --vscode=[codium|code]      install VSCodium (or VSCode)'
     echo '  --discord                   install Discord (OpenAsar + Equicord)'
     echo '  --zen                       install Zen browser'
+    echo '  --greetd                    configure greetd login manager'
     echo '  --aur-helper=[yay|paru]     the AUR helper to use'
 
     exit
@@ -293,6 +295,43 @@ if set -q _flag_zen
 
     # Prompt user to install extension
     log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
+end
+
+# Configure greetd
+if set -q _flag_greetd
+    log 'Configuring greetd login manager...'
+    
+    # Check if greetd is installed
+    if not pacman -Q greetd 2> /dev/null
+        log 'Installing greetd and cage (Wayland compositor)...'
+        $aur_helper -S --needed greetd cage $noconfirm
+    end
+    
+    # Check if the greetd module exists
+    set -l greetd_module (realpath shell/modules/greetd)
+    if test -d $greetd_module
+        log
+        log 'The greetd module has been prepared as a self-contained module.'
+        log 'To complete the installation, run the following commands with sudo:'
+        log
+        set_color yellow
+        echo "    sudo $greetd_module/install-greetd.sh"
+        set_color normal
+        log
+        log 'This will:'
+        log '  - Copy the greetd module to /etc/caelestia/greetd'
+        log '  - Set up proper permissions for the greeter user'
+        log '  - Install launcher script at /usr/local/bin/caelestia-greetd'
+        log '  - Create log directory at /var/log/caelestia-greetd'
+        log '  - Configure systemd tmpfiles for runtime directories'
+        log '  - Provide instructions for configuring /etc/greetd/config.toml'
+        log
+        log 'Features: Username pre-population, smart focus, debug logging'
+        log 'Note: The greetd service will need to be restarted after configuration.'
+    else
+        log 'Error: greetd module not found at expected location.'
+        log 'Please ensure you are running this from the caelestia repository root.'
+    end
 end
 
 # Generate scheme stuff if needed
