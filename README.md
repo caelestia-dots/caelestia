@@ -19,13 +19,17 @@ The install script has some options for installing configs for some apps.
 
 ```
 $ ./install.fish -h
-usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--paru]
+usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--codeready] [--discord] [--zen] [--paru]
 
 options:
   -h, --help                  show this help message and exit
   --noconfirm                 do not confirm package installation
   --spotify                   install Spotify (Spicetify)
   --vscode=[codium|code]      install VSCodium (or VSCode)
+  --codeready[=groups]        install development tools
+                              groups: python,java,nodejs,tools (comma-separated)
+                              default: all groups if no value specified
+                              example: --codeready=python,java
   --discord                   install Discord (OpenAsar + Equicord)
   --zen                       install Zen browser
   --paru                      use paru instead of yay as AUR helper
