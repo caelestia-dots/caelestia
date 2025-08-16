@@ -5,6 +5,7 @@ argparse -n 'install.fish' -X 0 \
     'noconfirm' \
     'spotify' \
     'vscode=?!contains -- "$_flag_value" codium code' \
+    'codeready=?!string match -q "*" "$_flag_value"' \
     'discord' \
     'zen' \
     'paru' \
@@ -13,13 +14,17 @@ or exit
 
 # Print help
 if set -q _flag_h
-    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--paru]'
+    echo 'usage: ./install.fish [-h] [--noconfirm] [--spotify] [--vscode] [--codeready] [--discord] [--zen] [--paru]'
     echo
     echo 'options:'
     echo '  -h, --help                  show this help message and exit'
     echo '  --noconfirm                 do not confirm package installation'
     echo '  --spotify                   install Spotify (Spicetify)'
     echo '  --vscode=[codium|code]      install VSCodium (or VSCode)'
+    echo '  --codeready[=groups]        install development tools'
+    echo '                              groups: python,java,nodejs,tools (comma-separated)'
+    echo '                              default: all groups if no value specified'
+    echo '                              example: --codeready=python,java'
     echo '  --discord                   install Discord (OpenAsar + Equicord)'
     echo '  --zen                       install Zen browser'
     echo '  --paru                      use paru instead of yay as AUR helper'
@@ -231,6 +236,94 @@ if set -q _flag_vscode
         # Install extension
         $prog --install-extension vscode/caelestia-vscode-integration/caelestia-vscode-integration-*.vsix
     end
+end
+
+# Install development tools (codeready)
+if set -q _flag_codeready
+    log 'Installing development tools...'
+    
+    # Parse selected groups
+    set -l selected_groups
+    if test -n "$_flag_codeready"
+        set selected_groups (string split ',' "$_flag_codeready")
+    else
+        set selected_groups python java nodejs tools
+    end
+    
+    # Python ecosystem
+    if contains python $selected_groups
+        log 'Installing Python ecosystem...'
+        set -l python_packages python python-pip python-virtualenv python-poetry
+        $aur_helper -S --needed $python_packages $noconfirm
+        log '✓ Python: python, pip, virtualenv, poetry installed!'
+    end
+    
+    # Java ecosystem
+    if contains java $selected_groups
+        log 'Installing Java ecosystem...'
+        set -l java_packages jdk-openjdk openjdk-doc maven gradle
+        $aur_helper -S --needed $java_packages $noconfirm
+        log '✓ Java: OpenJDK, Maven, Gradle installed!'
+    end
+    
+    # Node.js ecosystem
+    if contains nodejs $selected_groups
+        log 'Installing Node.js ecosystem...'
+        set -l nodejs_packages nodejs npm
+        $aur_helper -S --needed $nodejs_packages $noconfirm
+        
+        log 'Installing nvm for Node.js version management...'
+        $aur_helper -S --needed nvm $noconfirm
+        log '✓ Node.js: nodejs, npm, nvm installed!'
+    end
+    
+    # Essential development tools
+    if contains tools $selected_groups
+        log 'Installing essential development tools...'
+        set -l essential_tools git curl wget tree
+        $aur_helper -S --needed $essential_tools $noconfirm
+        log '✓ Tools: git, curl, wget, tree installed!'
+    end
+    
+    # Configure Java in VSCode/Codium if Java was installed
+    if contains java $selected_groups
+        for vscode_variant in 'Code' 'VSCodium'
+            set -l vscode_settings $config/$vscode_variant/User/settings.json
+            if test -f $vscode_settings
+                log "Configuring Java for $vscode_variant..."
+                
+                set -l java_home ""
+                for java_path in /usr/lib/jvm/java-*-openjdk
+                    if test -d $java_path
+                        set java_home $java_path
+                        break
+                    end
+                end
+                
+                if test -n "$java_home"
+                    set -l temp_file (mktemp)
+                    cat $vscode_settings > $temp_file
+                    
+                    set -l java_config "    \"java.home\": \"$java_home\",
+    \"java.configuration.detectJdksAtStart\": false,
+    \"java.jdt.ls.java.home\": \"$java_home\""
+                    
+                    sed -i '$d' $temp_file
+                    echo "," >> $temp_file
+                    echo "$java_config" >> $temp_file
+                    echo "}" >> $temp_file
+                    
+                    mv $temp_file $vscode_settings
+                    
+                    log "Java configured with home: $java_home"
+                else
+                    log "Warning: Java installation not found."
+                end
+            end
+        end
+    end
+    
+    log 'Development environment ready!'
 end
 
 # Install discord
