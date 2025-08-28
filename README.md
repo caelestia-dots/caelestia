@@ -65,8 +65,8 @@ Dependencies:
 -   curl
 -   adw-gtk-theme
 -   papirus-icon-theme
--   qt5ct
--   qt6ct
+-   qt5ct-kde
+-   qt6ct-kde
 -   ttf-jetbrains-mono-nerd
 
 Install all dependencies and follow the installation guides of the
