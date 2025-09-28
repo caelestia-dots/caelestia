@@ -46,10 +46,8 @@ Dependencies:
 -   xdg-desktop-portal-hyprland
 -   xdg-desktop-portal-gtk
 -   hyprpicker
--   hypridle
 -   wl-clipboard
 -   cliphist
--   bluez-utils
 -   inotify-tools
 -   app2unit
 -   wireplumber
@@ -60,13 +58,11 @@ Dependencies:
 -   starship
 -   btop
 -   jq
--   socat
--   imagemagick
--   curl
+-   eza
 -   adw-gtk-theme
 -   papirus-icon-theme
--   qt5ct
--   qt6ct
+-   qt5ct-kde
+-   qt6ct-kde
 -   ttf-jetbrains-mono-nerd
 
 Install all dependencies and follow the installation guides of the

@@ -7,13 +7,13 @@ argparse -n 'install.fish' -X 0 \
     'vscode=?!contains -- "$_flag_value" codium code' \
     'discord' \
     'zen' \
-    'paru' \
+    'aur-helper=!contains -- "$_flag_value" yay paru' \
     -- $argv
 or exit
 
 # Print help
 if set -q _flag_h
-    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--paru]'
+    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]'
     echo
     echo 'options:'
     echo '  -h, --help                  show this help message and exit'
@@ -22,7 +22,7 @@ if set -q _flag_h
     echo '  --vscode=[codium|code]      install VSCodium (or VSCode)'
     echo '  --discord                   install Discord (OpenAsar + Equicord)'
     echo '  --zen                       install Zen browser'
-    echo '  --paru                      use paru instead of yay as AUR helper'
+    echo '  --aur-helper=[yay|paru]     the AUR helper to use'
 
     exit
 end
@@ -71,7 +71,7 @@ end
 
 # Variables
 set -q _flag_noconfirm && set noconfirm '--noconfirm'
-set -q _flag_paru && set -l aur_helper paru || set -l aur_helper yay
+set -q _flag_aur_helper && set -l aur_helper $_flag_aur_helper || set -l aur_helper paru
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
 
@@ -132,16 +132,25 @@ if ! pacman -Q $aur_helper &> /dev/null
     rm -rf $aur_helper
 
     # Setup
-    $aur_helper -Y --gendb
-    $aur_helper -Y --devel --save
+    if $aur_helper = yay
+        $aur_helper -Y --gendb
+        $aur_helper -Y --devel --save
+    else
+        $aur_helper --gendb
+    end
 end
-
-# Install metapackage for deps
-log 'Installing metapackage...'
-$aur_helper -S --needed caelestia-meta $noconfirm
 
 # Cd into dir
 cd (dirname (status filename)) || exit 1
+
+# Install metapackage for deps
+log 'Installing metapackage...'
+if $aur_helper = yay
+    $aur_helper -Bi . $noconfirm
+else
+    $aur_helper -Ui $noconfirm
+end
+rm -f caelestia-meta-*.pkg.tar.zst 2> /dev/null
 
 # Install hypr* configs
 if confirm-overwrite $config/hypr
