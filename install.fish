@@ -44,6 +44,10 @@ function input -a text
     _out blue $text $argv[2..]
 end
 
+function sh-read
+    sh -c 'read a && echo -n "$a"' || exit 1
+end
+
 function confirm-overwrite -a path
     if test -e $path -o -L $path
         # No prompt if noconfirm
@@ -53,7 +57,8 @@ function confirm-overwrite -a path
             rm -rf $path
         else
             # Prompt user
-            read -l -p "input '$path already exists. Overwrite? [Y/n] ' -n" confirm || exit 1
+            input "$path already exists. Overwrite? [Y/n] " -n
+            set -l confirm (sh-read)
 
             if test "$confirm" = 'n' -o "$confirm" = 'N'
                 log 'Skipping...'
@@ -92,14 +97,16 @@ log 'Before continuing, please ensure you have made a backup of your config dire
 # Prompt for backup
 if ! set -q _flag_noconfirm
     log '[1] Two steps ahead of you!  [2] Make one for me please!'
-    read -l -p "input '=> ' -n" choice || exit 1
+    input '=> ' -n
+    set -l choice (sh-read)
 
     if contains -- "$choice" 1 2
         if test $choice = 2
             log "Backing up $config..."
 
             if test -e $config.bak -o -L $config.bak
-                read -l -p "input 'Backup already exists. Overwrite? [Y/n] ' -n" overwrite || exit 1
+                input 'Backup already exists. Overwrite? [Y/n] ' -n
+                set -l overwrite (sh-read)
 
                 if test "$overwrite" = 'n' -o "$overwrite" = 'N'
                     log 'Skipping...'
@@ -132,7 +139,7 @@ if ! pacman -Q $aur_helper &> /dev/null
     rm -rf $aur_helper
 
     # Setup
-    if $aur_helper = yay
+    if test $aur_helper = yay
         $aur_helper -Y --gendb
         $aur_helper -Y --devel --save
     else
@@ -145,12 +152,12 @@ cd (dirname (status filename)) || exit 1
 
 # Install metapackage for deps
 log 'Installing metapackage...'
-if $aur_helper = yay
+if test $aur_helper = yay
     $aur_helper -Bi . $noconfirm
 else
     $aur_helper -Ui $noconfirm
 end
-rm -f caelestia-meta-*.pkg.tar.zst 2> /dev/null
+fish -c 'rm -f caelestia-meta-*.pkg.tar.zst' 2> /dev/null
 
 # Install hypr* configs
 if confirm-overwrite $config/hypr

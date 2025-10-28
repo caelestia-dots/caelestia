@@ -1,4 +1,4 @@
-:root {
+/*:root {
     --c-accent: var(--tab-loading-fill);
     --c-text: var(--toolbar-color);
     --c-mantle: var(--lwt-accent-color);
@@ -30,17 +30,17 @@
     --in-content-primary-button-text-color: var(--c-text) !important;
     --in-content-primary-button-background: var(--toolbarbutton-hover-background) !important;
     --in-content-primary-button-background-hover: var(--toolbarbutton-active-background) !important;
-}
+}*/
 
-tooltip {
+/*tooltip {
     appearance: none !important;
     background-color: var(--c-mantle) !important;
     color: var(--c-text) !important;
     border: 1px solid color-mix(in srgb, var(--c-accent), transparent 70%) !important;
     border-radius: 8px !important;
-}
+}*/
 
-#permissions-granted-icon {
+/*#permissions-granted-icon {
     color: var(--c-mantle) !important;
 }
 
@@ -88,7 +88,7 @@ toolbar .toolbarbutton-1 {
 
 #urlbar-container {
     background: var(--c-mantle) !important;
-}
+}*/
 
 /* Center url bar text when not focused */
 #urlbar:not([focused]) .urlbar-input {
@@ -100,18 +100,18 @@ toolbar .toolbarbutton-1 {
     0% {
         opacity: 0;
         scale: 0.8;
-        translate: -10% 0;
+        /* translate: -10% 0; */
     }
 
     70% {
         scale: 1.02;
-        translate: 1% 0;
+        /* translate: 1% 0; */
     }
 
     100% {
         opacity: 1;
         scale: 1;
-        translate: 0 0;
+        /* translate: 0 0; */
     }
 }
 
@@ -120,7 +120,7 @@ toolbar .toolbarbutton-1 {
 }
 
 /* Blur menu popups */
-#commonDialog,
+/*#commonDialog,
 .menupopup-arrowscrollbox {
     border-radius: 10px !important;
     border: 1px solid color-mix(in srgb, var(--arrowpanel-border-color), transparent 70%) !important;
@@ -130,10 +130,10 @@ toolbar .toolbarbutton-1 {
 
 #commonDialog {
     background: color-mix(in srgb, var(--zen-branding-bg), transparent 15%) !important;
-}
+}*/
 
 /* Blur floating url bar */
-#urlbar[zen-floating-urlbar][breakout][breakout-extend] > #urlbar-background {
+/*#urlbar[zen-floating-urlbar][breakout][breakout-extend] > #urlbar-background {
     border: 1px solid color-mix(in srgb, var(--zen-colors-border), transparent 70%) !important;
     border-radius: 10px !important;
     background: color-mix(in srgb, var(--zen-colors-tertiary), transparent 15%) !important;
@@ -147,7 +147,7 @@ toolbar .toolbarbutton-1 {
 
 .urlbarView-body-inner {
     border: none !important;
-}
+}*/
 
 /* Styles the search options */
 .search-one-offs {

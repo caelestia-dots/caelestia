@@ -4,7 +4,7 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.fontLigatures": true,
     "prettier.tabWidth": 4,
-    "editor.minimap.autohide": true,
+    "editor.minimap.autohide": "mouseover",
     "security.workspace.trust.startupPrompt": "always",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
@@ -33,6 +33,9 @@
     "[c]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
     "doxdocgen.generic.boolReturnsTrueFalse": false,
     "terminal.integrated.enableMultiLinePasteWarning": "never",
     "qt-qml.qmlls.additionalImportPaths": ["/usr/lib/qt6/qml"],
@@ -47,5 +50,8 @@
     "diffEditor.experimental.showMoves": true,
     "diffEditor.renderSideBySide": false,
     "security.allowedUNCHosts": ["sg.com"],
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "editor.inlayHints.enabled": "off",
+    "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
+    "qt-qml.doNotAskForQmllsDownload": true
 }
