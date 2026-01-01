@@ -53,5 +53,7 @@
     "files.autoSave": "afterDelay",
     "editor.inlayHints.enabled": "off",
     "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
-    "qt-qml.doNotAskForQmllsDownload": true
+    "qt-qml.doNotAskForQmllsDownload": true,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "terminal.integrated.gpuAcceleration": "off"
 }
