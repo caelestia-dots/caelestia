@@ -70,7 +70,7 @@ Install all dependencies and follow the installation guides of the
 to install them.
 
 > [!TIP]
-> If on Arch or an Arch-based distro, there is a meta package available [in the repository](PKGBUILD)
+> If on Arch or an Arch-based distro, there is a meta package available [in this repository](PKGBUILD)
 > that pulls in all dependencies. It can be installed through the install script, makepkg/pacman, yay,
 > paru, or your preferred AUR helper.
 
