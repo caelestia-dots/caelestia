@@ -163,6 +163,7 @@ fish -c 'rm -f caelestia-meta-*.pkg.tar.zst' 2> /dev/null
 if confirm-overwrite $config/hypr
     log 'Installing hypr* configs...'
     ln -s (realpath hypr) $config/hypr
+    chmod +x $config/hypr/scripts/wsaction.fish
     hyprctl reload
 end
 
