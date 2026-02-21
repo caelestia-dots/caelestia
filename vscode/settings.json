@@ -44,7 +44,16 @@
     },
     "ruff.lineLength": 120,
     "python.languageServer": "Pylance",
+    "go.toolsManagement.autoUpdate": true,
+    "editor.fontFamily": "\"MesloLGS NF\"",
+    "diffEditor.experimental.useTrueInlineView": true,
+    "diffEditor.experimental.showMoves": true,
+    "diffEditor.renderSideBySide": false,
+    "security.allowedUNCHosts": ["sg.com"],
+    "files.autoSave": "afterDelay",
     "editor.inlayHints.enabled": "off",
     "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
-    "qt-qml.doNotAskForQmllsDownload": true
+    "qt-qml.doNotAskForQmllsDownload": true,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "terminal.integrated.gpuAcceleration": "off"
 }
