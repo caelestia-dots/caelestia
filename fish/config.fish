@@ -1,6 +1,4 @@
 if status is-interactive
-    # Custom fish config
-    source ~/.config/caelestia/user-config.fish 2>/dev/null
 
     # Starship custom prompt
     starship init fish | source
@@ -42,4 +40,7 @@ if status is-interactive
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
+    
+    # Custom fish config
+    source ~/.config/caelestia/user-config.fish 2>/dev/null
 end
