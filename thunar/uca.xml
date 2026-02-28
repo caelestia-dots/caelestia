@@ -5,8 +5,8 @@
 	<name>Open Terminal Here</name>
 	<submenu></submenu>
 	<unique-id>1710575157271461-1</unique-id>
-	<command>foot -D %f</command>
-	<description>Open the current directory in foot</description>
+	<command>kitty --directory=%f</command>
+	<description>Open the current directory in kitty</description>
 	<range></range>
 	<patterns>*</patterns>
 	<startup-notify/>

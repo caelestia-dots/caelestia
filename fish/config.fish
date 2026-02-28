@@ -1,16 +1,20 @@
+# Add .local/bin to PATH
+fish_add_path ~/.local/bin
+set -Ux PATH ~/.npm-global/bin $PATH
+fish_add_path ~/.npm-global/bin
 if status is-interactive
     # Starship custom prompt
     starship init fish | source
 
     # Direnv + Zoxide
-    command -v direnv &> /dev/null && direnv hook fish | source
-    command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
+    command -v direnv &>/dev/null && direnv hook fish | source
+    command -v zoxide &>/dev/null && zoxide init fish --cmd cd | source
 
     # Better ls
     alias ls='eza --icons --group-directories-first -1'
 
     # Abbrs
-    abbr lg 'lazygit'
+    abbr lg lazygit
     abbr gd 'git diff'
     abbr ga 'git add .'
     abbr gc 'git commit -am'
@@ -27,15 +31,15 @@ if status is-interactive
     abbr gco 'git checkout'
     abbr gsh 'git show'
 
-    abbr l 'ls'
+    abbr l ls
     abbr ll 'ls -l'
     abbr la 'ls -a'
     abbr lla 'ls -la'
 
     # Custom colours
-    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+    cat ~/.local/state/caelestia/sequences.txt 2>/dev/null
 
-    # For jumping between prompts in foot terminal
+    # For jumping between prompts in terminal (kitty/foot)
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
