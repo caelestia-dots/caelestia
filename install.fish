@@ -268,12 +268,13 @@ if confirm-overwrite $config/Kvantum/kvantum.kvconfig
     ln -s (realpath Kvantum/kvantum.kvconfig) $config/Kvantum/kvantum.kvconfig
 end
 
-# Dracula Kvantum theme (no AUR package — clone from GitHub)
+# Dracula Kvantum theme (no AUR package — download from GitHub)
 if ! test -d $config/Kvantum/Dracula
     log 'Installing Dracula Kvantum theme...'
-    git clone https://github.com/dracula/kvantum /tmp/dracula-kvantum
-    cp -r /tmp/dracula-kvantum/Dracula $config/Kvantum/
-    rm -rf /tmp/dracula-kvantum
+    curl -sL https://github.com/dracula/kvantum/archive/refs/heads/master.tar.gz \
+        | tar -xz -C /tmp/
+    cp -r /tmp/kvantum-master/Dracula $config/Kvantum/
+    rm -rf /tmp/kvantum-master
 end
 
 # Qt5ct
