@@ -159,6 +159,43 @@ else
 end
 fish -c 'rm -f caelestia-meta-*.pkg.tar.zst' 2> /dev/null
 
+# Detect and install Nvidia drivers
+if lspci -k | grep -qiE "(VGA|3D).*nvidia"
+    log (string join '' 'Nvidia GPU detected: ' (lspci -k | grep -iE "(VGA|3D).*nvidia" | awk -F ': ' '{print $NF}' | head -1))
+    log 'Installing Nvidia drivers...'
+
+    # Kernel headers for all running kernels
+    for kbase in /usr/lib/modules/*/pkgbase
+        $aur_helper -S --needed (cat $kbase)-headers $noconfirm
+    end
+
+    # Driver + Wayland support packages
+    $aur_helper -S --needed nvidia-dkms nvidia-utils egl-wayland $noconfirm
+
+    # Early module loading (needed for Wayland DRM)
+    if ! grep -q 'nvidia' /etc/mkinitcpio.conf
+        sudo sed -i '/MODULES=/ s/)$/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+        sudo mkinitcpio -P
+    end
+
+    # DRM modeset kernel parameter
+    if ! test -f /etc/modprobe.d/nvidia.conf; or ! grep -q 'modeset=1' /etc/modprobe.d/nvidia.conf
+        echo 'options nvidia-drm modeset=1 fbdev=1' | sudo tee -a /etc/modprobe.d/nvidia.conf
+    end
+
+    # Source nvidia.conf in Hyprland via user config
+    set -l user_conf $HOME/.config/caelestia/hypr-user.conf
+    mkdir -p (dirname $user_conf)
+    touch -a $user_conf
+    if ! grep -q 'nvidia.conf' $user_conf
+        echo 'source = $hl/nvidia.conf' >> $user_conf
+    end
+
+    log 'Nvidia setup complete.'
+else
+    log 'No Nvidia GPU detected, skipping driver installation.'
+end
+
 # Install hypr* configs
 if confirm-overwrite $config/hypr
     log 'Installing hypr* configs...'
