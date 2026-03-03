@@ -7,13 +7,16 @@ argparse -n 'install.fish' -X 0 \
     'vscode=?!contains -- "$_flag_value" codium code' \
     'discord' \
     'zen' \
+    'cursor' \
+    'opencode' \
+    'claude-code' \
     'aur-helper=!contains -- "$_flag_value" yay paru' \
     -- $argv
 or exit
 
 # Print help
 if set -q _flag_h
-    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]'
+    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--zen] [--cursor] [--opencode] [--claude-code] [--aur-helper]'
     echo
     echo 'options:'
     echo '  -h, --help                  show this help message and exit'
@@ -22,6 +25,9 @@ if set -q _flag_h
     echo '  --vscode=[codium|code]      install VSCodium (or VSCode)'
     echo '  --discord                   install Discord (OpenAsar + Equicord)'
     echo '  --zen                       install Zen browser'
+    echo '  --cursor                    install Cursor AI editor'
+    echo '  --opencode                  install OpenCode AI CLI'
+    echo '  --claude-code               install Claude Code CLI'
     echo '  --aur-helper=[yay|paru]     the AUR helper to use'
 
     exit
@@ -447,6 +453,24 @@ if set -q _flag_zen
 
     # Prompt user to install extension
     log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
+end
+
+# Install cursor
+if set -q _flag_cursor
+    log 'Installing Cursor AI editor...'
+    $aur_helper -S --needed cursor-bin $noconfirm
+end
+
+# Install opencode
+if set -q _flag_opencode
+    log 'Installing OpenCode...'
+    $aur_helper -S --needed opencode $noconfirm
+end
+
+# Install claude-code
+if set -q _flag_claude_code
+    log 'Installing Claude Code...'
+    $aur_helper -S --needed claude-code $noconfirm
 end
 
 # Install quickshell overrides

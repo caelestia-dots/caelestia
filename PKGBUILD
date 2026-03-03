@@ -24,4 +24,7 @@ optdepends=('spotify: music player'
             'gnome-keyring: keyring daemon'
             'polkit-gnome: gnome polkit client'
             'direnv: isolated dev envs'
-            'zoxide: better cd')
+            'zoxide: better cd'
+            'cursor-bin: Cursor AI editor'
+            'opencode: OpenCode AI CLI'
+            'claude-code: Claude Code CLI')
