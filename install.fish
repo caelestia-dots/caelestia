@@ -40,6 +40,8 @@ function _out -a colour text
     # Pass arguments other than text to echo
     echo $argv[3..] -- ":: $text"
     set_color normal
+    # Also write to log file (no colour codes)
+    echo $argv[3..] -- ":: $text" >> $logfile
 end
 
 function log -a text
@@ -81,6 +83,11 @@ set -q _flag_aur_helper && set -l aur_helper $_flag_aur_helper || set -l aur_hel
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
 set -q XDG_DATA_HOME && set -l data $XDG_DATA_HOME || set -l data $HOME/.local/share
+
+# Log file
+set -g logfile $state/caelestia/install-(date +%Y%m%d-%H%M%S).log
+mkdir -p (dirname $logfile)
+echo "=== Caelestia install log - $(date) ===" > $logfile
 
 # Startup prompt
 set_color magenta
@@ -467,9 +474,18 @@ end
 set -l qs_overrides $HOME/quickshell-overrides/caelestia
 set -l qs_config $config/quickshell/caelestia
 
-if ! test -d $qs_overrides
+if ! test -d $HOME/quickshell-overrides
     log 'quickshell-overrides not found. Cloning...'
-    git clone git@github.com:soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides
+    if ! git clone git@github.com:soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides 2>> $logfile
+        log 'SSH clone failed, retrying with HTTPS...'
+        git clone https://github.com/soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides 2>> $logfile
+    end
+end
+
+if ! test -d $HOME/quickshell-overrides
+    log 'Warning: failed to clone quickshell-overrides, skipping.'
+else if ! test -d $qs_overrides
+    log "Warning: quickshell-overrides cloned but '$qs_overrides' subdirectory not found, skipping."
 end
 
 if test -d $qs_overrides
@@ -498,3 +514,4 @@ if ! pgrep -x qs > /dev/null
 end
 
 log 'Done!'
+log "Install log written to: $logfile"
