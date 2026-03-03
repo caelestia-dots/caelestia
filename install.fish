@@ -310,8 +310,17 @@ if test -d $qs_overrides
         end
     end
 else
-    log 'quickshell-overrides not found at ~/quickshell-overrides, skipping...'
-    log 'Clone it with: git clone git@github.com:soyeb-jim285/quickshell-overrides.git ~/quickshell-overrides'
+    log 'quickshell-overrides not found. Cloning...'
+    git clone git@github.com:soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides
+    log 'Installing quickshell overrides...'
+    for file in (find $qs_overrides -type f)
+        set -l rel (string replace "$qs_overrides/" "" $file)
+        set -l target $qs_config/$rel
+        if confirm-overwrite $target
+            mkdir -p (dirname $target)
+            ln -s (realpath $file) $target
+        end
+    end
 end
 
 # Generate scheme stuff if needed
