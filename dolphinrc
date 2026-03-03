@@ -12,16 +12,12 @@ Version=202
 MaximumTextLines=1
 PreviewSize=112
 
-[InformationPanel]
-dateFormat=ShortFormat
-
 [KFileDialog Settings]
 Places Icons Auto-resize=false
 Places Icons Static Size=16
 
 [MainWindow]
 MenuBar=Disabled
-ToolBarsMovable=Disabled
 
 [MainWindow][Toolbar mainToolBar]
 IconSize=16
