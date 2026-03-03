@@ -197,7 +197,7 @@ else
 
     # Write config and enable
     sudo mkdir -p /etc/greetd
-    sudo cp (realpath greetd/config.toml) /etc/greetd/config.toml
+    sudo cp greetd/config.toml /etc/greetd/config.toml
     sudo systemctl enable greetd
     log 'greetd enabled.'
 end
@@ -267,14 +267,14 @@ end
 # Install hypr* configs
 if confirm-overwrite $config/hypr
     log 'Installing hypr* configs...'
-    ln -s (realpath hypr) $config/hypr
+    cp -r hypr $config/hypr
     hyprctl reload
 end
 
 # Starship
 if confirm-overwrite $config/starship.toml
     log 'Installing starship config...'
-    ln -s (realpath starship.toml) $config/starship.toml
+    cp starship.toml $config/starship.toml
 end
 
 # Maple Mono NF (custom build, bundled in repo)
@@ -282,51 +282,51 @@ set -l font_dir $HOME/.local/share/fonts/MapleMono-NF
 if ! test -d $font_dir
     log 'Installing Maple Mono NF fonts...'
     mkdir -p $font_dir
-    cp (realpath fonts/MapleMono-NF)/*.ttf $font_dir/
+    cp fonts/MapleMono-NF/*.ttf $font_dir/
     fc-cache -f $font_dir
 end
 
 # Kitty
 if confirm-overwrite $config/kitty
     log 'Installing kitty config...'
-    ln -s (realpath kitty) $config/kitty
+    cp -r kitty $config/kitty
 end
 
 # Fish
 if confirm-overwrite $config/fish
     log 'Installing fish config...'
-    ln -s (realpath fish) $config/fish
+    cp -r fish $config/fish
 end
 
 # Fastfetch
 if confirm-overwrite $config/fastfetch
     log 'Installing fastfetch config...'
-    ln -s (realpath fastfetch) $config/fastfetch
+    cp -r fastfetch $config/fastfetch
 end
 
 # Uwsm
 if confirm-overwrite $config/uwsm
     log 'Installing uwsm config...'
-    ln -s (realpath uwsm) $config/uwsm
+    cp -r uwsm $config/uwsm
 end
 
 # Btop
 if confirm-overwrite $config/btop
     log 'Installing btop config...'
-    ln -s (realpath btop) $config/btop
+    cp -r btop $config/btop
 end
 
 # Neovim
 if confirm-overwrite $config/nvim
     log 'Installing neovim config...'
-    ln -s (realpath nvim) $config/nvim
+    cp -r nvim $config/nvim
 end
 
 # Tmux
 if confirm-overwrite $config/tmux/tmux.conf
     log 'Installing tmux config...'
     mkdir -p $config/tmux
-    ln -s (realpath tmux/tmux.conf) $config/tmux/tmux.conf
+    cp tmux/tmux.conf $config/tmux/tmux.conf
 end
 
 # TPM (tmux plugin manager)
@@ -341,7 +341,7 @@ end
 mkdir -p $config/Kvantum
 if confirm-overwrite $config/Kvantum/kvantum.kvconfig
     log 'Installing Kvantum config...'
-    ln -s (realpath Kvantum/kvantum.kvconfig) $config/Kvantum/kvantum.kvconfig
+    cp Kvantum/kvantum.kvconfig $config/Kvantum/kvantum.kvconfig
 end
 
 # Dracula Kvantum theme (inside dracula/gtk repo under kde/kvantum/)
@@ -356,31 +356,31 @@ end
 # Qt5ct
 if confirm-overwrite $config/qt5ct
     log 'Installing qt5ct config...'
-    ln -s (realpath qt5ct) $config/qt5ct
+    cp -r qt5ct $config/qt5ct
 end
 
 # Qt6ct
 if confirm-overwrite $config/qt6ct
     log 'Installing qt6ct config...'
-    ln -s (realpath qt6ct) $config/qt6ct
+    cp -r qt6ct $config/qt6ct
 end
 
 # Dolphin (all dolphin files grouped under one confirm)
 if confirm-overwrite $config/dolphinrc
     log 'Installing dolphin configs...'
-    ln -s (realpath dolphinrc) $config/dolphinrc
+    cp dolphinrc $config/dolphinrc
     xdg-mime default org.kde.dolphin.desktop inode/directory
     rm -rf $state/dolphinstaterc $data/kxmlgui5/dolphin/dolphinui.rc $data/dolphin/view_properties/global/.directory
     mkdir -p $state $data/kxmlgui5/dolphin $data/dolphin/view_properties/global
-    ln -s (realpath dolphin/dolphinstaterc) $state/dolphinstaterc
-    ln -s (realpath dolphin/kxmlgui5/dolphinui.rc) $data/kxmlgui5/dolphin/dolphinui.rc
-    ln -s (realpath dolphin/view_properties/global/.directory) $data/dolphin/view_properties/global/.directory
+    cp dolphin/dolphinstaterc $state/dolphinstaterc
+    cp dolphin/kxmlgui5/dolphinui.rc $data/kxmlgui5/dolphin/dolphinui.rc
+    cp dolphin/view_properties/global/.directory $data/dolphin/view_properties/global/.directory
 end
 
 # KDE globals (transparent view, kitty terminal, Papirus icons)
 if confirm-overwrite $config/kdeglobals
     log 'Installing kdeglobals...'
-    ln -s (realpath kdeglobals) $config/kdeglobals
+    cp kdeglobals $config/kdeglobals
 end
 
 # Install spicetify
@@ -400,7 +400,7 @@ if set -q _flag_spotify
     # Install configs
     if confirm-overwrite $config/spicetify
         log 'Installing spicetify config...'
-        ln -s (realpath spicetify) $config/spicetify
+        cp -r spicetify $config/spicetify
 
         # Set spicetify configs
         spicetify config current_theme caelestia color_scheme caelestia custom_apps marketplace 2> /dev/null
@@ -421,9 +421,9 @@ if set -q _flag_vscode
     # Install configs
     if confirm-overwrite $folder/settings.json && confirm-overwrite $folder/keybindings.json && confirm-overwrite $config/$prog-flags.conf
         log "Installing vs$prog config..."
-        ln -s (realpath vscode/settings.json) $folder/settings.json
-        ln -s (realpath vscode/keybindings.json) $folder/keybindings.json
-        ln -s (realpath vscode/flags.conf) $config/$prog-flags.conf
+        cp vscode/settings.json $folder/settings.json
+        cp vscode/keybindings.json $folder/keybindings.json
+        cp vscode/flags.conf $config/$prog-flags.conf
 
         # Install extension
         $prog --install-extension vscode/caelestia-vscode-integration/caelestia-vscode-integration-*.vsix
@@ -459,7 +459,7 @@ if set -q _flag_zen
     set -l chrome $HOME/.zen/*/chrome
     if confirm-overwrite $chrome/userChrome.css
         log 'Installing zen userChrome...'
-        ln -s (realpath zen/userChrome.css) $chrome/userChrome.css
+        cp zen/userChrome.css $chrome/userChrome.css
     end
 
     # Install native app
@@ -476,7 +476,7 @@ if set -q _flag_zen
     if confirm-overwrite $lib/caelestiafox
         log 'Installing zen native app...'
         mkdir -p $lib
-        ln -s (realpath zen/native_app/app.fish) $lib/caelestiafox
+        cp zen/native_app/app.fish $lib/caelestiafox
     end
 
     # Prompt user to install extension
@@ -524,7 +524,7 @@ if test -d $qs_overrides
             set -l target $qs_config/$rel
             rm -rf $target
             mkdir -p (dirname $target)
-            ln -s (realpath $file) $target
+            cp $file $target
         end
     end
 end
