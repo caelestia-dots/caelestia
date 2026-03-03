@@ -270,6 +270,12 @@ if confirm-overwrite $config/btop
     ln -s (realpath btop) $config/btop
 end
 
+# Neovim
+if confirm-overwrite $config/nvim
+    log 'Installing neovim config...'
+    ln -s (realpath nvim) $config/nvim
+end
+
 # Tmux
 if confirm-overwrite $config/tmux/tmux.conf
     log 'Installing tmux config...'
