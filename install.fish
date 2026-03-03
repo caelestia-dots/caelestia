@@ -160,6 +160,27 @@ else
 end
 fish -c 'rm -f caelestia-meta-*.pkg.tar.zst' 2> /dev/null
 
+# Setup greetd login manager
+if systemctl is-enabled greetd &>/dev/null
+    log 'greetd already enabled, skipping login manager setup.'
+else
+    log 'Setting up greetd login manager...'
+
+    # Disable any other display manager if active
+    for dm in sddm gdm lightdm lxdm
+        if systemctl is-enabled $dm &>/dev/null
+            log "Disabling $dm..."
+            sudo systemctl disable $dm
+        end
+    end
+
+    # Write config and enable
+    sudo mkdir -p /etc/greetd
+    sudo cp (realpath greetd/config.toml) /etc/greetd/config.toml
+    sudo systemctl enable greetd
+    log 'greetd enabled.'
+end
+
 # Detect and install Nvidia drivers
 if lspci -k | grep -qiE "(VGA|3D).*nvidia"
     log (string join '' 'Nvidia GPU detected: ' (lspci -k | grep -iE "(VGA|3D).*nvidia" | awk -F ': ' '{print $NF}' | head -1))

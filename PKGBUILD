@@ -15,7 +15,7 @@ depends=('caelestia-cli' 'caelestia-shell'
          'foot' 'fish' 'eza' 'fastfetch' 'starship' 'btop' 'jq' 'adw-gtk-theme'
          'papirus-icon-theme' 'tela-circle-icon-theme-dracula' 'kvantum'
          'qt5ct-kde' 'qt6ct-kde' 'ttf-jetbrains-mono-nerd'
-         'dolphin')
+         'dolphin' 'greetd' 'greetd-tuigreet')
 optdepends=('spotify: music player'
             'vscode: code editor'
             'zen-browser: web browser'

@@ -1,0 +1,6 @@
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --time --remember --asterisks --cmd 'uwsm start hyprland.desktop'"
+user = "greeter"
