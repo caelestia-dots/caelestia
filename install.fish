@@ -393,6 +393,13 @@ if set -q _flag_zen
     log 'Installing zen...'
     $aur_helper -S --needed zen-browser-bin $noconfirm
 
+    # Set as default browser
+    xdg-settings set default-web-browser zen.desktop
+    for mime in text/html x-scheme-handler/http x-scheme-handler/https \
+                application/x-extension-html application/xhtml+xml
+        xdg-mime default zen.desktop $mime
+    end
+
     # Install userChrome css
     set -l chrome $HOME/.zen/*/chrome
     if confirm-overwrite $chrome/userChrome.css

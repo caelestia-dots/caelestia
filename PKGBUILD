@@ -18,7 +18,7 @@ depends=('caelestia-cli' 'caelestia-shell'
          'dolphin' 'greetd' 'greetd-tuigreet')
 optdepends=('spotify: music player'
             'vscode: code editor'
-            'zen-browser: web browser'
+            'zen-browser-bin: web browser (default browser)'
             'todoist-appimage: todo manager'
             'uwsm: uwsm session'
             'gnome-keyring: keyring daemon'
