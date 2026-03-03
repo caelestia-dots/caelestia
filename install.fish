@@ -501,10 +501,7 @@ set -l qs_config $config/quickshell/caelestia
 
 if ! test -d $HOME/quickshell-overrides
     log 'quickshell-overrides not found. Cloning...'
-    if ! git clone git@github.com:soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides 2>> $logfile
-        log 'SSH clone failed, retrying with HTTPS...'
-        git clone https://github.com/soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides 2>> $logfile
-    end
+    git clone https://github.com/soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides 2>> $logfile
 end
 
 if ! test -d $HOME/quickshell-overrides
