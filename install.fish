@@ -239,6 +239,31 @@ if confirm-overwrite $config/btop
     ln -s (realpath btop) $config/btop
 end
 
+# Kvantum
+if confirm-overwrite $config/Kvantum
+    log 'Installing Kvantum config...'
+    ln -s (realpath Kvantum) $config/Kvantum
+end
+
+# Qt5ct
+if confirm-overwrite $config/qt5ct
+    log 'Installing qt5ct config...'
+    ln -s (realpath qt5ct) $config/qt5ct
+end
+
+# Qt6ct
+if confirm-overwrite $config/qt6ct
+    log 'Installing qt6ct config...'
+    ln -s (realpath qt6ct) $config/qt6ct
+end
+
+# Dolphin
+if confirm-overwrite $config/dolphinrc
+    log 'Installing dolphin config...'
+    ln -s (realpath dolphinrc) $config/dolphinrc
+end
+xdg-mime default org.kde.dolphin.desktop inode/directory
+
 # Install spicetify
 if set -q _flag_spotify
     log 'Installing spotify (spicetify)...'

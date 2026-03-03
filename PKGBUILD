@@ -13,8 +13,11 @@ depends=('caelestia-cli' 'caelestia-shell'
          'hyprland' 'xdg-desktop-portal-hyprland' 'xdg-desktop-portal-gtk' 'hyprpicker'
          'wl-clipboard' 'cliphist' 'inotify-tools' 'app2unit' 'wireplumber' 'trash-cli'
          'foot' 'fish' 'eza' 'fastfetch' 'starship' 'btop' 'jq' 'adw-gtk-theme'
-         'papirus-icon-theme' 'qt5ct-kde' 'qt6ct-kde' 'ttf-jetbrains-mono-nerd')
-optdepends=('thunar: file manager'
+         'papirus-icon-theme' 'kvantum' 'qt5ct-kde' 'qt6ct-kde' 'ttf-jetbrains-mono-nerd'
+         'dolphin')
+optdepends=('thunar: file manager (GTK alternative)'
+            'kvantum-theme-catppuccin-git: Catppuccin Mocha Qt theme'
+            'catppuccin-qt5ct-git: Catppuccin Mocha color scheme for qt5ct/qt6ct'
             'spotify: music player'
             'vscode: code editor'
             'zen-browser: web browser'
