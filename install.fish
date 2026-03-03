@@ -241,9 +241,18 @@ if confirm-overwrite $config/btop
 end
 
 # Kvantum
-if confirm-overwrite $config/Kvantum
+mkdir -p $config/Kvantum
+if confirm-overwrite $config/Kvantum/kvantum.kvconfig
     log 'Installing Kvantum config...'
-    ln -s (realpath Kvantum) $config/Kvantum
+    ln -s (realpath Kvantum/kvantum.kvconfig) $config/Kvantum/kvantum.kvconfig
+end
+
+# Dracula Kvantum theme (no AUR package — clone from GitHub)
+if ! test -d $config/Kvantum/Dracula
+    log 'Installing Dracula Kvantum theme...'
+    git clone https://github.com/dracula/kvantum /tmp/dracula-kvantum
+    cp -r /tmp/dracula-kvantum/Dracula $config/Kvantum/
+    rm -rf /tmp/dracula-kvantum
 end
 
 # Qt5ct

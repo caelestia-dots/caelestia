@@ -5,7 +5,7 @@ BackgroundNormal=#00000000
 TerminalApplication=kitty
 
 [Icons]
-Theme=Papirus-Dark
+Theme=Tela-circle-dracula
 
 [Wallet]
 Enabled=false
