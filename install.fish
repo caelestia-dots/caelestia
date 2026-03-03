@@ -79,6 +79,7 @@ set -q _flag_noconfirm && set noconfirm '--noconfirm'
 set -q _flag_aur_helper && set -l aur_helper $_flag_aur_helper || set -l aur_helper paru
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
+set -q XDG_DATA_HOME && set -l data $XDG_DATA_HOME || set -l data $HOME/.local/share
 
 # Startup prompt
 set_color magenta
@@ -263,6 +264,29 @@ if confirm-overwrite $config/dolphinrc
     ln -s (realpath dolphinrc) $config/dolphinrc
 end
 xdg-mime default org.kde.dolphin.desktop inode/directory
+
+# Dolphin panel layout (sidebar position, toolbar)
+if confirm-overwrite $state/dolphinstaterc
+    log 'Installing dolphin state (panel layout)...'
+    mkdir -p $state
+    ln -s (realpath dolphin/dolphinstaterc) $state/dolphinstaterc
+end
+if confirm-overwrite $data/kxmlgui5/dolphin/dolphinui.rc
+    log 'Installing dolphin UI layout...'
+    mkdir -p $data/kxmlgui5/dolphin
+    ln -s (realpath dolphin/kxmlgui5/dolphinui.rc) $data/kxmlgui5/dolphin/dolphinui.rc
+end
+if confirm-overwrite $data/dolphin/view_properties/global/.directory
+    log 'Installing dolphin view properties...'
+    mkdir -p $data/dolphin/view_properties/global
+    ln -s (realpath dolphin/view_properties/global/.directory) $data/dolphin/view_properties/global/.directory
+end
+
+# KDE globals (transparent view, kitty terminal, Papirus icons)
+if confirm-overwrite $config/kdeglobals
+    log 'Installing kdeglobals...'
+    ln -s (realpath kdeglobals) $config/kdeglobals
+end
 
 # Install spicetify
 if set -q _flag_spotify

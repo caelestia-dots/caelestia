@@ -1,0 +1,11 @@
+[Colors:View]
+BackgroundNormal=#00000000
+
+[General]
+TerminalApplication=kitty
+
+[Icons]
+Theme=Papirus-Dark
+
+[Wallet]
+Enabled=false
