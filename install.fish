@@ -492,7 +492,9 @@ if ! test -f $state/caelestia/scheme.json
     hyprctl reload
 end
 
-# Start the shell
-caelestia shell -d > /dev/null
+# Start the shell (only if not already running)
+if ! pgrep -x qs > /dev/null
+    caelestia shell -d > /dev/null
+end
 
 log 'Done!'
