@@ -295,6 +295,25 @@ if set -q _flag_zen
     log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
 end
 
+# Install quickshell overrides
+set -l qs_overrides $HOME/quickshell-overrides/caelestia
+set -l qs_config $config/quickshell/caelestia
+
+if test -d $qs_overrides
+    log 'Installing quickshell overrides...'
+    for file in (find $qs_overrides -type f)
+        set -l rel (string replace "$qs_overrides/" "" $file)
+        set -l target $qs_config/$rel
+        if confirm-overwrite $target
+            mkdir -p (dirname $target)
+            ln -s (realpath $file) $target
+        end
+    end
+else
+    log 'quickshell-overrides not found at ~/quickshell-overrides, skipping...'
+    log 'Clone it with: git clone git@github.com:soyeb-jim285/quickshell-overrides.git ~/quickshell-overrides'
+end
+
 # Generate scheme stuff if needed
 if ! test -f $state/caelestia/scheme.json
     caelestia scheme set -n shadotheme
