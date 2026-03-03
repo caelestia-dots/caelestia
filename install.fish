@@ -231,6 +231,15 @@ if confirm-overwrite $config/starship.toml
     ln -s (realpath starship.toml) $config/starship.toml
 end
 
+# Maple Mono NF (custom build, bundled in repo)
+set -l font_dir $HOME/.local/share/fonts/MapleMono-NF
+if ! test -d $font_dir
+    log 'Installing Maple Mono NF fonts...'
+    mkdir -p $font_dir
+    cp (realpath fonts/MapleMono-NF)/*.ttf $font_dir/
+    fc-cache -f $font_dir
+end
+
 # Kitty
 if confirm-overwrite $config/kitty
     log 'Installing kitty config...'

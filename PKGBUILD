@@ -12,7 +12,7 @@ license=('GPL-3.0-only')
 depends=('caelestia-cli' 'caelestia-shell'
          'hyprland' 'xdg-desktop-portal-hyprland' 'xdg-desktop-portal-gtk' 'hyprpicker'
          'wl-clipboard' 'cliphist' 'inotify-tools' 'app2unit' 'wireplumber' 'trash-cli'
-         'kitty' 'maplemono-nf' 'fish' 'eza' 'fastfetch' 'starship' 'btop' 'jq' 'adw-gtk-theme'
+         'kitty' 'fish' 'eza' 'fastfetch' 'starship' 'btop' 'jq' 'adw-gtk-theme'
          'papirus-icon-theme' 'tela-circle-icon-theme-dracula' 'kvantum'
          'qt5ct-kde' 'qt6ct-kde' 'ttf-jetbrains-mono-nerd'
          'dolphin' 'greetd' 'greetd-tuigreet')
