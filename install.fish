@@ -270,6 +270,21 @@ if confirm-overwrite $config/btop
     ln -s (realpath btop) $config/btop
 end
 
+# Tmux
+if confirm-overwrite $config/tmux/tmux.conf
+    log 'Installing tmux config...'
+    mkdir -p $config/tmux
+    ln -s (realpath tmux/tmux.conf) $config/tmux/tmux.conf
+end
+
+# TPM (tmux plugin manager)
+if ! test -d $config/tmux/plugins/tpm
+    log 'Installing TPM...'
+    git clone https://github.com/tmux-plugins/tpm $config/tmux/plugins/tpm
+    log 'Installing tmux plugins...'
+    $config/tmux/plugins/tpm/scripts/install_plugins.sh
+end
+
 # Kvantum
 mkdir -p $config/Kvantum
 if confirm-overwrite $config/Kvantum/kvantum.kvconfig
