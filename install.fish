@@ -77,17 +77,23 @@ function confirm-overwrite -a path
 end
 
 
+# Log file (must be set before the begin block so 'end 2>> $logfile' can expand it)
+if set -q XDG_STATE_HOME
+    set -g logfile $XDG_STATE_HOME/caelestia/install-(date +%Y%m%d-%H%M%S).log
+else
+    set -g logfile $HOME/.local/state/caelestia/install-(date +%Y%m%d-%H%M%S).log
+end
+mkdir -p (dirname $logfile)
+echo "=== Caelestia install log - $(date) ===" > $logfile
+
+begin # stderr from all commands is redirected to the log file
+
 # Variables
 set -q _flag_noconfirm && set noconfirm '--noconfirm'
 set -q _flag_aur_helper && set -l aur_helper $_flag_aur_helper || set -l aur_helper paru
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
 set -q XDG_DATA_HOME && set -l data $XDG_DATA_HOME || set -l data $HOME/.local/share
-
-# Log file
-set -g logfile $state/caelestia/install-(date +%Y%m%d-%H%M%S).log
-mkdir -p (dirname $logfile)
-echo "=== Caelestia install log - $(date) ===" > $logfile
 
 # Startup prompt
 set_color magenta
@@ -204,7 +210,7 @@ if lspci -k | grep -qiE "(VGA|3D).*nvidia"
     # Kernel headers for all running kernels
     set -l kbases (string match -r '.*' /usr/lib/modules/*/pkgbase 2>/dev/null)
     if test (count $kbases) -eq 0
-        log 'Warning: no kernel pkgbase files found in /usr/lib/modules — skipping header install.' 2>> $logfile
+        log 'Warning: no kernel pkgbase files found in /usr/lib/modules — skipping header install.'
     else
         for kbase in $kbases
             if test -f $kbase
@@ -537,3 +543,5 @@ end
 
 log 'Done!'
 log "Install log written to: $logfile"
+
+end 2>> $logfile
