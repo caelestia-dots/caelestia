@@ -202,22 +202,47 @@ if lspci -k | grep -qiE "(VGA|3D).*nvidia"
     log 'Installing Nvidia drivers...'
 
     # Kernel headers for all running kernels
-    for kbase in /usr/lib/modules/*/pkgbase
-        $aur_helper -S --needed (cat $kbase)-headers $noconfirm
+    set -l kbases (string match -r '.*' /usr/lib/modules/*/pkgbase 2>/dev/null)
+    if test (count $kbases) -eq 0
+        log 'Warning: no kernel pkgbase files found in /usr/lib/modules — skipping header install.' 2>> $logfile
+    else
+        for kbase in $kbases
+            if test -f $kbase
+                set -l hdr_pkg (cat $kbase)-headers
+                log "Installing kernel headers: $hdr_pkg"
+                $aur_helper -S --needed $hdr_pkg $noconfirm 2>> $logfile
+            end
+        end
     end
 
     # Driver + Wayland support packages
-    $aur_helper -S --needed nvidia-dkms nvidia-utils egl-wayland $noconfirm
+    log 'Installing nvidia-dkms, nvidia-utils, egl-wayland...'
+    $aur_helper -S --needed nvidia-dkms nvidia-utils egl-wayland $noconfirm 2>> $logfile
 
-    # Early module loading (needed for Wayland DRM)
-    if ! grep -q 'nvidia' /etc/mkinitcpio.conf
-        sudo sed -i '/MODULES=/ s/)$/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
-        sudo mkinitcpio -P
+    # Wait for DKMS to finish building the nvidia module before running mkinitcpio
+    log 'Running dkms autoinstall to build nvidia kernel modules...'
+    if ! sudo dkms autoinstall 2>> $logfile
+        log 'Warning: dkms autoinstall reported errors — check log for details.'
+    end
+
+    # Verify the module was actually built before touching mkinitcpio
+    if ! sudo modinfo nvidia &>> $logfile
+        log 'Warning: nvidia module not found after DKMS build. Skipping mkinitcpio step to avoid a broken initramfs.'
+        log 'You may need to reboot and re-run this script, or install the correct kernel headers manually.'
+    else
+        # Early module loading (needed for Wayland DRM)
+        if ! grep -q 'nvidia' /etc/mkinitcpio.conf
+            log 'Adding nvidia modules to mkinitcpio.conf...'
+            sudo sed -i '/MODULES=/ s/)$/ nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+            log 'Regenerating initramfs (mkinitcpio -P)...'
+            sudo mkinitcpio -P 2>> $logfile
+        end
     end
 
     # DRM modeset kernel parameter
     if ! test -f /etc/modprobe.d/nvidia.conf; or ! grep -q 'modeset=1' /etc/modprobe.d/nvidia.conf
-        echo 'options nvidia-drm modeset=1 fbdev=1' | sudo tee -a /etc/modprobe.d/nvidia.conf
+        log 'Setting nvidia-drm modeset=1...'
+        echo 'options nvidia-drm modeset=1 fbdev=1' | sudo tee -a /etc/modprobe.d/nvidia.conf >> $logfile
     end
 
     # Source nvidia.conf in Hyprland via user config
