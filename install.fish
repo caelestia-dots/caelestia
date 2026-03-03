@@ -231,10 +231,10 @@ if confirm-overwrite $config/starship.toml
     ln -s (realpath starship.toml) $config/starship.toml
 end
 
-# Foot
-if confirm-overwrite $config/foot
-    log 'Installing foot config...'
-    ln -s (realpath foot) $config/foot
+# Kitty
+if confirm-overwrite $config/kitty
+    log 'Installing kitty config...'
+    ln -s (realpath kitty) $config/kitty
 end
 
 # Fish
