@@ -56,13 +56,9 @@ end
 
 function confirm-overwrite -a path
     if test -e $path -o -L $path
-        # No prompt if noconfirm
-        if set -q noconfirm
-            input "$path already exists. Overwrite? [Y/n]"
-            log 'Removing...'
+        if set -q overwrite_all; or set -q noconfirm
             rm -rf $path
         else
-            # Prompt user
             input "$path already exists. Overwrite? [Y/n] " -n
             set -l confirm (sh-read)
 
@@ -70,7 +66,6 @@ function confirm-overwrite -a path
                 log 'Skipping...'
                 return 1
             else
-                log 'Removing...'
                 rm -rf $path
             end
         end
@@ -128,6 +123,13 @@ if ! set -q _flag_noconfirm
     else
         log 'No choice selected. Exiting...'
         exit 1
+    end
+
+    # Ask once: overwrite all existing configs?
+    input 'Overwrite all existing configs without asking? [Y/n] ' -n
+    set -l ow (sh-read)
+    if test "$ow" != 'n' -a "$ow" != 'N'
+        set -g overwrite_all
     end
 end
 
@@ -325,27 +327,15 @@ if confirm-overwrite $config/qt6ct
     ln -s (realpath qt6ct) $config/qt6ct
 end
 
-# Dolphin
+# Dolphin (all dolphin files grouped under one confirm)
 if confirm-overwrite $config/dolphinrc
-    log 'Installing dolphin config...'
+    log 'Installing dolphin configs...'
     ln -s (realpath dolphinrc) $config/dolphinrc
-end
-xdg-mime default org.kde.dolphin.desktop inode/directory
-
-# Dolphin panel layout (sidebar position, toolbar)
-if confirm-overwrite $state/dolphinstaterc
-    log 'Installing dolphin state (panel layout)...'
-    mkdir -p $state
+    xdg-mime default org.kde.dolphin.desktop inode/directory
+    rm -rf $state/dolphinstaterc $data/kxmlgui5/dolphin/dolphinui.rc $data/dolphin/view_properties/global/.directory
+    mkdir -p $state $data/kxmlgui5/dolphin $data/dolphin/view_properties/global
     ln -s (realpath dolphin/dolphinstaterc) $state/dolphinstaterc
-end
-if confirm-overwrite $data/kxmlgui5/dolphin/dolphinui.rc
-    log 'Installing dolphin UI layout...'
-    mkdir -p $data/kxmlgui5/dolphin
     ln -s (realpath dolphin/kxmlgui5/dolphinui.rc) $data/kxmlgui5/dolphin/dolphinui.rc
-end
-if confirm-overwrite $data/dolphin/view_properties/global/.directory
-    log 'Installing dolphin view properties...'
-    mkdir -p $data/dolphin/view_properties/global
     ln -s (realpath dolphin/view_properties/global/.directory) $data/dolphin/view_properties/global/.directory
 end
 
@@ -477,24 +467,18 @@ end
 set -l qs_overrides $HOME/quickshell-overrides/caelestia
 set -l qs_config $config/quickshell/caelestia
 
-if test -d $qs_overrides
-    log 'Installing quickshell overrides...'
-    for file in (find $qs_overrides -type f)
-        set -l rel (string replace "$qs_overrides/" "" $file)
-        set -l target $qs_config/$rel
-        if confirm-overwrite $target
-            mkdir -p (dirname $target)
-            ln -s (realpath $file) $target
-        end
-    end
-else
+if ! test -d $qs_overrides
     log 'quickshell-overrides not found. Cloning...'
     git clone git@github.com:soyeb-jim285/quickshell-overrides.git $HOME/quickshell-overrides
-    log 'Installing quickshell overrides...'
-    for file in (find $qs_overrides -type f)
-        set -l rel (string replace "$qs_overrides/" "" $file)
-        set -l target $qs_config/$rel
-        if confirm-overwrite $target
+end
+
+if test -d $qs_overrides
+    if confirm-overwrite $qs_config
+        log 'Installing quickshell overrides...'
+        for file in (find $qs_overrides -type f)
+            set -l rel (string replace "$qs_overrides/" "" $file)
+            set -l target $qs_config/$rel
+            rm -rf $target
             mkdir -p (dirname $target)
             ln -s (realpath $file) $target
         end
