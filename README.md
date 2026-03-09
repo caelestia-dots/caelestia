@@ -61,8 +61,7 @@ Dependencies:
 -   eza
 -   adw-gtk-theme
 -   papirus-icon-theme
--   qt5ct-kde
--   qt6ct-kde
+-   qtengine-git
 -   ttf-jetbrains-mono-nerd
 
 Install all dependencies and follow the installation guides of the
