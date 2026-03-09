@@ -307,13 +307,6 @@ if ! test -f $state/caelestia/scheme.json
     hyprctl reload
 end
 
-# Generate blank configs
-if ! test -d $config/caelestia
-    mkdir $config/caelestia
-    touch $config/caelestia/hypr-user.conf
-    touch $config/caelestia/hypr-vars.conf
-end
-
 # Start the shell
 caelestia shell -d > /dev/null
 
