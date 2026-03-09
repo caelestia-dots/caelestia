@@ -308,8 +308,11 @@ if ! test -f $state/caelestia/scheme.json
 end
 
 # Generate blank configs
-touch $config/caelestia/hypr-user.conf
-touch $config/caelestia/hypr-vars.conf
+if ! test -d $config/caelestia
+    mkdir $config/caelestia
+    touch $config/caelestia/hypr-user.conf
+    touch $config/caelestia/hypr-vars.conf
+end
 
 # Start the shell
 caelestia shell -d > /dev/null
