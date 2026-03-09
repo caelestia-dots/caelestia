@@ -1,5 +1,4 @@
 if status is-interactive
-
     # Starship custom prompt
     starship init fish | source
 
@@ -42,5 +41,5 @@ if status is-interactive
     end
     
     # Custom fish config
-    source ~/.config/caelestia/user-config.fish 2>/dev/null
+    source ~/.config/caelestia/user-config.fish 2> /dev/null
 end
