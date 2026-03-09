@@ -79,6 +79,7 @@ set -q _flag_noconfirm && set noconfirm '--noconfirm'
 set -q _flag_aur_helper && set -l aur_helper $_flag_aur_helper || set -l aur_helper paru
 set -q XDG_CONFIG_HOME && set -l config $XDG_CONFIG_HOME || set -l config $HOME/.config
 set -q XDG_STATE_HOME && set -l state $XDG_STATE_HOME || set -l state $HOME/.local/state
+set -l install_dir (path dirname (path resolve (status filename)))
 
 # Startup prompt
 set_color magenta
@@ -148,7 +149,7 @@ if ! pacman -Q $aur_helper &> /dev/null
 end
 
 # Cd into dir
-cd (dirname (status filename)) || exit 1
+cd $install_dir || exit 1
 
 # Install metapackage for deps
 log 'Installing metapackage...'
