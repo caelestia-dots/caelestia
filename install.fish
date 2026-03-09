@@ -152,7 +152,7 @@ end
 cd $install_dir || exit 1
 
 # Fix missing key for qqc2-desktop-style5
-sudo gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 53E6B47B45CEA3E0D5B7457758D0EE648A48B3BB
+gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 53E6B47B45CEA3E0D5B7457758D0EE648A48B3BB
 
 # Install metapackage for deps
 log 'Installing metapackage...'
