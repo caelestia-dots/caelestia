@@ -151,11 +151,12 @@ end
 # Cd into dir
 cd $install_dir || exit 1
 
+# Install metapackage for deps
+log 'Installing metapackage...'
+
 # Fix missing key for qqc2-desktop-style5
 gpg --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 53E6B47B45CEA3E0D5B7457758D0EE648A48B3BB
 
-# Install metapackage for deps
-log 'Installing metapackage...'
 if test $aur_helper = yay
     $aur_helper -Bi . $noconfirm
 else
