@@ -7,5 +7,6 @@
 /btop/themes/
 
 /fish/fish_variables
+/fish/conf.d/
 
 .SRCINFO
