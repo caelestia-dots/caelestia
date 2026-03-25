@@ -11,7 +11,6 @@
     "prettier.printWidth": 120,
     "prettier.arrowParens": "avoid",
     "workbench.colorTheme": "Caelestia",
-    "diffEditor.hideUnchangedRegions.enabled": true,
     "workbench.list.smoothScrolling": true,
     "editor.smoothScrolling": true,
     "terminal.integrated.smoothScrolling": true,
@@ -46,5 +45,30 @@
     "python.languageServer": "Pylance",
     "editor.inlayHints.enabled": "off",
     "qt-qml.qmlls.customExePath": "/usr/bin/qmlls6",
-    "qt-qml.doNotAskForQmllsDownload": true
+    "qt-qml.doNotAskForQmllsDownload": true,
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "/usr/bin/fish"
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        },
+        "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "explorer.confirmDelete": false,
+    "files.autoSave": "afterDelay",
+    "git.confirmSync": false,
+    "diffEditor.ignoreTrimWhitespace": false
 }

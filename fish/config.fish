@@ -32,7 +32,6 @@ if status is-interactive
     abbr la 'ls -a'
     abbr lla 'ls -la'
 
-    # Custom colours
     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
 
     # For jumping between prompts in foot terminal
@@ -40,3 +39,5 @@ if status is-interactive
         echo -en "\e]133;A\e\\"
     end
 end
+set -gx LIBVA_DRIVER_NAME iHD
+fish_add_path ~/.local/bin
