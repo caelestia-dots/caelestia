@@ -70,16 +70,16 @@ hl.bind("CTRL + SUPER + ALT + R", hl.dsp.exec_cmd("qs -c caelestia kill; sleep .
 -- bind = $kbGoToWsGroup, 0, exec, $wsaction -g workspace 10
 
 -- Go to workspace -1/+1
--- bind = Super, mouse_down, workspace, -1
--- bind = Super, mouse_up, workspace, +1
--- binde = $kbPrevWs, workspace, -1
--- binde = $kbNextWs, workspace, +1
--- binde = Super, Page_Up, workspace, -1
--- binde = Super, Page_Down, workspace, +1
+hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "-1" }))
+hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "+1" }))
+hl.bind(vars.kbPrevWs, hl.dsp.focus({ workspace = "-1" }), { repeating = true })
+hl.bind(vars.kbNextWs, hl.dsp.focus({ workspace = "+1" }), { repeating = true })
+hl.bind("SUPER + Page_Up", hl.dsp.focus({ workspace = "-1" }), { repeating = true })
+hl.bind("SUPER + Page_down", hl.dsp.focus({ workspace = "+1" }), { repeating = true })
 
 -- Go to workspace group -1/+1
--- bind = Ctrl+Super, mouse_down, workspace, -10
--- bind = Ctrl+Super, mouse_up, workspace, +10
+hl.bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "-10" }))
+hl.bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "+10" }))
 
 -- Toggle special workspace
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
@@ -109,17 +109,17 @@ hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
 -- bind = $kbMoveWinToWsGroup, 0, exec, $wsaction -g movetoworkspace 10
 
 -- Move window to workspace -1/+1
--- binde = Super+Alt, Page_Up, movetoworkspace, -1
--- binde = Super+Alt, Page_Down, movetoworkspace, +1
--- bind = Super+Alt, mouse_down, movetoworkspace, -1
--- bind = Super+Alt, mouse_up, movetoworkspace, +1
--- binde = Ctrl+Super+Shift, right, movetoworkspace, +1
--- binde = Ctrl+Super+Shift, left, movetoworkspace, -1
+hl.bind("SUPER + ALT + Page_Up", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
+hl.bind("SUPER + ALT + Page_Down", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
+hl.bind("SUPER + ALT + mouse_down", hl.dsp.window.move({ workspace = "-1" }))
+hl.bind("SUPER + ALT + mouse_up", hl.dsp.window.move({ workspace = "+1" }))
+hl.bind("CTRL + SUPER + SHIFT + right", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
+hl.bind("CTRL + SUPER + SHIFT + left", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
 
 -- Move window to/from special workspace
--- bind = Ctrl+Super+Shift, up, movetoworkspace, special:special
--- bind = Ctrl+Super+Shift, down, movetoworkspace, e+0
--- bind = Super+Alt, S, movetoworkspace, special:special
+hl.bind("CTRL + SUPER + SHIFT + up", hl.dsp.window.move({ workspace = "special:special" }))
+hl.bind("CTRL + SUPER + SHIFT + down", hl.dsp.window.move({ workspace = "e+0" }))
+hl.bind("SUPER + ALT + S", hl.dsp.window.move({ workspace = "special:special" }))
 
 -- Window groups
 -- binde = $kbWindowGroupCycleNext, cyclenext
@@ -131,14 +131,14 @@ hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
 -- bind = Super+Shift, Comma, lockactivegroup, toggle
 
 -- Window actions
--- bind = Super, left, movefocus, l
--- bind = Super, right, movefocus, r
--- bind = Super, up, movefocus, u
--- bind = Super, down, movefocus, d
--- bind = Super+Shift, left, movewindow, l
--- bind = Super+Shift, right, movewindow, r
--- bind = Super+Shift, up, movewindow, u
--- bind = Super+Shift, down, movewindow, d
+hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
+hl.bind("SUPER + right", hl.dsp.focus({ direction = "right" }))
+hl.bind("SUPER + up", hl.dsp.focus({ direction = "up" }))
+hl.bind("SUPER + down", hl.dsp.focus({ direction = "down" }))
+hl.bind("SUPER + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
+hl.bind("SUPER + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
+hl.bind("SUPER + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
+hl.bind("SUPER + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 -- binde = Super, Minus, resizeactive, -10% 0 # Resize left
 -- binde = Super, Equal, resizeactive, 10% 0 # Resize right
 -- binde = Super+Shift, Minus, resizeactive, 0 -10% # Resize up
@@ -180,7 +180,7 @@ hl.bind("CTRL + ALT + V", hl.dsp.exec_cmd("app2unit -- pavucontrol"))
 
 -- Utilities
 hl.bind("Print", hl.dsp.exec_cmd("caelestia screenshot"), { locked = true })
-hl.bind("SUPER + SHIFT + S", hl.dsp.global("caelestia:screenshotFreeeze"))
+hl.bind("SUPER + SHIFT + S", hl.dsp.global("caelestia:screenshotFreeze"))
 hl.bind("SUPER + SHIFT + ALT + S", hl.dsp.global("caelestia:screenshot"))
 hl.bind("SUPER + ALT + R", hl.dsp.global("caelestia record -s"))
 hl.bind("CTRL + ALT + R", hl.dsp.global("caelestia record"))
@@ -213,7 +213,11 @@ hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-suspend", {
 hl.bind("SUPER + V", hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))
 hl.bind("SUPER + ALT + V", hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard -d"))
 hl.bind("SUPER + Period", hl.dsp.exec_cmd("pkill fuzzel || caelestia emoji -p"))
-hl.bind("CTRL + SHIFT + ALT + V", hl.dsp.exec_cmd("sleep 0.5s && ydotool type -d 1 '$(cliphist list | head -1 | cliphist decode)"), { locked = true })
+hl.bind(
+    "CTRL + SHIFT + ALT + V",
+    hl.dsp.exec_cmd("sleep 0.5s && ydotool type -d 1 '$(cliphist list | head -1 | cliphist decode)"),
+    { locked = true }
+)
 
 -- Requires playerctl
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -221,4 +225,9 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 
 -- Testing
-hl.bind("SUPER + ALT + F12", hl.dsp.exec_cmd("notify-send -u low -i dialog-information-symbolic 'Test notification' 'Here\'s a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!' -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"))
+hl.bind(
+    "SUPER + ALT + F12",
+    hl.dsp.exec_cmd(
+        "notify-send -u low -i dialog-information-symbolic 'Test notification' 'Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!' -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"
+    )
+)
