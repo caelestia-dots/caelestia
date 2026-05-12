@@ -57,7 +57,7 @@ return {
 
     -- Workspaces
     kbMoveWinToWs = "SUPER + ALT",
-    kbMoveWinToGroup = "CTRL + SUPER + ALT",
+    kbMoveWinToWsGroup = "CTRL + SUPER + ALT",
     kbGoToWs = "SUPER",
     kbGoToWsGroup = "CTRL + SUPER",
     kbNextWs = "CTRL + SUPER + Right",

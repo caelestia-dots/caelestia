@@ -14,6 +14,7 @@ local function resize_by_screen(x, y)
     return { x = w, y = h, relative = false }
 end
 
+-- needs rework
 local function resize_activewindow(x, y)
     local window = hl.get_active_window()
     local w = 800
