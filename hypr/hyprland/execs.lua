@@ -1,4 +1,5 @@
 local vars = require("variables")
+local fn = require("hyprland.functions")
 
 hl.on("hyprland.start", function()
     -- Keyring and auth
@@ -29,4 +30,13 @@ hl.on("hyprland.start", function()
 
     -- Start shell
     hl.exec_cmd("caelestia shell -d")
+end)
+
+hl.on("window.title", function()
+    local d = {
+        hl.dsp.window.float({ action = "on" }),
+        hl.dsp.window.center(),
+    }
+    fn.resizer("Bitwarden", 20, 54, d, true)
+    fn.resizer("^[Pp]icture(-| )in(-| )[Pp]icture$", 0, 0, hl.exec_cmd("caelestia resizer pip"), false)
 end)

@@ -1,60 +1,6 @@
 local vars = require("variables")
 
-hl.bind("ALT + R", hl.dsp.submap("resize"))
-
-local function resize_by_screen(x, y)
-    local screen = hl.get_active_monitor()
-    local w = 1080
-    local h = 1920
-    if screen and type(screen.width) == "number" and type(screen.height) == "number" then
-        w = math.floor(screen.width * x / 100)
-        h = math.floor(screen.height * y / 100)
-    end
-
-    return { x = w, y = h, relative = false }
-end
-
--- needs rework
-local function resize_activewindow(x, y)
-    local window = hl.get_active_window()
-    local w = 800
-    local h = 600
-
-    if window and window.size and type(window.size) == "table" then
-        local win_w = window.size[1]
-        local win_h = window.size[2]
-
-        if win_w and win_h then
-            local cur_w = math.floor(win_w * x / 100)
-            local cur_h = math.floor(win_h * y / 100)
-            w = cur_w + win_w
-            h = cur_h + win_h
-        end
-    end
-
-    return { x = w, y = h, relative = true }
-end
-
-local function wsaction(x, y, i)
-    return function()
-        local activews = hl.get_active_workspace()
-        if not activews then
-            return
-        end
-
-        local id = activews.id
-        local s = (i - 1) * 10 + (id % 10)
-        local t = math.floor((id - 1) / 10) * 10 + i
-
-        if x == "move" then
-            local z = (y == "g") and t or s
-            return hl.dispatch(hl.dsp.window.move({ workspace = z }))
-        else
-            local z = (y == "g") and s or t
-            return hl.dispatch(hl.dsp.focus({ workspace = z }))
-        end
-    end
-end
+local fn = require("hyprland.functions")
 
 -- Launcher
 hl.bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), { release = true })
@@ -101,10 +47,10 @@ hl.bind("CTRL + SUPER + ALT + R", hl.dsp.exec_cmd("qs -c caelestia kill; sleep .
 
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(vars.kbGoToWs .. " + " .. key, wsaction("don't move", "ew", i))
-    hl.bind(vars.kbMoveWinToWs .. " + " .. key, wsaction("move", "ew", i))
-    hl.bind(vars.kbGoToWsGroup .. " + " .. key, wsaction("don't move", "g", i))
-    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, wsaction("move", "g", i))
+    hl.bind(vars.kbGoToWs .. " + " .. key, fn.wsaction("don't move", "ew", i))
+    hl.bind(vars.kbMoveWinToWs .. " + " .. key, fn.wsaction("move", "ew", i))
+    hl.bind(vars.kbGoToWsGroup .. " + " .. key, fn.wsaction("don't move", "g", i))
+    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, fn.wsaction("move", "g", i))
 end
 
 -- Go to workspace -1/+1
@@ -163,21 +109,21 @@ hl.bind("SUPER + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 -- binde = Super+Alt, down, resizeactive, 0 10%
 
 -- These are cursed
-hl.bind("SUPER + Minus", hl.dsp.window.resize(resize_activewindow(-10, 0)), { repeating = true })
-hl.bind("SUPER + Equal", hl.dsp.window.resize(resize_activewindow(10, 0)), { repeating = true })
-hl.bind("SUPER + SHIFT + Minus", hl.dsp.window.resize(resize_activewindow(0, -10)), { repeating = true })
-hl.bind("SUPER + SHIFT + Equal", hl.dsp.window.resize(resize_activewindow(0, 10)), { repeating = true })
-hl.bind("SUPER + ALT + left", hl.dsp.window.resize(resize_activewindow(-10, 0)), { repeating = true })
-hl.bind("SUPER + ALT + right", hl.dsp.window.resize(resize_activewindow(10, 0)), { repeating = true })
-hl.bind("SUPER + ALT + up", hl.dsp.window.resize(resize_activewindow(0, -10)), { repeating = true })
-hl.bind("SUPER + ALT + down", hl.dsp.window.resize(resize_activewindow(0, 10)), { repeating = true })
+hl.bind("SUPER + Minus", hl.dsp.window.resize(fn.resize_activewindow(-10, 0)), { repeating = true })
+hl.bind("SUPER + Equal", hl.dsp.window.resize(fn.resize_activewindow(10, 0)), { repeating = true })
+hl.bind("SUPER + SHIFT + Minus", hl.dsp.window.resize(fn.resize_activewindow(0, -10)), { repeating = true })
+hl.bind("SUPER + SHIFT + Equal", hl.dsp.window.resize(fn.resize_activewindow(0, 10)), { repeating = true })
+hl.bind("SUPER + ALT + left", hl.dsp.window.resize(fn.resize_activewindow(-10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + right", hl.dsp.window.resize(fn.resize_activewindow(10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + up", hl.dsp.window.resize(fn.resize_activewindow(0, -10)), { repeating = true })
+hl.bind("SUPER + ALT + down", hl.dsp.window.resize(fn.resize_activewindow(0, 10)), { repeating = true })
 
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(vars.kbResizeWindow, hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind(vars.kbResizeWindow, hl.dsp.window.resize(), { mouse = true })
 hl.bind("CTRL + SUPER + Backslash", hl.dsp.window.center())
-hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.resize(resize_by_screen(55, 70)))
+hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.resize(fn.resize_by_screen(55, 70)))
 hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
 hl.bind(vars.kbWindowPip, hl.dsp.exec_cmd("caelestia resizer pip"))
 hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
