@@ -2,9 +2,62 @@ local vars = require("variables")
 
 hl.bind("ALT + R", hl.dsp.submap("resize"))
 
+local function resize_by_screen(x, y)
+    local screen = hl.get_active_monitor()
+    local w = 1080
+    local h = 1920
+    if screen and type(screen.width) == "number" and type(screen.height) == "number" then
+        w = math.floor(screen.width * x / 100)
+        h = math.floor(screen.height * y / 100)
+    end
+
+    return { x = w, y = h, relative = false }
+end
+
+local function resize_activewindow(x, y)
+    local window = hl.get_active_window()
+    local w = 800
+    local h = 600
+
+    if window and window.size and type(window.size) == "table" then
+        local win_w = window.size[1]
+        local win_h = window.size[2]
+
+        if win_w and win_h then
+            local cur_w = math.floor(win_w * x / 100)
+            local cur_h = math.floor(win_h * y / 100)
+            w = cur_w + win_w
+            h = cur_h + win_h
+        end
+    end
+
+    return { x = w, y = h, relative = true }
+end
+
+local function wsaction(x, y, i)
+    return function()
+        local activews = hl.get_active_workspace()
+        if not activews then
+            return
+        end
+
+        local id = activews.id
+        local s = (i - 1) * 10 + (id % 10)
+        local t = math.floor((id - 1) / 10) * 10 + i
+
+        if x == "move" then
+            local z = (y == "g") and t or s
+            return hl.dispatch(hl.dsp.window.move({ workspace = z }))
+        else
+            local z = (y == "g") and s or t
+            return hl.dispatch(hl.dsp.focus({ workspace = z }))
+        end
+    end
+end
+
 -- Launcher
 hl.bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), { release = true })
--- hl.bind("catchall", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
+-- hl.bind("SUPER + catchall", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:272", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:273", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:274", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
@@ -45,29 +98,13 @@ hl.bind("XF86AudioStop", hl.dsp.global("caelestia:mediaStop"), { locked = true }
 hl.bind("CTRL + SUPER + SHIFT + R", hl.dsp.exec_cmd("qs -c caelestia kill"))
 hl.bind("CTRL + SUPER + ALT + R", hl.dsp.exec_cmd("qs -c caelestia kill; sleep .1; caelestia shell -d"))
 
--- Go to workspace #
--- bind = $kbGoToWs, 1, exec, $wsaction workspace 1
--- bind = $kbGoToWs, 2, exec, $wsaction workspace 2
--- bind = $kbGoToWs, 3, exec, $wsaction workspace 3
--- bind = $kbGoToWs, 4, exec, $wsaction workspace 4
--- bind = $kbGoToWs, 5, exec, $wsaction workspace 5
--- bind = $kbGoToWs, 6, exec, $wsaction workspace 6
--- bind = $kbGoToWs, 7, exec, $wsaction workspace 7
--- bind = $kbGoToWs, 8, exec, $wsaction workspace 8
--- bind = $kbGoToWs, 9, exec, $wsaction workspace 9
--- bind = $kbGoToWs, 0, exec, $wsaction workspace 10
-
--- Go to workspace group #
--- bind = $kbGoToWsGroup, 1, exec, $wsaction -g workspace 1
--- bind = $kbGoToWsGroup, 2, exec, $wsaction -g workspace 2
--- bind = $kbGoToWsGroup, 3, exec, $wsaction -g workspace 3
--- bind = $kbGoToWsGroup, 4, exec, $wsaction -g workspace 4
--- bind = $kbGoToWsGroup, 5, exec, $wsaction -g workspace 5
--- bind = $kbGoToWsGroup, 6, exec, $wsaction -g workspace 6
--- bind = $kbGoToWsGroup, 7, exec, $wsaction -g workspace 7
--- bind = $kbGoToWsGroup, 8, exec, $wsaction -g workspace 8
--- bind = $kbGoToWsGroup, 9, exec, $wsaction -g workspace 9
--- bind = $kbGoToWsGroup, 0, exec, $wsaction -g workspace 10
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    hl.bind(vars.kbGoToWs .. " + " .. key, wsaction("don't move", "ew", i))
+    hl.bind(vars.kbMoveWinToWs .. " + " .. key, wsaction("move", "ew", i))
+    hl.bind(vars.kbGoToWsGroup .. " + " .. key, wsaction("don't move", "g", i))
+    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, wsaction("move", "g", i))
+end
 
 -- Go to workspace -1/+1
 hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "-1" }))
@@ -84,30 +121,6 @@ hl.bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "+10" }))
 -- Toggle special workspace
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
 
--- # Move window to workspace #
--- bind = $kbMoveWinToWs, 1, exec, $wsaction movetoworkspace 1
--- bind = $kbMoveWinToWs, 2, exec, $wsaction movetoworkspace 2
--- bind = $kbMoveWinToWs, 3, exec, $wsaction movetoworkspace 3
--- bind = $kbMoveWinToWs, 4, exec, $wsaction movetoworkspace 4
--- bind = $kbMoveWinToWs, 5, exec, $wsaction movetoworkspace 5
--- bind = $kbMoveWinToWs, 6, exec, $wsaction movetoworkspace 6
--- bind = $kbMoveWinToWs, 7, exec, $wsaction movetoworkspace 7
--- bind = $kbMoveWinToWs, 8, exec, $wsaction movetoworkspace 8
--- bind = $kbMoveWinToWs, 9, exec, $wsaction movetoworkspace 9
--- bind = $kbMoveWinToWs, 0, exec, $wsaction movetoworkspace 10
-
--- Move window to workspace group #
--- bind = $kbMoveWinToWsGroup, 1, exec, $wsaction -g movetoworkspace 1
--- bind = $kbMoveWinToWsGroup, 2, exec, $wsaction -g movetoworkspace 2
--- bind = $kbMoveWinToWsGroup, 3, exec, $wsaction -g movetoworkspace 3
--- bind = $kbMoveWinToWsGroup, 4, exec, $wsaction -g movetoworkspace 4
--- bind = $kbMoveWinToWsGroup, 5, exec, $wsaction -g movetoworkspace 5
--- bind = $kbMoveWinToWsGroup, 6, exec, $wsaction -g movetoworkspace 6
--- bind = $kbMoveWinToWsGroup, 7, exec, $wsaction -g movetoworkspace 7
--- bind = $kbMoveWinToWsGroup, 8, exec, $wsaction -g movetoworkspace 8
--- bind = $kbMoveWinToWsGroup, 9, exec, $wsaction -g movetoworkspace 9
--- bind = $kbMoveWinToWsGroup, 0, exec, $wsaction -g movetoworkspace 10
-
 -- Move window to workspace -1/+1
 hl.bind("SUPER + ALT + Page_Up", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
 hl.bind("SUPER + ALT + Page_Down", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
@@ -122,13 +135,13 @@ hl.bind("CTRL + SUPER + SHIFT + down", hl.dsp.window.move({ workspace = "e+0" })
 hl.bind("SUPER + ALT + S", hl.dsp.window.move({ workspace = "special:special" }))
 
 -- Window groups
--- binde = $kbWindowGroupCycleNext, cyclenext
--- binde = $kbWindowGroupCyclePrev, cyclenext, prev
--- binde = Ctrl+Alt, Tab, changegroupactive, f
--- binde = Ctrl+Shift+Alt, Tab, changegroupactive, b
--- bind = $kbToggleGroup, togglegroup
--- bind = $kbUngroup, moveoutofgroup
--- bind = Super+Shift, Comma, lockactivegroup, toggle
+hl.bind(vars.kbWindowGroupCycleNext, hl.dsp.window.cycle_next(), { repeating = true })
+hl.bind(vars.kbWindowGroupCyclePrev, hl.dsp.window.cycle_next(), { repeating = true })
+hl.bind("CTRL + ALT + Tab", hl.dsp.group.next(), { repeating = true })
+hl.bind("CTRL + SHIFT + ALT + Tab", hl.dsp.group.prev(), { repeating = true })
+hl.bind(vars.kbToggleGroup, hl.dsp.group.toggle())
+hl.bind(vars.kbUngroup, hl.dsp.window.move({ out_of_group = true }))
+hl.bind("SUPER + SHIFT + Comma", hl.dsp.group.lock_active())
 
 -- Window actions
 hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
@@ -147,20 +160,30 @@ hl.bind("SUPER + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
 -- binde = Super+Alt, right, resizeactive, 10% 0
 -- binde = Super+Alt, up, resizeactive, 0 -10%
 -- binde = Super+Alt, down, resizeactive, 0 10%
--- bindm = Super, mouse:272, movewindow
--- bindm = $kbMoveWindow, movewindow
--- bindm = Super, mouse:273, resizewindow
--- bindm = $kbResizeWindow, resizewindow
--- bind = Ctrl+Super, Backslash, centerwindow, 1
--- bind = Ctrl+Super+Alt, Backslash, resizeactive, exact 55% 70%
--- bind = Ctrl+Super+Alt, Backslash, centerwindow, 1
--- bind = $kbWindowPip, exec, caelestia resizer pip  # Move window to picture-in-picture mode
--- bind = $kbPinWindow, pin
--- bind = $kbWindowFullscreen, fullscreen, 0
--- bind = $kbWindowBorderedFullscreen, fullscreen, 1  # Fullscreen with borders
--- bind = $kbToggleWindowFloating, togglefloating,
--- bind = $kbCloseWindow, killactive,
-hl.bind(vars.kbCloseWindow, hl.dsp.window.close(window))
+
+-- These are cursed
+hl.bind("SUPER + Minus", hl.dsp.window.resize(resize_activewindow(-10, 0)), { repeating = true })
+hl.bind("SUPER + Equal", hl.dsp.window.resize(resize_activewindow(10, 0)), { repeating = true })
+hl.bind("SUPER + SHIFT + Minus", hl.dsp.window.resize(resize_activewindow(0, -10)), { repeating = true })
+hl.bind("SUPER + SHIFT + Equal", hl.dsp.window.resize(resize_activewindow(0, 10)), { repeating = true })
+hl.bind("SUPER + ALT + left", hl.dsp.window.resize(resize_activewindow(-10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + right", hl.dsp.window.resize(resize_activewindow(10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + up", hl.dsp.window.resize(resize_activewindow(0, -10)), { repeating = true })
+hl.bind("SUPER + ALT + down", hl.dsp.window.resize(resize_activewindow(0, 10)), { repeating = true })
+
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(vars.kbResizeWindow, hl.dsp.window.drag(), { mouse = true })
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(vars.kbResizeWindow, hl.dsp.window.resize(), { mouse = true })
+hl.bind("CTRL + SUPER + Backslash", hl.dsp.window.center())
+hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.resize(resize_by_screen(55, 70)))
+hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
+hl.bind(vars.kbWindowPip, hl.dsp.exec_cmd("caelestia resizer pip"))
+hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
+hl.bind(vars.kbWindowFullscreen, hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+hl.bind(vars.kbWindowBorderedFullscreen, hl.dsp.window.fullscreen({ mode = "maximized" }))
+hl.bind(vars.kbToggleWindowFloating, hl.dsp.window.float())
+hl.bind(vars.kbCloseWindow, hl.dsp.window.close())
 
 -- Special workspace toggles
 hl.bind(vars.kbSystemMonitor, hl.dsp.workspace.toggle_special("sysmon"))
