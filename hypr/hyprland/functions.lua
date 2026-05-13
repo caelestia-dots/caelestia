@@ -7,7 +7,7 @@ local function wsaction(x, y, i)
             local t = math.floor((id - 1) / 10) * 10 + i
 
             if x == "move" then
-                local z = (y == "g") and t or s
+                local z = (y == "g") and s or t
                 return hl.dispatch(hl.dsp.window.move({ workspace = z }))
             else
                 local z = (y == "g") and s or t
@@ -20,7 +20,7 @@ end
 local function resize_by_screen(x, y)
     local screen = hl.get_active_monitor()
     if screen and type(screen.width) == "number" and type(screen.height) == "number" then
-        if (x or y) > 0 then
+        if (x and y) > 0 then
             local w = screen.width
             local h = screen.height
 
@@ -47,28 +47,41 @@ local function resizer(a, b, c, d, e)
     local window = hl.get_active_window()
 
     if (window and window.title) and string.find(window.title, a, 1, e) then
+        hl.dispatch(hl.dsp.window.float())
         local disp = (type(d) == "table") and d or { d }
         for _, x in ipairs(disp) do
             hl.dispatch(x)
         end
-        if b or c == not 0 then
-            hl.dispatch(hl.dsp.window.resize(resize_by_screen(b, c)))
-        end
+        hl.dispatch(hl.dsp.window.resize(resize_by_screen(b, c)))
+        hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true" }))
     end
 end
 
 local function moveActions()
     local screen = hl.get_active_monitor()
     local win = hl.get_active_window()
+
     if screen and screen.width and screen.height and win and win.size then
-        local xr = 200
-        xr = math.floor(math.max(xr, (win.size.x * ((screen.height / 4) / win.size.y))))
-        local yr = 150
-        yr = math.floor(math.max(yr, (win.size.y * ((screen.height / 4) / win.size.y))))
-        local offset = math.min(screen.width, screen.height) * 0.03
-        local xe = math.floor(screen.x + screen.width - xr - offset)
-        local ye = math.floor(screen.y + screen.height - yr - offset)
-        return hl.dsp.window.resize({ x = xr, y = yr }), hl.dsp.window.move({ x = xe, y = ye })
+        local monitor_height = screen.height / screen.scale
+        local monitor_width = screen.width / screen.scale
+
+        local scale_factor = (monitor_height / 4) / win.size.y
+
+        local target_width = win.size.x * scale_factor
+        local target_height = win.size.y * scale_factor
+
+        local x_resize = math.floor(math.max(200, target_width))
+        local y_resize = math.floor(math.max(150, target_height))
+
+        local offset = math.min(monitor_width, monitor_height) * 0.03
+
+        local move_x = math.floor(screen.x + monitor_width - x_resize - offset)
+        local move_y = math.floor(screen.y + monitor_height - y_resize - offset)
+
+        return {
+            hl.dsp.window.resize({ x = x_resize, y = y_resize }),
+            hl.dsp.window.move({ x = move_x, y = move_y, relative = false }),
+        }
     end
 end
 
