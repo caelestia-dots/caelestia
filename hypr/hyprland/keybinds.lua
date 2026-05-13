@@ -125,7 +125,15 @@ hl.bind(vars.kbResizeWindow, hl.dsp.window.resize(), { mouse = true })
 hl.bind("CTRL + SUPER + Backslash", hl.dsp.window.center())
 hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.resize(fn.resize_by_screen(55, 70)))
 hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
-hl.bind(vars.kbWindowPip, hl.dsp.exec_cmd("caelestia resizer pip"))
+hl.bind(vars.kbWindowPip, function()
+    local a = hl.get_active_window().title
+    local pip = {
+        hl.dsp.window.float(),
+        fn.moveActions(),
+        hl.dsp.window.pin(),
+    }
+    fn.resizer(a, 0, 0, pip, true)
+end)
 hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
 hl.bind(vars.kbWindowFullscreen, hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 hl.bind(vars.kbWindowBorderedFullscreen, hl.dsp.window.fullscreen({ mode = "maximized" }))
