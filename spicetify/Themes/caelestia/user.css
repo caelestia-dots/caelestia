@@ -33,6 +33,17 @@ button,
   display: none !important;
 }
 
+/* Make home page filter chip better */
+/* Apply material color gradient to home page filter chips container */
+.main-home-filterChipsContainer {
+  background: linear-gradient(to bottom, var(--spice-main-elevated), var(--spice-main)) !important;
+}
+
+/* Remove any decorative pseudo-elements inside the home page filter chips section */
+.main-home-filterChipsSection {
+  background: transparent !important;
+}
+
 /* Remove any decorative pseudo-elements inside the home header */
 .search-searchCategory-contentArea::before,
 .search-searchCategory-contentArea::after {
@@ -47,4 +58,71 @@ button,
 
 .main-view-container__scroll-node-child div[style*="--background-base"]:not([style*="--background-base-min-contrast"]) {
   display: none !important;
+}
+
+/* Make playlist looks better */
+/* Remove gradients in playlist */
+.main-entityHeader-backgroundColor,
+.main-actionBarBackground-background {
+  background-color: unset !important;
+  background-image: none;
+}
+
+/* Some Cover shadow */
+.main-entityHeader-shadow {
+  -webkit-box-shadow: 0 4px 20px rgba(var(--spice-rgb-shadow), 0.5);
+  box-shadow: 0 4px 20px rgba(var(--spice-rgb-shadow), 0.5);
+}
+
+/* Playlist Header */
+.main-entityHeader-shadow {
+  border-radius: 6px;
+}
+
+/* Remove empty space above playlist cover and title on narrow viewports */
+.main-entityHeader-container.main-entityHeader-nonWrapped {
+  min-height: 325px;
+  height: 15vh;
+}
+
+/* Apply material gradient to the sticky top bar in playlist */
+.main-topBar-background {
+  background: linear-gradient(to bottom, var(--spice-main-elevated), var(--spice-main)) !important;
+}
+
+/* Apply material gradient to top bar overlay */
+.main-topBar-overlay {
+  background: linear-gradient(to bottom, transparent, var(--spice-main-elevated)) !important;
+  display: block !important;
+}
+
+/* Force gradient on top bar background */
+.main-topBar-background[style*="--background-base"] {
+  --background-base: transparent !important;
+  background: linear-gradient(to bottom, var(--spice-main-elevated), var(--spice-main)) !important;
+}
+
+.playlist-playlist-actionBarBackground-background {
+  visibility: hidden;
+}
+
+/* Scrollbars */
+.os-scrollbar-handle {
+  background: var(--spice-button) !important;
+  border-radius: 8px;
+}
+
+/* Make Scrollbar look better */
+.os-theme-spotify.os-host-transition
+  > .os-scrollbar-vertical
+  > .os-scrollbar-track
+  > .os-scrollbar-handle {
+  border-radius: 8px;
+  width: 4px;
+  background-color: var(--spice-button-disabled);
+}
+.os-theme-spotify.os-host-transition
+  > .os-scrollbar-vertical
+  > .os-scrollbar-track {
+  width: 4px;
 }
