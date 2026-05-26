@@ -31,12 +31,23 @@ end)
 
 -- resizer listener
 hl.on("window.title", function()
-    local d = {
-        hl.dsp.window.float({ action = "on" }),
-        hl.dsp.window.center(),
-    }
-    local pip = fn.moveActions() or {}
-    table.insert(pip, hl.dsp.window.pin())
-    fn.resizer("Bitwarden", 20, 54, d, true)
-    fn.resizer("Picture(-| )in(-| )[Pp]icture", 0, 0, pip, true) --damn regex
+	local d = {
+		hl.dsp.window.float({ action = "on" }),
+		hl.dsp.window.center(),
+	}
+	local pip = fn.move_actions() or {}
+	table.insert(pip, hl.dsp.window.pin())
+	fn.resizer("Bitwarden", 20, 54, d, true)
+	fn.resizer("Picture(-| )in(-| )[Pp]icture", 0, 0, pip, true)
+end)
+
+hl.on("window.open", function()
+	local d = {
+		hl.dsp.window.float({ action = "on" }),
+		hl.dsp.window.center(),
+	}
+	local pip = fn.move_actions() or {}
+	table.insert(pip, hl.dsp.window.pin())
+	fn.resizer("Bitwarden", 20, 54, d, true)
+	fn.resizer("Picture(-| )in(-| )[Pp]icture", 0, 0, pip, true)
 end)

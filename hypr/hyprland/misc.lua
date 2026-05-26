@@ -1,8 +1,9 @@
 local scheme = require("scheme.current")
 
 hl.config({
-    misc = {
-        vrr                          = 1,
+	misc = {
+		animate_manual_resizes = false,
+		animate_mouse_windowdragging = false,
 
         animate_manual_resizes       = false,
         animate_mouse_windowdragging = false,

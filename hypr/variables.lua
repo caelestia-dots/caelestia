@@ -99,4 +99,5 @@ return {
     kbShowPanels = "SUPER + K",
     kbLock = "SUPER + L",
     kbRestoreLock = "SUPER + ALT + L",
+    kbSleepGesture = "systemctl suspend-then-hibernate",
 }

@@ -24,6 +24,6 @@ hl.gesture({
     fingers = vars.gestureFingersMore,
     direction = "down",
     action = function()
-        hl.exec_cmd("systemctl suspend-then-hibernate")
+        hl.exec_cmd(vars.kbSleepGesture)
     end,
 })

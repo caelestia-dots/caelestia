@@ -6,84 +6,101 @@ local vars = require("variables")
 
 hl.window_rule({ match = { fullscreen = false }, opacity = vars.windowOpacity .. " override" })
 
-hl.window_rule({ match = { class = "foot|equibop|org.quickshell|imv|swappy" }, opaque = true }) -- They use native transparency or we want them opaque
-hl.window_rule({ match = { float = true, xwayland = false }, center = true })                   -- Center all floating windows (not xwayland cause popups)
+hl.window_rule({ match = { float = true, xwayland = false }, center = true }) -- Center all floating windows (not xwayland cause popups)
 
--- Float
-hl.window_rule({ match = { class = "guifetch" }, float = true }) -- FlafyDev/guifetch
-hl.window_rule({ match = { class = "yad" }, float = true })
-hl.window_rule({ match = { class = "zenity" }, float = true })
-hl.window_rule({ match = { class = "wev" }, float = true })
-hl.window_rule({ match = { class = "org.gnome.FileRoller" }, float = true })
-hl.window_rule({ match = { class = "file-roller" }, float = true }) -- WHY IS THERE TWOOOOOOOOOOOOOOOO
-hl.window_rule({ match = { class = "blueman-manager" }, float = true })
-hl.window_rule({ match = { class = "com.github.GradienceTeam.Gradience" }, float = true })
-hl.window_rule({ match = { class = "feh" }, float = true })
-hl.window_rule({ match = { class = "imv" }, float = true })
-hl.window_rule({ match = { class = "system-config-printer" }, float = true })
-hl.window_rule({ match = { class = "org.quickshell" }, float = true })
-
--- Float, resize and center
-hl.window_rule({ match = { class = "foot", title = "nmtui" }, float = true, size = "(monitor_w*0.7) (monitor_h*0.6)", center = true })
-hl.window_rule({ match = { class = "org.gnome.Settings" }, float = true, size = "(monitor_w*0.8) (monitor_h*0.7)", center = true })
+-- Floating Applications
 hl.window_rule({
-    match  = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" },
-    float  = true,
-    size   = "(monitor_w*0.7) (monitor_h*0.6)",
-    center = true
+    match = {
+        class = "guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|org.quickshell",
+    },
+    tag = "+float",
 })
-hl.window_rule({ match = { class = "nwg-look" }, float = true, size = "(monitor_w*0.6) (monitor_h*0.5)", center = true })
-
--- Special workspaces
-hl.window_rule({ match = { class = "btop" }, workspace = "special:sysmon" })
 hl.window_rule({
-    match     = { class = "feishin|Spotify|Supersonic|Cider|com.github.th_ch.youtube_music|Plexamp|com-maxrave-simpmusic-MainKt" },
-    workspace = "special:music"
+    match = {
+        title = "(Select|Open)( a)? (File|Folder)(s)?|File (Operation|Upload)( Progress)?|.* Properties|Export Image as PNG|GIMP Crash Debug|Save As|Library",
+    },
+    tag = "+float",
 })
-hl.window_rule({ match = { initial_title = "Spotify( %(?Free%)?)?" } }) -- Spotify wayland, it has no class for some reason
-hl.window_rule({ match = { class = "discord|equibop|vesktop|whatsapp" }, workspace = "special:communication" })
-hl.window_rule({ match = { class = "Todoist" }, workspace = "special:todo" })
+hl.window_rule({ match = { class = "steam", title = "Friends List" }, tag = "+float" })
+hl.window_rule({ match = { class = "com-atlauncher-App", title = "ATLauncher Console" }, tag = "+float" })
+hl.window_rule({ match = { class = "PandoraLauncher", title = "Minecraft Game Output" }, tag = "+float" })
 
--- Dialogs
-hl.window_rule({ match = { title = "(Select|Open)( a)? (File|Folder)(s)?" }, float = true })
-hl.window_rule({ match = { title = "File (Operation|Upload)( Progress)?" }, float = true })
-hl.window_rule({ match = { title = ".* Properties" }, float = true })
-hl.window_rule({ match = { title = "Export Image as PNG" }, float = true })
-hl.window_rule({ match = { title = "GIMP Crash Debug" }, float = true })
-hl.window_rule({ match = { title = "Save As" }, float = true })
-hl.window_rule({ match = { title = "Library" }, float = true })
+hl.window_rule({ match = { tag = "float" }, float = true })
+
+-- Opaque Apps (Terminal, Image Viewers, Creative Software, Games) as they prefer native transparency as required
+hl.window_rule({
+    match = {
+        class = "foot|equibop|org.quickshell|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot|(steam_app_(default|[0-9]+))|gamescope",
+    },
+    tag = "+opaque_app",
+})
+
+hl.window_rule({ match = { tag = "opaque_app" }, opaque = true })
+
+-- Sized & Centered Floaters
+hl.window_rule({ match = { class = "foot", title = "nmtui" }, tag = "+float_70_60" })
+hl.window_rule({ match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" }, tag = "+float_70_60" })
+hl.window_rule({ match = { class = "org.gnome.Settings" }, tag = "+float_80_70" })
+hl.window_rule({ match = { class = "nwg-look" }, tag = "+float_60_50" })
+
+hl.window_rule({
+    match = { tag = "float_70_60" },
+    float = true,
+    size = "(monitor_w*0.7) (monitor_h*0.6)",
+    center = true,
+})
+hl.window_rule({
+    match = { tag = "float_80_70" },
+    float = true,
+    size = "(monitor_w*0.8) (monitor_h*0.7)",
+    center = true,
+})
+hl.window_rule({
+    match = { tag = "float_60_50" },
+    float = true,
+    size = "(monitor_w*0.6) (monitor_h*0.5)",
+    center = true,
+})
+
+-- Games (Steam, Lutris/Wine, Gamescope)
+hl.window_rule({
+    match = { class = "(steam_app_(default|[0-9]+))|gamescope" },
+    immediate = true,
+    idle_inhibit = "always",
+})
+
+-- Steam
+hl.window_rule({ match = { class = "steam" }, rounding = 10 })
 
 -- Picture in picture (resize and move done via script)
 hl.window_rule({
     match = { title = "Picture(-| )in(-| )[Pp]icture" },
-    move  = "(monitor_w-(window_w*0.2)) (monitor_h-(window_h*0.3))"
-}) -- Initial move so window doesn't shoot across the screen from the center
-hl.window_rule({ match = { title = "Picture(-| )in(-| )[Pp]icture" }, keep_aspect_ratio = true, float = true, pin = true })
-
--- Creative software
-hl.window_rule({ match = { class = "krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot" }, opaque = true })
+    move = "(monitor_w-(window_w*0.2)) (monitor_h-(window_h*0.3))",
+    pin = true,
+    float = true,
+    keep_aspect_ratio = true,
+})
 
 -- Ueberzugpp
 hl.window_rule({ match = { class = "^(ueberzugpp_.*)$" }, float = true, no_initial_focus = true })
 
--- Steam
-hl.window_rule({ match = { class = "steam" }, rounding = 10 })
-hl.window_rule({ match = { class = "steam", title = "Friends List" }, float = true })
-
--- Games (Steam, Lutris/Wine, Gamescope)
-hl.window_rule({ match = { class = "(steam_app_(default|[0-9]+))|gamescope" }, opaque = true })
-hl.window_rule({ match = { class = "(steam_app_(default|[0-9]+))|gamescope" }, immediate = true }) -- Allow tearing for games
-hl.window_rule({ match = { class = "(steam_app_(default|[0-9]+))|gamescope" }, idle_inhibit = "always" }) -- Always idle inhibit when playing a game
-
--- Minecraft launcher consoles
-hl.window_rule({ match = { class = "com-atlauncher-App", title = "ATLauncher Console" }, float = true })
-hl.window_rule({ match = { class = "PandoraLauncher", title = "Minecraft Game Output" }, float = true })
-
 -- Autodesk Fusion 360
-hl.window_rule({ match = { class = "fusion360.exe", title = "Fusion360|(Marking Menu)"}, no_blur = true })
+hl.window_rule({ match = { class = "fusion360.exe", title = "Fusion360|(Marking Menu)" }, no_blur = true })
 
 -- Ugh xwayland popups
 hl.window_rule({ match = { xwayland = true, title = "win[0-9]+" }, no_dim = true, no_shadow = true, rounding = 10 })
+
+-- Special workspaces
+hl.window_rule({ match = { class = "btop" }, workspace = "special:sysmon" })
+hl.window_rule({
+    match = {
+        class = "feishin|Spotify|Supersonic|Cider|com.github.th_ch.youtube_music|Plexamp|com-maxrave-simpmusic-MainKt",
+    },
+    workspace = "special:music",
+})
+hl.window_rule({ match = { initial_title = "Spotify( %(?Free%)?)?" } }) -- Spotify wayland, it has no class for some reason
+hl.window_rule({ match = { class = "discord|equibop|vesktop|whatsapp" }, workspace = "special:communication" })
+hl.window_rule({ match = { class = "Todoist" }, workspace = "special:todo" })
 
 -------------------------
 ---- Workspace rules ----
