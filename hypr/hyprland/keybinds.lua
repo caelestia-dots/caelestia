@@ -49,11 +49,11 @@ hl.bind(
 )
 
 for i = 1, 10 do
-	local key = i % 10 -- 10 maps to key 0
-	hl.bind(vars.kbGoToWs .. " + " .. key, fn.wsaction("focus", "", i))
-	hl.bind(vars.kbMoveWinToWs .. " + " .. key, fn.wsaction("move", "", i))
-	hl.bind(vars.kbGoToWsGroup .. " + " .. key, fn.wsaction("focus", "group", i))
-	hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, fn.wsaction("move", "group", i))
+    local key = i % 10 -- 10 maps to key 0
+    hl.bind(vars.kbGoToWs .. " + " .. key, fn.wsaction("focus", "", i))
+    hl.bind(vars.kbMoveWinToWs .. " + " .. key, fn.wsaction("move", "", i))
+    hl.bind(vars.kbGoToWsGroup .. " + " .. key, fn.wsaction("focus", "group", i))
+    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, fn.wsaction("move", "group", i))
 end
 
 -- Go to workspace -1/+1
@@ -119,12 +119,12 @@ hl.bind("CTRL + SUPER + Backslash", hl.dsp.window.center())
 hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.resize(fn.resize_by_screen(55, 70)))
 hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
 hl.bind(vars.kbWindowPip, function()
-	local a = hl.get_active_window()
-	if a then
-		local pip = fn.move_actions() or {}
-		table.insert(pip, hl.dsp.window.pin())
-		fn.resizer(a.title, 0, 0, pip, true)
-	end
+    local a = hl.get_active_window()
+    if a then
+        local pip = fn.move_actions() or {}
+        table.insert(pip, hl.dsp.window.pin())
+        fn.resizer(a.title, 0, 0, pip, true)
+    end
 end)
 hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
 hl.bind(vars.kbWindowFullscreen, hl.dsp.window.fullscreen({ mode = "fullscreen" }))
@@ -193,6 +193,6 @@ hl.bind(
 hl.bind(
     "SUPER + ALT + F12",
     hl.dsp.exec_cmd(
-        [[notify-send -u low -i dialog-information-symbolic 'Test notification' 'Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!' -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action']]
+        [[notify-send -u low -i dialog-information-symbolic "Test notification" "Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!" -a "Shell" -A "Test1=I got it!" -A "Test2=Another action"]]
     )
 )
