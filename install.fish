@@ -166,6 +166,7 @@ if confirm-overwrite $config/hypr
     log 'Installing hypr* configs...'
     ln -s (realpath hypr) $config/hypr
     chmod u+x $config/hypr/scripts/wsaction.fish
+    chmod u+x $config/hypr/scripts/ocr.fish
     hyprctl reload
 end
 
