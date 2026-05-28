@@ -30,24 +30,24 @@ hl.on("hyprland.start", function()
 end)
 
 -- resizer listener
-hl.on("window.title", function()
-	local d = {
-		hl.dsp.window.float({ action = "on" }),
-		hl.dsp.window.center(),
-	}
-	local pip = fn.move_actions() or {}
-	table.insert(pip, hl.dsp.window.pin())
-	fn.resizer("Bitwarden", 20, 54, d, true)
-	fn.resizer("Picture(-| )in(-| )[Pp]icture", 0, 0, pip, true)
+hl.on("window.title", function(win)
+    local d = {
+        hl.dsp.window.float({ action = "on", window = win }),
+        hl.dsp.window.center({ window = win }),
+    }
+    local pip = fn.move_actions(win) or {}
+
+    fn.resizer(win, "Bitwarden", 20, 54, d, true)
+    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
 end)
 
-hl.on("window.open", function()
-	local d = {
-		hl.dsp.window.float({ action = "on" }),
-		hl.dsp.window.center(),
-	}
-	local pip = fn.move_actions() or {}
-	table.insert(pip, hl.dsp.window.pin())
-	fn.resizer("Bitwarden", 20, 54, d, true)
-	fn.resizer("Picture(-| )in(-| )[Pp]icture", 0, 0, pip, true)
+hl.on("window.open", function(win)
+    local d = {
+        hl.dsp.window.float({ action = "on", window = win }),
+        hl.dsp.window.center({ window = win }),
+    }
+    local pip = fn.move_actions(win) or {}
+
+    fn.resizer(win, "Bitwarden", 20, 54, d, true)
+    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
 end)

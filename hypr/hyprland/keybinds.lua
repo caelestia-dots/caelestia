@@ -121,9 +121,13 @@ hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
 hl.bind(vars.kbWindowPip, function()
     local a = hl.get_active_window()
     if a then
-        local pip = fn.move_actions() or {}
-        table.insert(pip, hl.dsp.window.pin())
-        fn.resizer(a.title, 0, 0, pip, true)
+        local pip = fn.move_actions(a) or {}
+        table.insert(pip, 1, hl.dsp.window.float())
+        table.insert(pip, hl.dsp.window.pin({ window = "address:" .. a.address }))
+
+        for _, x in ipairs(pip) do
+            hl.dispatch(x)
+        end
     end
 end)
 hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
@@ -177,7 +181,7 @@ hl.bind(
 )
 
 -- Sleep
-hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-suspend", { locked = true }))
+hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-suspend"), { locked = true })
 
 -- Clipboard and emoji picker
 hl.bind("SUPER + V", hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))

@@ -37,46 +37,43 @@ local function resize_active_window(x, y)
 	end
 end
 
-local function resizer(pattern, x_percent, y_percent, actions, exact)
-	local window = hl.get_active_window()
+local function resizer(window, pattern, x_percent, y_percent, actions, exact)
+    if (window and window.title) and string.find(window.title, pattern, 1, exact) then
+        local disp = (type(actions) == "table") and actions or { actions }
+        for _, x in ipairs(disp) do
+            hl.dispatch(x)
+        end
 
-	if (window and window.title) and string.find(window.title, pattern, 1, exact) then
-		hl.dispatch(hl.dsp.window.float())
-		local disp = (type(actions) == "table") and actions or { actions }
-		for _, x in ipairs(disp) do
-			hl.dispatch(x)
-		end
-		hl.dispatch(hl.dsp.window.resize(resize_by_screen(x_percent, y_percent)))
-		hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true" }))
-	end
+        hl.dispatch(hl.dsp.window.resize(resize_by_screen(x_percent, y_percent)))
+        hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true" }))
+    end
 end
 
-local function move_actions()
-	local screen = hl.get_active_monitor()
-	local win = hl.get_active_window()
+local function move_actions(win)
+    local screen = hl.get_active_monitor()
 
-	if screen and screen.width and screen.height and win and win.size then
-		local monitor_height = screen.height / screen.scale
-		local monitor_width = screen.width / screen.scale
+    if screen and screen.width and screen.height and win and win.size then
+        local monitor_height = screen.height / screen.scale
+        local monitor_width = screen.width / screen.scale
 
-		local scale_factor = (monitor_height / 4) / win.size.y
+        local scale_factor = (monitor_height / 4) / win.size.y
 
-		local target_width = win.size.x * scale_factor
-		local target_height = win.size.y * scale_factor
+        local target_width = win.size.x * scale_factor
+        local target_height = win.size.y * scale_factor
 
-		local x_resize = math.floor(math.max(200, target_width))
-		local y_resize = math.floor(math.max(150, target_height))
+        local x_resize = math.floor(math.max(200, target_width))
+        local y_resize = math.floor(math.max(150, target_height))
 
-		local offset = math.min(monitor_width, monitor_height) * 0.03
+        local offset = math.min(monitor_width, monitor_height) * 0.03
 
-		local move_x = math.floor(screen.x + monitor_width - x_resize - offset)
-		local move_y = math.floor(screen.y + monitor_height - y_resize - offset)
+        local move_x = math.floor(screen.x + monitor_width - x_resize - offset)
+        local move_y = math.floor(screen.y + monitor_height - y_resize - offset)
 
-		return {
-			hl.dsp.window.resize({ x = x_resize, y = y_resize }),
-			hl.dsp.window.move({ x = move_x, y = move_y, relative = false }),
-		}
-	end
+        return {
+            hl.dsp.window.resize({ x = x_resize, y = y_resize, window = win }),
+            hl.dsp.window.move({ x = move_x, y = move_y, relative = false, window = win }),
+        }
+    end
 end
 
 return {
