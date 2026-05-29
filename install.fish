@@ -1,5 +1,12 @@
 #!/usr/bin/env fish
 
+# Check for zen profile
+set -l zen_profile (ls -d $HOME/.zen/*/ 2>/dev/null | head -1)
+if test -z "$zen_profile"
+    log 'Error: No Zen profile found. Please open Zen Browser first to create a profile.'
+    exit 1
+end
+
 argparse -n 'install.fish' -X 0 \
     'h/help' \
     'noconfirm' \
@@ -21,7 +28,7 @@ if set -q _flag_h
     echo '  --spotify                   install Spotify (Spicetify)'
     echo '  --vscode=[codium|code]      install VSCodium (or VSCode)'
     echo '  --discord                   install Discord (OpenAsar + Equicord)'
-    echo '  --zen                       install Zen browser'
+    echo '  --zen                       install Zen browser with Sine mod manager'
     echo '  --aur-helper=[yay|paru]     the AUR helper to use'
 
     exit
@@ -270,32 +277,55 @@ if set -q _flag_zen
     log 'Installing zen...'
     $aur_helper -S --needed zen-browser-bin $noconfirm
 
-    # Install userChrome css
-    set -l chrome $HOME/.zen/*/chrome
-    if confirm-overwrite $chrome/userChrome.css
-        log 'Installing zen userChrome...'
-        ln -s (realpath zen/userChrome.css) $chrome/userChrome.css
+    # Install Sine mod manager using official installer
+    set -l sine_version (curl -fsSL https://api.github.com/repos/CosmoCreeper/Sine/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+
+    log 'Downloading Sine installer...'
+    set -l sine_install (mktemp -d)
+    curl -fsSL https://github.com/CosmoCreeper/Sine/releases/download/$sine_version/sine-linux-x64 -o $sine_install/sine-linux-x64
+    chmod +x $sine_install/sine-linux-x64
+
+    log ''
+    set_color yellow
+    echo '╭─────────────────────────────────────────────────────────────╮'
+    echo '│  IMPORTANT: The Sine installer will open in a GUI window.  │'
+    echo '│  1. Select "Zen Browser" as your browser                  │'
+    echo '│  2. Complete the installation wizard                       │'
+    echo '│  3. Close the installer when done                           │'
+    echo '╰─────────────────────────────────────────────────────────────╯'
+    set_color normal
+    input 'Press Enter when the Sine installer has completed... ' -n
+    sh-read
+
+    log 'Running Sine installer...'
+    sudo $sine_install/sine-linux-x64
+
+    rm -rf $sine_install
+
+    # Install CaelestiaZen as a Sine mod
+    set -l chrome $zen_profile/chrome
+    set -l mod_dir $chrome/sine-mods/caelestia-zen
+    if confirm-overwrite $mod_dir
+        log 'Installing CaelestiaZen Sine mod...'
+        mkdir -p $chrome/sine-mods
+        ln -s (realpath $install_dir/../caelestia-zen-sync) $mod_dir
     end
 
-    # Install native app
-    set -l hosts $HOME/.mozilla/native-messaging-hosts
-    set -l lib $HOME/.local/lib/caelestia
+    # Clear startup cache
+    rm -rf $zen_profile/startupCache
 
-    if confirm-overwrite $hosts/caelestiafox.json
-        log 'Installing zen native app manifest...'
-        mkdir -p $hosts
-        cp zen/native_app/manifest.json $hosts/caelestiafox.json
-        sed -i "s|{{ \$lib }}|$lib|g" $hosts/caelestiafox.json
-    end
-
-    if confirm-overwrite $lib/caelestiafox
-        log 'Installing zen native app...'
-        mkdir -p $lib
-        ln -s (realpath zen/native_app/app.fish) $lib/caelestiafox
-    end
-
-    # Prompt user to install extension
-    log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
+    log ''
+    set_color green
+    echo '╭─────────────────────────────────────────────────────────────╮'
+    echo '│  Sine installation complete!                               │'
+    echo '│                                                             │'
+    echo '│  Next steps:                                               │'
+    echo '│  1. Restart Zen Browser if not prompted to do so            │'
+    echo '│  2. Open Zen Settings                                       │'
+    echo '│  3. Navigate to "Sine Mods" section                         │'
+    echo '│  4. Enable "CaelestiaZen" mod                                │'
+    echo '╰─────────────────────────────────────────────────────────────╯'
+    set_color normal
 end
 
 # Generate scheme stuff if needed
