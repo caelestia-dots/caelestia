@@ -1,11 +1,8 @@
 local scheme = require("scheme.current")
 
 hl.config({
-	misc = {
-		animate_manual_resizes = false,
-		animate_mouse_windowdragging = false,
-
-        animate_manual_resizes       = false,
+    misc = {
+        animate_manual_resizes = false,
         animate_mouse_windowdragging = false,
 
         disable_hyprland_logo        = true,
