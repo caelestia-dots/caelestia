@@ -26,7 +26,6 @@
     "workbench.iconTheme": "catppuccin-mocha",
     "git.enableSmartCommit": true,
     "codeium.enableConfig": {
-        "*": true,
         "fish": true,
         "qml": true
     },

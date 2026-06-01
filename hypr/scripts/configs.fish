@@ -20,6 +20,6 @@ if ! test -f $argv/hypr-user.conf
 end
 
 # Reload as needed
-if _reload
+if $_reload
     hyprctl reload
 end

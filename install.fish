@@ -13,7 +13,7 @@ or exit
 
 # Print help
 if set -q _flag_h
-    echo 'usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]'
+    echo 'usage: install.fish [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]'
     echo
     echo 'options:'
     echo '  -h, --help                  show this help message and exit'
@@ -141,8 +141,7 @@ if ! pacman -Q $aur_helper &> /dev/null
 
     # Setup
     if test $aur_helper = yay
-        $aur_helper -Y --gendb
-        $aur_helper -Y --devel --save
+        $aur_helper --gendb
     else
         $aur_helper --gendb
     end
