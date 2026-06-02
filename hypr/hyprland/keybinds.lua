@@ -181,7 +181,7 @@ hl.bind(
 )
 
 -- Sleep
-hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-suspend"), { locked = true })
+hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd(vars.sleepGestureCmd), { locked = true })
 
 -- Clipboard and emoji picker
 hl.bind("SUPER + V", hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))

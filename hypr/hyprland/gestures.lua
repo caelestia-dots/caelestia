@@ -24,6 +24,6 @@ hl.gesture({
     fingers = vars.gestureFingersMore,
     direction = "down",
     action = function()
-        hl.exec_cmd(vars.kbSleepGesture)
+        hl.exec_cmd(vars.sleepGestureCmd)
     end,
 })

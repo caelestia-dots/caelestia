@@ -50,6 +50,7 @@ return {
     volumeStep = 10,
     cursorTheme = "sweet-cursors",
     cursorSize = 24,
+    sleepGestureCmd = "systemctl suspend-then-hibernate",
 
     ------------------
     ---- KEYBINDS ----
@@ -99,5 +100,4 @@ return {
     kbShowPanels = "SUPER + K",
     kbLock = "SUPER + L",
     kbRestoreLock = "SUPER + ALT + L",
-    kbSleepGesture = "systemctl suspend-then-hibernate",
 }
