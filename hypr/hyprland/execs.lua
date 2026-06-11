@@ -1,3 +1,5 @@
+local vars = Config.vars
+
 hl.on("hyprland.start", function()
     -- Keyring and auth
     hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
@@ -11,9 +13,9 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("trash-empty 30")
 
     -- Cursors
-    hl.exec_cmd("hyprctl setcursor " .. Config.vars.cursorTheme .. " " .. Config.vars.cursorSize)
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme '" .. Config.vars.cursorTheme .. "'")
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. Config.vars.cursorSize)
+    hl.exec_cmd("hyprctl setcursor " .. vars.cursorTheme .. " " .. vars.cursorSize)
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme '" .. vars.cursorTheme .. "'")
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. vars.cursorSize)
 
     -- Location provider and night light
     hl.exec_cmd("/usr/lib/geoclue-2.0/demos/agent")

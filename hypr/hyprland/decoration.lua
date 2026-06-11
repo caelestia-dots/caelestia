@@ -1,24 +1,26 @@
+local vars = Config.vars
+local computed = Config.computed
 hl.config({
   decoration = {
-    rounding = Config.vars.windowRounding,
+    rounding = vars.windowRounding,
 
     blur = {
-      enabled = Config.vars.blurEnabled,
-      xray = Config.vars.blurXray,
-      special = Config.vars.blurSpecialWs,
-      ignore_opacity = Config.vars.ignoreOpacityq,
-      new_optimizations = Config.vars.newOptimizations,
-      popups = Config.vars.blurPopups,
-      input_methods = Config.vars.blurInputMethods,
-      size = Config.vars.blurSize,
-      passes = Config.vars.blurPasses,
+      enabled = vars.blurEnabled,
+      xray = vars.blurXray,
+      special = vars.blurSpecialWs,
+      ignore_opacity = vars.ignoreOpacity,
+      new_optimizations = vars.newOptimizations,
+      popups = vars.blurPopups,
+      input_methods = vars.blurInputMethods,
+      size = vars.blurSize,
+      passes = vars.blurPasses,
     },
 
     shadow = {
-      enabled = Config.vars.shadowEnabled,
-      range = Config.vars.shadowRange,
-      render_power = Config.vars.shadowRenderPower,
-      color = Config.vars.shadowColour,
+      enabled = vars.shadowEnabled,
+      range = vars.shadowRange,
+      render_power = vars.shadowRenderPower,
+      color = computed.shadowColour,
     },
   }
 })

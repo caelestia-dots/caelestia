@@ -1,3 +1,5 @@
+local vars = Config.vars
+
 hl.config({
     gestures = {
         workspace_swipe_distance = 700,
@@ -11,14 +13,14 @@ hl.config({
 
 -- 3-finger horizontal workspace swipe
 hl.gesture({
-    fingers = Config.vars.workspaceSwipeFingers,
+    fingers = vars.workspaceSwipeFingers,
     direction = "horizontal",
     action = "workspace",
 })
 
 -- Swipe up -> show special workspace
 hl.gesture({
-    fingers = Config.vars.gestureFingers,
+    fingers = vars.gestureFingers,
     direction = "up",
     action = "special",
     workspace_name = "special",
@@ -26,7 +28,7 @@ hl.gesture({
 
 -- Swipe down -> toggle special workspace
 hl.gesture({
-    fingers = Config.vars.gestureFingers,
+    fingers = vars.gestureFingers,
     direction = "down",
     action = function()
         hl.dispatch(
@@ -37,11 +39,9 @@ hl.gesture({
 
 -- More fingers swipe down -> suspend
 hl.gesture({
-    fingers = Config.vars.gestureFingersMore,
+    fingers = vars.gestureFingersMore,
     direction = "down",
     action = function()
-        hl.dispatch(
-            hl.dsp.exec_cmd("systemctl suspend-then-hibernate")
-        )
+        hl.dispatch( hl.dsp.exec_cmd("~/.config/hypr/scripts/suspend-toggle.sh"))
     end,
 })

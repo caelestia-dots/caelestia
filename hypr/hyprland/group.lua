@@ -1,11 +1,14 @@
+local colors = Config.colors
+local computed = Config.computed
+
 -- Call the hl.config function with your configuration table
 hl.config({
     group = {
 
-        ["col.border_active"] = Config.computed.activeWindowBorderColour,
-        ["col.border_inactive"]          = Config.computed.inactiveWindowBorderColour,
-        ["col.border_locked_active"]     = Config.computed.activeWindowBorderColour,
-        ["col.border_locked_inactive"]   = Config.computed.inactiveWindowBorderColour,
+        ["col.border_active"] = computed.activeWindowBorderColour,
+        ["col.border_inactive"]          = computed.inactiveWindowBorderColour,
+        ["col.border_locked_active"]     = computed.activeWindowBorderColour,
+        ["col.border_locked_inactive"]   = computed.inactiveWindowBorderColour,
         groupbar = {
             font_family                  = "JetBrains Mono NF",
             font_size                    = 15,
@@ -18,12 +21,12 @@ hl.config({
             gaps_out                     = 3,
 
 
-            text_color                   = "0xff" .. Config.colors.onPrimary,
+            text_color                   = "0xff" .. colors.onPrimary,
             
-            ["col.active"]               = Config.computed.primaryd4,
-            ["col.inactive"]             = Config.computed.outlined4,
-            ["col.locked_active"]        = Config.computed.primaryd4,
-            ["col.locked_inactive"]      = Config.computed.secondaryd4,
+            ["col.active"]               = computed.primaryd4,
+            ["col.inactive"]             = computed.outlined4,
+            ["col.locked_active"]        = computed.primaryd4,
+            ["col.locked_inactive"]      = computed.secondaryd4,
         }
     }
 })

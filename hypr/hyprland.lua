@@ -1,30 +1,54 @@
 local HOME = os.getenv("HOME")
 
+package.path = package.path
+    .. ";" .. HOME .. "/.config/hypr/?.lua"
+    .. ";" .. HOME .. "/.config/caelestia/?.lua"
+
+local function maybe_create(path)
+    local file = io.open(path, "r")
+
+    if file then
+        file:close()
+        return
+    end
+
+    file = io.open(path, "w")
+
+    if file then
+        file:close()
+    end
+end
+
+maybe_create(HOME .. "/.config/caelestia/hypr-vars.lua")
+maybe_create(HOME .. "/.config/caelestia/hypr-user.lua")
+
 Config = require("config")
-hl.dispatch(hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/hypr/scripts/configs.fish " .. os.getenv("HOME") .. "/.config/caelestia"))
+require("hypr-vars")
+
 hl.monitor({
-    output  = "eDP-1",
-    mode    = "19020x1080@60",
-    position= "0x0",
-    scale   = "1"
+    output = "",
+    mode = "preferred",
+    position = "auto",
+    scale = 1,
 })
 
-hl.config({
-    animations = {
-        enabled = true
-    }
-})
+local modules = {
+    "hyprland.env",
+    "hyprland.general",
+    "hyprland.input",
+    "hyprland.misc",
+    "hyprland.animations",
+    "hyprland.decoration",
+    "hyprland.group",
+    "hyprland.execs",
+    "hyprland.rules",
+    "hyprland.gestures",
+    "hyprland.keybinds",
+    "hyprland.scrolling",
+}
 
+for _, module in ipairs(modules) do
+    require(module)
+end
 
-require("hyprland.env")
-require("hyprland.general")
-require("hyprland.input")
-require("hyprland.misc")
-require("hyprland.animations")
-require("hyprland.decoration")
-require("hyprland.group")
-require("hyprland.execs")
-require("hyprland.rules")
-require("hyprland.gestures")
-require("hyprland.keybinds")
-require("hyprland.scorlling")
+require("hypr-user")

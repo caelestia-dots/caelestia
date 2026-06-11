@@ -1,16 +1,19 @@
+local vars = Config.vars
+local computed = Config.computed
+
 hl.config({
   general = {
     layout = "dwindle",
     allow_tearing = false, -- Allows `immediate` window rule to work
 
-    gaps_workspaces = Config.vars.workspaceGaps,
-    gaps_in = Config.vars.windowGapsIn,
-    gaps_out = Config.vars.windowGapsOut,
-    border_size = Config.vars.windowBorderSize,
+    gaps_workspaces = vars.workspaceGaps,
+    gaps_in = vars.windowGapsIn,
+    gaps_out = vars.windowGapsOut,
+    border_size = vars.windowBorderSize,
 
     col = {
-      active_border = Config.computed.activeWindowBorderColour,
-      inactive_border = Config.computed.inactiveWindowBorderColour,
+      active_border = computed.activeWindowBorderColour,
+      inactive_border = computed.inactiveWindowBorderColour,
     },
   },
 

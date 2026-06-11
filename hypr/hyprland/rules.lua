@@ -1,8 +1,9 @@
+local vars = Config.vars
 
 -- Windo Rules -- 
 
 -- Opacity Rule -- 
-hl.window_rule({match = {fullscreen = false}, opacity = Config.vars.windowOpacity .. " override"})
+hl.window_rule({match = {fullscreen = false}, opacity = vars.windowOpacity .. " override"})
 -- Opaque apps
 hl.window_rule({match = {class = "foot|equibop|org\\.quickshell|imv|swappy"}, opaque = true})   -- They use native transparency
 -- Center floating windows (excluding XWayland)
@@ -89,8 +90,8 @@ hl.window_rule({
 })
 
 -- Workspace Rules -- 
-hl.workspace_rule({ workspace = "w[tv1]s[false]", gaps_out = Config.vars.singleWindowGapsOut })
-hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = Config.vars.singleWindowGapsOut })
+hl.workspace_rule({ workspace = "w[tv1]s[false]", gaps_out = vars.singleWindowGapsOut })
+hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = vars.singleWindowGapsOut })
 
 -- Layer Rules -- 
 
@@ -104,8 +105,6 @@ end
 hl.layer_rule({ match = { namespace = "launcher"}, animation = "popin 80%", blur = true })
 
 -- Shell -- 
-hl.layer_rule({match = { namespace = "caelestia-(border-exclusion|area-picker)"}, no_anim = true})
-hl.layer_rule({ match = { namespace = "caelestia-(drawers|background)"}, animation = "fade"})
-
-
+hl.layer_rule({ match = { namespace = "caelestia-(border-exclusion|area-picker)" }, no_anim = true })
+hl.layer_rule({ match = { namespace = "caelestia-background" }, animation = "fade" }) -- Kept sharp (No blur here!)
 

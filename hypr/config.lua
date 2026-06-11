@@ -25,7 +25,7 @@ Config.vars = {
 
     -- Blur
     blurEnabled = true,
-    blurSpecialWs = true,
+    blurSpecialWs = false,
     blurPopups = true,
     blurInputMethods = true,
     blurSize = 8,
@@ -38,7 +38,6 @@ Config.vars = {
     shadowEnabled = true,
     shadowRange = 20,
     shadowRenderPower = 3,
-
     -- Gaps
     workspaceGaps = 20,
     windowGapsIn = 5,

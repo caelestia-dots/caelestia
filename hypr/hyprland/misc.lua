@@ -1,3 +1,5 @@
+local colors = Config.colors
+
 hl.config({
     misc = {
         vrr = 1,
@@ -12,7 +14,7 @@ hl.config({
         session_lock_xray = true,
         mouse_move_enables_dpms = true,
         key_press_enables_dpms = true,
-        background_color = "rgb(" .. Config.colors.surfaceContainer .. ")"
+        background_color = "rgb(" .. colors.surfaceContainer .. ")"
     },
     debug = {
         error_position = 1,

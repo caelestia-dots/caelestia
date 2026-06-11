@@ -1,3 +1,5 @@
+local vars = Config.vars
+
 hl.config({
   -- Input variables
   input = {
@@ -7,12 +9,12 @@ hl.config({
     repeat_rate = 35,
 
     focus_on_close = 1,
-    sensitivity = Config.vars.touchpadSensitivity,
+    sensitivity = vars.touchpadSensitivity,
 
     touchpad = {
       natural_scroll = true,
-      disable_while_typing = Config.vars.touchpadDisableTyping,
-      scroll_factor = Config.vars.touchpadScrollFactor,
+      disable_while_typing = vars.touchpadDisableTyping,
+      scroll_factor = vars.touchpadScrollFactor,
     },
   },
 
