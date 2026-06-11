@@ -221,7 +221,6 @@ hl.bind(keybinds.kbResizeDown,  hl.dsp.window.resize({ x = 0, y = 20, relative =
 -- Pin window (keep on all workspaces)
 hl.bind(
     keybinds.kbPinWindow, function ()
-        hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
         hl.dispatch(hl.dsp.window.pin())   
     end           
 )

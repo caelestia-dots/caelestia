@@ -33,6 +33,7 @@ Config.vars = {
     blurXray = false,
     ignoreOpacity = true,
     newOptimizations = true,
+    ignoreAlpha = 0.2,
 
     -- Shadow
     shadowEnabled = true,
