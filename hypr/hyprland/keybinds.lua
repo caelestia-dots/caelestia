@@ -2,16 +2,15 @@ local keybinds = Config.keybinds
 local vars = Config.vars
 -- Launcher
 hl.bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), { release = true })
--- hl.bind("SUPER + catchall", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
+-- Mouse interrupts
 hl.bind("SUPER + mouse:272", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:273", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:274", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:275", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:276", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 hl.bind("SUPER + mouse:277", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse_up", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse_down", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-
+hl.bind("SUPER + mouse_up",  hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
+hl.bind("SUPER + mouse_down",hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 -- Session menu (Power off, Logout, Reboot, Lock)
 hl.bind( keybinds.kbSession, hl.dsp.global("caelestia:session"))
 
