@@ -1,0 +1,24 @@
+pkgname='caelestia-tools'
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='A metapackage containing useful tools for the Caelestia dotfiles'
+arch=('any')
+url='https://github.com/caelestia-dots/caelestia'
+license=('GPL-3.0-only')
+depends=(
+  fish
+  curl
+  git
+  trash-cli
+  eza
+  jq
+  zoxide
+  direnv
+  btop
+  lazygit
+  bat
+  micro
+  ripgrep
+  ydotool
+  hyprpicker
+)
