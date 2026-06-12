@@ -1,0 +1,23 @@
+pkgname='caelestia-firefox-theme'
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='The native app component of the CaelestiaFox Firefox theme'
+arch=('any')
+url='https://github.com/caelestia-dots/caelestia'
+license=('GPL-3.0-only')
+depends=(
+  fish
+  jq
+  inotify-tools
+)
+source=()
+sha256sums=()
+install=message.install
+
+_pkgbuild_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+_native_app_dir="$_pkgbuild_dir/../../firefox/native_app"
+
+package() {
+  install -Dm644 "$_native_app_dir/manifest.json" "$pkgdir"/usr/lib/mozilla/native-messaging-hosts/caelestiafox.json
+  install -Dm755 "$_native_app_dir/app.fish" "$pkgdir"/usr/lib/caelestia/caelestiafox
+}
