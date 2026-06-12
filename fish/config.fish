@@ -1,13 +1,13 @@
 if status is-interactive
     # Starship custom prompt
-    starship init fish | source
+    command -v starship &> /dev/null && starship init fish | source
 
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source
     command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
 
     # Better ls
-    alias ls='eza --icons --group-directories-first -1'
+    command -v eza &> /dev/null && alias ls='eza --icons --group-directories-first -1'
 
     # Abbrs
     abbr lg 'lazygit'
@@ -39,7 +39,7 @@ if status is-interactive
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
-    
+
     # Custom fish config
     source ~/.config/caelestia/user-config.fish 2> /dev/null
 end
