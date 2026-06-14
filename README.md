@@ -19,7 +19,7 @@ The install script has some options for installing configs for some apps.
 
 ```
 $ ./install.fish -h
-usage: ./install.sh [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]
+usage: ./install.fish [-h] [--noconfirm] [--spotify] [--vscode] [--discord] [--aur-helper]
 
 options:
   -h, --help                  show this help message and exit

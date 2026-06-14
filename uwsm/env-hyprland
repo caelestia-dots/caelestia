@@ -1,3 +1,4 @@
+# NOTE: Also duplicated in hypr/hyprland/env.conf — keep in sync
 # ######## Toolkit backends ########
 export GDK_BACKEND='wayland,x11'
 export QT_QPA_PLATFORM='wayland;xcb'

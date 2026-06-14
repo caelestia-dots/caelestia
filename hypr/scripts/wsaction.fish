@@ -2,7 +2,7 @@
 
 if test "$argv[1]" = '-g'
     set group
-    set -e $argv[1]
+    set -e argv[1]
 end
 
 if test (count $argv) -ne 2
