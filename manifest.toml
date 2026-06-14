@@ -1,7 +1,52 @@
 packages = [
-    "local:packages/caelestia-system",
-    "local:packages/caelestia-theming",
-    "local:packages/caelestia-tools"
+    "caelestia-shell",
+    "caelestia-cli",
+
+    # WM & portals
+    "hyprland",
+    "xdg-desktop-portal-hyprland",
+    "xdg-desktop-portal-gtk",
+
+    # System
+    "networkmanager",
+    "wireplumber",
+    "gnome-keyring",
+    "polkit-gnome",
+
+    # Clipboard
+    "wl-clipboard",
+    "cliphist",
+
+
+    # Theming
+    "adw-gtk-theme",
+    "papirus-icon-theme",
+    "qtengine",
+    "darkly-bin",
+
+    # Fonts
+    "ttf-rubik-vf",
+    "ttf-jetbrains-mono-nerd",
+
+    # Tools
+    "starship",
+    "fastfetch",
+    "fish",
+    "curl",
+    "git",
+    "trash-cli",
+    "eza",
+    "jq",
+    "zoxide",
+    "direnv",
+    "btop",
+    "lazygit",
+    "bat",
+    "micro",
+    "ripgrep",
+    "ydotool",
+    "hyprpicker",
+    "xdg-user-dirs",
 ]
 
 # --- Hooks ---
