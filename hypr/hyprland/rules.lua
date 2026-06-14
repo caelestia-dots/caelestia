@@ -11,13 +11,15 @@ hl.window_rule({ match = { float = true, xwayland = false }, center = true }) --
 -- Floating Applications
 hl.window_rule({
     match = {
-        class = "guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|org.quickshell",
+        class =
+        "guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|org.quickshell",
     },
     tag = "+float",
 })
 hl.window_rule({
     match = {
-        title = "(Select|Open)( a)? (File|Folder)(s)?|File (Operation|Upload)( Progress)?|.* Properties|Export Image as PNG|GIMP Crash Debug|Save As|Library",
+        title =
+        "(Select|Open)( a)? (File|Folder)(s)?|File (Operation|Upload)( Progress)?|.* Properties|Export Image as PNG|GIMP Crash Debug|Save As|Library",
     },
     tag = "+float",
 })
@@ -30,7 +32,8 @@ hl.window_rule({ match = { tag = "float" }, float = true })
 -- Opaque Apps (Terminal, Image Viewers, Creative Software, Games) as they prefer native transparency as required
 hl.window_rule({
     match = {
-        class = "foot|equibop|org.quickshell|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot|(steam_app_(default|[0-9]+))|gamescope",
+        class =
+        "foot|equibop|org.quickshell|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot|(steam_app_(default|[0-9]+))|gamescope",
     },
     tag = "+opaque_app",
 })
@@ -113,10 +116,10 @@ hl.workspace_rule({ workspace = "f[1]s[false]", gaps_out = vars.singleWindowGaps
 ---- Layer rules ----
 ---------------------
 
-hl.layer_rule({ match = { namespace = "hyprpicker" }, animation = "fade" }) -- Colour picker out animation
-hl.layer_rule({ match = { namespace = "logout_dialog" }, animation = "fade" }) -- wlogout
-hl.layer_rule({ match = { namespace = "selection" }, animation = "fade" }) -- slurp
-hl.layer_rule({ match = { namespace = "wayfreeze" }, animation = "fade" }) -- wayfreeze
+hl.layer_rule({ match = { namespace = "hyprpicker" }, animation = "fade" })                 -- Colour picker out animation
+hl.layer_rule({ match = { namespace = "logout_dialog" }, animation = "fade" })              -- wlogout
+hl.layer_rule({ match = { namespace = "selection" }, animation = "fade" })                  -- slurp
+hl.layer_rule({ match = { namespace = "wayfreeze" }, animation = "fade" })                  -- wayfreeze
 hl.layer_rule({ match = { namespace = "launcher" }, animation = "popin 80%", blur = true }) -- Fuzzel
 
 -- Shell

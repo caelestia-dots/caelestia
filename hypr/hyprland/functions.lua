@@ -1,40 +1,40 @@
 local function wsaction(action, range, i)
-	return function()
-		local activews = hl.get_active_workspace()
-		if activews then
-			local id = activews.id
-			local s = (i - 1) * 10 + (id % 10)
-			local t = math.floor((id - 1) / 10) * 10 + i
-			local z = (range == "group") and s or t
+    return function()
+        local activews = hl.get_active_workspace()
+        if activews then
+            local id = activews.id
+            local s = (i - 1) * 10 + (id % 10)
+            local t = math.floor((id - 1) / 10) * 10 + i
+            local z = (range == "group") and s or t
 
-			if action == "move" then
-				return hl.dispatch(hl.dsp.window.move({ workspace = z }))
-			else
-				return hl.dispatch(hl.dsp.focus({ workspace = z }))
-			end
-		end
-	end
+            if action == "move" then
+                return hl.dispatch(hl.dsp.window.move({ workspace = z }))
+            else
+                return hl.dispatch(hl.dsp.focus({ workspace = z }))
+            end
+        end
+    end
 end
 
 local function resize_by_screen(x, y)
-	local screen = hl.get_active_monitor()
-	if screen and type(screen.width) == "number" and type(screen.height) == "number" then
-		if not (x == 0 and y == 0) then
-			local w = (x and x > 0) and math.floor(screen.width * x / 100) or screen.width
-			local h = (y and y > 0) and math.floor(screen.height * y / 100) or screen.height
-			return { x = w, y = h, relative = false }
-		end
-	end
+    local screen = hl.get_active_monitor()
+    if screen and type(screen.width) == "number" and type(screen.height) == "number" then
+        if not (x == 0 and y == 0) then
+            local w = (x and x > 0) and math.floor(screen.width * x / 100) or screen.width
+            local h = (y and y > 0) and math.floor(screen.height * y / 100) or screen.height
+            return { x = w, y = h, relative = false }
+        end
+    end
 end
 
 local function resize_active_window(x, y)
-	local win = hl.get_active_window()
-	if win and win.size then
-		local w = (win.size.x * (x / 100)) or 800
-		local h = (win.size.y * (y / 100)) or 600
+    local win = hl.get_active_window()
+    if win and win.size then
+        local w = (win.size.x * (x / 100)) or 800
+        local h = (win.size.y * (y / 100)) or 600
 
-		return { x = w, y = h, relative = true }
-	end
+        return { x = w, y = h, relative = true }
+    end
 end
 
 local function resizer(window, pattern, x_percent, y_percent, actions, exact)
@@ -77,9 +77,9 @@ local function move_actions(win)
 end
 
 return {
-	resizer = resizer,
-	resize_by_screen = resize_by_screen,
-	resize_active_window = resize_active_window,
-	wsaction = wsaction,
-	move_actions = move_actions,
+    resizer = resizer,
+    resize_by_screen = resize_by_screen,
+    resize_active_window = resize_active_window,
+    wsaction = wsaction,
+    move_actions = move_actions,
 }
