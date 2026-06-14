@@ -11,9 +11,11 @@ depends=(
   hyprland
   xdg-desktop-portal-hyprland
   xdg-desktop-portal-gtk
+  networkmanager
   wl-clipboard
   cliphist
   wireplumber
   gnome-keyring
   polkit-gnome
+  xdg-user-dirs
 )

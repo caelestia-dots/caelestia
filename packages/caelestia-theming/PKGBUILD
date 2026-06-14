@@ -9,6 +9,7 @@ depends=(
   adw-gtk-theme
   papirus-icon-theme
   qtengine
+  darkly-bin
   ttf-rubik-vf
   ttf-jetbrains-mono-nerd
   starship
