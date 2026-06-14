@@ -29,9 +29,9 @@ return {
 
     -- Shadow
     shadowEnabled = true,
-    shadowRange = 20,
-    shadowRenderPower = 3,
-    shadowColour = "rgba(" .. scheme.surface .. "d4)",
+    shadowRange = 15,
+    shadowRenderPower = 4,
+    shadowColour = "rgba(" .. scheme.inversePrimary .. "d4)",
 
     -- Gaps
     workspaceGaps = 20,
@@ -50,6 +50,7 @@ return {
     volumeStep = 10,
     cursorTheme = "sweet-cursors",
     cursorSize = 24,
+    sleepGestureCmd = "systemctl suspend-then-hibernate",
 
     ------------------
     ---- KEYBINDS ----

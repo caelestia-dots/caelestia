@@ -12,7 +12,7 @@ hl.config({
 })
 
 hl.gesture({ fingers = vars.workspaceSwipeFingers, direction = "horizontal", action = "workspace" })
-hl.gesture({ fingers = vars.gestureFingers, direction = "up", action = "special", arg = "special" })
+hl.gesture({ fingers = vars.gestureFingers, direction = "up", action = "special", workspace_name = "special" })
 hl.gesture({
     fingers = vars.gestureFingers,
     direction = "down",
@@ -24,6 +24,6 @@ hl.gesture({
     fingers = vars.gestureFingersMore,
     direction = "down",
     action = function()
-        hl.exec_cmd("systemctl suspend-then-hibernate")
+        hl.exec_cmd(vars.sleepGestureCmd)
     end,
 })

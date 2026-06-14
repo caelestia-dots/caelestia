@@ -3,15 +3,6 @@ local fn = require("hyprland.functions")
 
 -- Launcher
 hl.bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), { release = true })
--- hl.bind("SUPER + catchall", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:272", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:273", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:274", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:275", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:276", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse:277", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse_up", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
-hl.bind("SUPER + mouse_down", hl.dsp.global("caelestia:launcherInterrupt"), { release = true })
 
 -- Misc
 hl.bind(vars.kbSession, hl.dsp.global("caelestia:session"))
@@ -50,10 +41,10 @@ hl.bind(
 
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(vars.kbGoToWs .. " + " .. key, fn.wsaction("don't move", "ew", i))
-    hl.bind(vars.kbMoveWinToWs .. " + " .. key, fn.wsaction("move", "ew", i))
-    hl.bind(vars.kbGoToWsGroup .. " + " .. key, fn.wsaction("don't move", "g", i))
-    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, fn.wsaction("move", "g", i))
+    hl.bind(vars.kbGoToWs .. " + " .. key, fn.wsaction("focus", "", i))
+    hl.bind(vars.kbMoveWinToWs .. " + " .. key, fn.wsaction("move", "", i))
+    hl.bind(vars.kbGoToWsGroup .. " + " .. key, fn.wsaction("focus", "group", i))
+    hl.bind(vars.kbMoveWinToWsGroup .. " + " .. key, fn.wsaction("move", "group", i))
 end
 
 -- Go to workspace -1/+1
@@ -102,14 +93,14 @@ hl.bind("SUPER + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
 hl.bind("SUPER + SHIFT + right", hl.dsp.window.move({ direction = "right" }))
 hl.bind("SUPER + SHIFT + up", hl.dsp.window.move({ direction = "up" }))
 hl.bind("SUPER + SHIFT + down", hl.dsp.window.move({ direction = "down" }))
-hl.bind("SUPER + Minus", hl.dsp.window.resize(fn.resize_activewindow(-10, 0)), { repeating = true })
-hl.bind("SUPER + Equal", hl.dsp.window.resize(fn.resize_activewindow(10, 0)), { repeating = true })
-hl.bind("SUPER + SHIFT + Minus", hl.dsp.window.resize(fn.resize_activewindow(0, -10)), { repeating = true })
-hl.bind("SUPER + SHIFT + Equal", hl.dsp.window.resize(fn.resize_activewindow(0, 10)), { repeating = true })
-hl.bind("SUPER + ALT + left", hl.dsp.window.resize(fn.resize_activewindow(-10, 0)), { repeating = true })
-hl.bind("SUPER + ALT + right", hl.dsp.window.resize(fn.resize_activewindow(10, 0)), { repeating = true })
-hl.bind("SUPER + ALT + up", hl.dsp.window.resize(fn.resize_activewindow(0, -10)), { repeating = true })
-hl.bind("SUPER + ALT + down", hl.dsp.window.resize(fn.resize_activewindow(0, 10)), { repeating = true })
+hl.bind("SUPER + Minus", hl.dsp.window.resize(fn.resize_active_window(-10, 0)), { repeating = true })
+hl.bind("SUPER + Equal", hl.dsp.window.resize(fn.resize_active_window(10, 0)), { repeating = true })
+hl.bind("SUPER + SHIFT + Minus", hl.dsp.window.resize(fn.resize_active_window(0, -10)), { repeating = true })
+hl.bind("SUPER + SHIFT + Equal", hl.dsp.window.resize(fn.resize_active_window(0, 10)), { repeating = true })
+hl.bind("SUPER + ALT + left", hl.dsp.window.resize(fn.resize_active_window(-10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + right", hl.dsp.window.resize(fn.resize_active_window(10, 0)), { repeating = true })
+hl.bind("SUPER + ALT + up", hl.dsp.window.resize(fn.resize_active_window(0, -10)), { repeating = true })
+hl.bind("SUPER + ALT + down", hl.dsp.window.resize(fn.resize_active_window(0, 10)), { repeating = true })
 
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(vars.kbMoveWindow, hl.dsp.window.drag(), { mouse = true })
@@ -121,9 +112,13 @@ hl.bind("CTRL + SUPER + ALT + Backslash", hl.dsp.window.center())
 hl.bind(vars.kbWindowPip, function()
     local a = hl.get_active_window()
     if a then
-        local pip = fn.moveActions() or {}
-        table.insert(pip, hl.dsp.window.pin())
-        fn.resizer(a.title, 0, 0, pip, true)
+        local pip = fn.move_actions(a) or {}
+        table.insert(pip, 1, hl.dsp.window.float())
+        table.insert(pip, hl.dsp.window.pin({ window = "address:" .. a.address }))
+
+        for _, x in ipairs(pip) do
+            hl.dispatch(x)
+        end
     end
 end)
 hl.bind(vars.kbPinWindow, hl.dsp.window.pin())
@@ -177,7 +172,7 @@ hl.bind(
 )
 
 -- Sleep
-hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-suspend", { locked = true }))
+hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd(vars.sleepGestureCmd), { locked = true })
 
 -- Clipboard and emoji picker
 hl.bind("SUPER + V", hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))
@@ -193,6 +188,6 @@ hl.bind(
 hl.bind(
     "SUPER + ALT + F12",
     hl.dsp.exec_cmd(
-        "notify-send -u low -i dialog-information-symbolic 'Test notification' 'Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!' -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"
+        [[notify-send -u low -i dialog-information-symbolic "Test notification" "Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!" -a "Shell" -A "Test1=I got it!" -A "Test2=Another action"]]
     )
 )
