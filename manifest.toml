@@ -1,54 +1,5 @@
-packages = [
-    "caelestia-shell",
-    "caelestia-cli",
-
-    # WM & portals
-    "hyprland",
-    "xdg-desktop-portal-hyprland",
-    "xdg-desktop-portal-gtk",
-
-    # System
-    "networkmanager",
-    "wireplumber",
-    "gnome-keyring",
-    "polkit-gnome",
-
-    # Clipboard
-    "wl-clipboard",
-    "cliphist",
-
-    # Theming
-    "adw-gtk-theme",
-    "papirus-icon-theme",
-    "qtengine",
-    "darkly-bin",
-
-    # Fonts
-    "ttf-rubik-vf",
-    "ttf-jetbrains-mono-nerd",
-
-    # Tools
-    "starship",
-    "fastfetch",
-    "fish",
-    "curl",
-    "git",
-    "trash-cli",
-    "eza",
-    "jq",
-    "zoxide",
-    "direnv",
-    "btop",
-    "lazygit",
-    "bat",
-    "micro",
-    "ripgrep",
-    "ydotool",
-    "hyprpicker",
-    "xdg-user-dirs",
-]
+packages = ["caelestia-shell", "caelestia-cli"]
 post_install = [
-    "xdg-user-dirs-update",
     "test -f ${XDG_STATE_HOME:-$HOME/.local/state}/caelestia/scheme.json || caelestia scheme set -n caelestia",
     "caelestia shell -d >/dev/null",
 ]
@@ -59,7 +10,12 @@ post_update = ["caelestia shell -k && sleep 1 && caelestia shell -d >/dev/null"]
 [[components]]
 name = "hypr"
 default = true
-packages = ["hyprland"]
+packages = [
+    "hyprland",
+    "xdg-desktop-portal-hyprland",
+    "xdg-desktop-portal-gtk",
+    "ttf-jetbrains-mono-nerd",
+]
 post_install = [
     "chmod u+x ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts/wsaction.fish",
     "hyprctl reload >/dev/null",
@@ -72,7 +28,7 @@ dest = "$XDG_CONFIG_HOME/hypr"
 [[components]]
 name = "fish"
 default = true
-packages = ["fish"]
+packages = ["fish", "eza", "zoxide", "direnv"]
 [[components.entries]]
 src = "fish"
 dest = "$XDG_CONFIG_HOME/fish"
@@ -80,7 +36,7 @@ dest = "$XDG_CONFIG_HOME/fish"
 [[components]]
 name = "foot"
 default = true
-packages = ["foot"]
+packages = ["foot", "fish", "ttf-jetbrains-mono-nerd"]
 [[components.entries]]
 src = "foot"
 dest = "$XDG_CONFIG_HOME/foot"
@@ -131,6 +87,71 @@ dest = "$XDG_CONFIG_HOME/starship.toml"
 name = "firefox"
 default = true
 packages = ["firefox", "local:packages/caelestia-firefox-theme"]
+
+[[components]]
+name = "gtk"
+default = true
+packages = ["adw-gtk-theme", "papirus-icon-theme", "papirus-folders"]
+
+[[components]]
+name = "qt"
+default = true
+packages = ["qtengine", "darkly-bin", "papirus-icon-theme", "papirus-folders"]
+
+[[components]]
+name = "auth"
+default = true
+packages = ["gnome-keyring", "polkit-gnome"]
+
+[[components]]
+name = "network"
+default = true
+packages = ["networkmanager"]
+
+[[components]]
+name = "bluetooth"
+default = true
+packages = ["bluez", "bluez-utils"]
+
+[[components]]
+name = "pipewire"
+default = true
+packages = [
+    "pipewire",
+    "pipewire-pulse",
+    "pipewire-audio",
+    "pipewire-alsa",
+    "pipewire-jack",
+    "wireplumber",
+    "pavucontrol",
+]
+
+[[components]]
+name = "clipboard"
+default = true
+packages = ["wl-clipboard", "cliphist"]
+
+[[components]]
+name = "fonts"
+default = true
+packages = ["noto-fonts", "noto-fonts-cjk", "noto-fonts-emoji"]
+
+[[components]]
+name = "tools"
+default = true
+packages = [
+    "curl",
+    "git",
+    "trash-cli",
+    "jq",
+    "lazygit",
+    "bat",
+    "ripgrep",
+    "ydotool",
+    "hyprpicker",
+    "xdg-user-dirs",
+]
+post_install = ["xdg-user-dirs-update"]
 
 
 # --- Optional components ---
