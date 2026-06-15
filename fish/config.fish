@@ -41,5 +41,7 @@ if status is-interactive
     end
 
     # Custom fish config
+    mkdir -p ~/.config/caelestia
+    touch ~/.config/caelestia/user-config.fish
     source ~/.config/caelestia/user-config.fish 2> /dev/null
 end
