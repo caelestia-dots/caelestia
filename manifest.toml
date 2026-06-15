@@ -47,10 +47,6 @@ packages = [
     "hyprpicker",
     "xdg-user-dirs",
 ]
-
-# --- Hooks ---
-
-[hooks]
 post_install = [
     "xdg-user-dirs-update",
     "test -f ${XDG_STATE_HOME:-$HOME/.local/state}/caelestia/scheme.json || caelestia scheme set -n caelestia",
