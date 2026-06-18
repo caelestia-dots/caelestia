@@ -231,9 +231,6 @@ src = "uwsm"
 dest = "$XDG_CONFIG_HOME/uwsm"
 
 # Zen theming doesn't currently work
-# [[components]]
-# name = "zen"
-# packages = ["zen-browser-bin"]
-# post_install = [
-#     "for chrome in $HOME/.zen/*/chrome; do mkdir -p \"$chrome\"; ln -sf \"$CAELESTIA_DOTS/zen/userChrome.css\" \"$chrome/userChrome.css\"; done"
-# ]
+[[components]]
+name = "zen"
+packages = ["zen-browser-bin"]
