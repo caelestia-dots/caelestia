@@ -93,9 +93,13 @@ dest = "$XDG_CONFIG_HOME/starship.toml"
 name = "firefox"
 default = true
 packages = ["firefox", "local:packages/caelestia-firefox-theme"]
+post_package = ["bash $CAELESTIA_DOTS/firefox/init_firefox.sh"]
 [[components.entries]]
 src = "firefox/userChrome.css"
 dest = "$HOME/.mozilla/firefox/*/chrome/userChrome.css"
+[[components.entries]]
+src = "firefox/user.js"
+dest = "$HOME/.mozilla/firefox/*/user.js"
 
 [[components]]
 name = "gtk"
