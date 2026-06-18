@@ -42,7 +42,5 @@ if status is-interactive
 
     # Custom fish config
     set -q XDG_CONFIG_HOME && set -l cConf $XDG_CONFIG_HOME/caelestia || set -l cConf $HOME/.config/caelestia
-    mkdir -p $cConf
-    touch $cConf/user-config.fish
     source $cConf/user-config.fish 2> /dev/null
 end

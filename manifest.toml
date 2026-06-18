@@ -31,6 +31,10 @@ dest = "$XDG_CONFIG_HOME/hypr"
 name = "fish"
 default = true
 packages = ["fish", "eza", "zoxide", "direnv"]
+post_install = [
+    "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia",
+    "touch ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia/user-config.fish",
+]
 [[components.entries]]
 src = "fish"
 dest = "$XDG_CONFIG_HOME/fish"
