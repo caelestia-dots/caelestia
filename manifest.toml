@@ -3,7 +3,7 @@ post_install = [
     "test -f ${XDG_STATE_HOME:-$HOME/.local/state}/caelestia/scheme.json || caelestia scheme set -n caelestia",
     "caelestia shell -d >/dev/null",
 ]
-post_update = ["caelestia shell -k && sleep 1 && caelestia shell -d >/dev/null"]
+post_update = ["caelestia shell -k; sleep 1; caelestia shell -d >/dev/null"]
 
 # --- Core components ---
 
