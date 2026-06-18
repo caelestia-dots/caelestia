@@ -96,10 +96,10 @@ packages = ["firefox", "local:packages/caelestia-firefox-theme"]
 post_package = ["bash $CAELESTIA_DOTS/firefox/init_firefox.sh"]
 [[components.entries]]
 src = "firefox/userChrome.css"
-dest = "$HOME/.mozilla/firefox/*/chrome/userChrome.css"
+dest = "$HOME/.mozilla/firefox/*.default*/chrome/userChrome.css"
 [[components.entries]]
 src = "firefox/user.js"
-dest = "$HOME/.mozilla/firefox/*/user.js"
+dest = "$HOME/.mozilla/firefox/*.default*/user.js"
 
 [[components]]
 name = "gtk"
