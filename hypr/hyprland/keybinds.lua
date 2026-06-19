@@ -1,5 +1,5 @@
 local vars = require("variables")
-local fn = require("hyprland.functions")
+local fn   = require("hyprland.functions")
 
 -- Launcher
 hl.bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), { release = true })

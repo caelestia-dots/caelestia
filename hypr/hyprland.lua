@@ -22,10 +22,10 @@ require("hypr-vars")
 
 -- Default monitor conf
 hl.monitor({
-    output = "",
-    mode = "preferred",
+    output   = "",
+    mode     = "preferred",
     position = "auto",
-    scale = 1,
+    scale    = 1,
 })
 
 -- Configs

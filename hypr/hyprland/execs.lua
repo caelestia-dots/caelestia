@@ -1,5 +1,5 @@
 local vars = require("variables")
-local fn = require("hyprland.functions")
+local fn   = require("hyprland.functions")
 
 hl.on("hyprland.start", function()
     -- Keyring and auth
@@ -29,7 +29,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("caelestia shell -d")
 end)
 
--- resizer listener
+-- Resizer listener
 hl.on("window.title", function(win)
     local d = {
         hl.dsp.window.float({ action = "on", window = win }),
