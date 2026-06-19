@@ -109,7 +109,13 @@ packages = ["adw-gtk-theme", "papirus-icon-theme", "papirus-folders"]
 [[components]]
 name = "qt"
 default = true
-packages = ["qtengine", "darkly-bin", "papirus-icon-theme", "papirus-folders"]
+packages = [
+    "qtengine",
+    "frameworkintegration", # Darkly has this as a dep but is missing it from its PKGBUILD
+    "darkly-bin",
+    "papirus-icon-theme",
+    "papirus-folders",
+]
 
 [[components]]
 name = "auth"
