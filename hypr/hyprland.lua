@@ -13,8 +13,27 @@ local function maybe_create(file)
     end
 end
 
+-- Copy src to dst, but only if dst doesn't already exist
+local function maybe_copy(src, dst)
+    local out = io.open(dst)
+    if out then
+        out:close()
+        return
+    end
+
+    local input = io.open(src, "r")
+    if not input then return end
+
+    out = io.open(dst, "w")
+    if out then
+        out:write(input:read("*a"))
+        out:close()
+    end
+    input:close()
+end
+
 -- Maybe set current colours to defaults
-os.execute("cp -L --no-preserve=mode --update=none " .. hypr .. "/scheme/default.lua " .. hypr .. "/scheme/current.lua")
+maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
 -- User variables
 maybe_create(home .. "/.config/caelestia/hypr-vars.lua")
