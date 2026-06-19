@@ -59,9 +59,6 @@ hl.bind("SUPER + Page_down", hl.dsp.focus({ workspace = "+1" }), { repeating = t
 hl.bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "-10" }))
 hl.bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "+10" }))
 
--- Toggle special workspace
-hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("special"))
-
 -- Move window to workspace -1/+1
 hl.bind("SUPER + ALT + Page_Up", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
 hl.bind("SUPER + ALT + Page_Down", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
@@ -128,6 +125,7 @@ hl.bind(vars.kbToggleWindowFloating, hl.dsp.window.float())
 hl.bind(vars.kbCloseWindow, hl.dsp.window.close())
 
 -- Special workspace toggles
+hl.bind("SUPER + S", hl.dsp.exec_cmd("caelestia toggle specialws"))
 hl.bind(vars.kbSystemMonitor, hl.dsp.exec_cmd("caelestia toggle sysmon"))
 hl.bind(vars.kbMusic, hl.dsp.exec_cmd("caelestia toggle music"))
 hl.bind(vars.kbCommunication, hl.dsp.exec_cmd("caelestia toggle communication"))
