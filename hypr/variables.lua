@@ -64,7 +64,6 @@ return {
     kbGoToWsGroup              = "CTRL + SUPER",
     kbNextWs                   = "CTRL + SUPER + Right",
     kbPrevWs                   = "CTRL + SUPER + Left",
-    kbToggleSpecialWs          = "SUPER + S",
 
     -- Window Group
     kbWindowGroupCycleNext     = "ALT + TAB",
@@ -83,10 +82,11 @@ return {
     kbCloseWindow              = "SUPER + Q",
 
     -- Special workspaces toggles
-    kbSystemMonitor            = "CTRL + SHIFT + Escape",
-    kbMusic                    = "SUPER + M",
-    kbCommunication            = "SUPER + D",
-    kbTodo                     = "SUPER + R",
+    kbSpecialWs                = "SUPER + S",
+    kbSystemMonitorWs          = "CTRL + SHIFT + Escape",
+    kbMusicWs                  = "SUPER + M",
+    kbCommunicationWs          = "SUPER + D",
+    kbTodoWs                   = "SUPER + R",
 
     -- Apps
     kbTerminal                 = "SUPER + T",
