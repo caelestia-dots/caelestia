@@ -269,33 +269,6 @@ end
 if set -q _flag_zen
     log 'Installing zen...'
     $aur_helper -S --needed zen-browser-bin $noconfirm
-
-    # Install userChrome css
-    set -l chrome $HOME/.zen/*/chrome
-    if confirm-overwrite $chrome/userChrome.css
-        log 'Installing zen userChrome...'
-        ln -s (realpath zen/userChrome.css) $chrome/userChrome.css
-    end
-
-    # Install native app
-    set -l hosts $HOME/.mozilla/native-messaging-hosts
-    set -l lib $HOME/.local/lib/caelestia
-
-    if confirm-overwrite $hosts/caelestiafox.json
-        log 'Installing zen native app manifest...'
-        mkdir -p $hosts
-        cp zen/native_app/manifest.json $hosts/caelestiafox.json
-        sed -i "s|{{ \$lib }}|$lib|g" $hosts/caelestiafox.json
-    end
-
-    if confirm-overwrite $lib/caelestiafox
-        log 'Installing zen native app...'
-        mkdir -p $lib
-        ln -s (realpath zen/native_app/app.fish) $lib/caelestiafox
-    end
-
-    # Prompt user to install extension
-    log 'Please install the CaelestiaFox extension from https://addons.mozilla.org/en-US/firefox/addon/caelestiafox if you have not already done so.'
 end
 
 # Generate scheme stuff if needed
