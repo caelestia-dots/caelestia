@@ -2,13 +2,18 @@ local home   = os.getenv("HOME")
 local hypr   = home .. "/.config/hypr"
 package.path = package.path .. ";" .. home .. "/.config/caelestia/?.lua"
 
--- Create a file if it doesn't exist
-local function maybe_create(file)
+-- Create a file if it doesn't exist, optionally with initial content
+local function maybe_create(file, content)
     local f = io.open(file)
 
-    if not f then
-        os.execute("touch " .. file)
-    else
+    if f then
+        f:close()
+        return
+    end
+
+    f = io.open(file, "w")
+    if f then
+        if content then f:write(content) end
         f:close()
     end
 end
@@ -36,7 +41,7 @@ end
 maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
 -- User variables
-maybe_create(home .. "/.config/caelestia/hypr-vars.lua")
+maybe_create(home .. "/.config/caelestia/hypr-vars.lua", "return {}\n")
 local overrides = require("hypr-vars")
 if type(overrides) == "table" then
     local vars = require("variables")
