@@ -183,6 +183,8 @@ hl.bind(
 hl.bind(
     "SUPER + ALT + F12",
     hl.dsp.exec_cmd(
-        [[notify-send -u low -i dialog-information-symbolic "Test notification" "Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!" -a "Shell" -A "Test1=I got it!" -A "Test2=Another action"]]
+        "notify-send -u low -i dialog-information-symbolic 'Test notification' " ..
+        [["Here's a really long message to test truncation and wrapping\nYou can middle click or flick this notification to dismiss it!"]] ..
+        " -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"
     )
 )
