@@ -37,7 +37,13 @@ maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
 -- User variables
 maybe_create(home .. "/.config/caelestia/hypr-vars.lua")
-require("hypr-vars")
+local overrides = require("hypr-vars")
+if type(overrides) == "table" then
+    local vars = require("variables")
+    for k, v in pairs(overrides) do
+        vars[k] = v
+    end
+end
 
 -- Default monitor conf
 hl.monitor({
