@@ -1,0 +1,240 @@
+packages = ["caelestia-shell", "caelestia-cli"]
+post_install = [
+    "test -f ${XDG_STATE_HOME:-$HOME/.local/state}/caelestia/scheme.json || caelestia scheme set -n caelestia",
+    "caelestia shell -d >/dev/null",
+]
+post_update = ["caelestia shell -k; sleep 1; caelestia shell -d >/dev/null"]
+
+# --- Core components ---
+
+[[components]]
+name = "hypr"
+default = true
+packages = [
+    "hyprland",
+    "xdg-desktop-portal-hyprland",
+    "xdg-desktop-portal-gtk",
+    "ttf-jetbrains-mono-nerd",
+]
+post_install = [
+    "chmod u+x ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts/wsaction.fish",
+    "hyprctl reload >/dev/null",
+    # Double reload so source files are recognised. This should be removed with luafication
+    "hyprctl reload >/dev/null",
+]
+post_update = ["hyprctl reload >/dev/null"]
+[[components.entries]]
+src = "hypr"
+dest = "$XDG_CONFIG_HOME/hypr"
+
+[[components]]
+name = "fish"
+default = true
+packages = ["fish", "eza", "zoxide", "direnv"]
+post_install = [
+    "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia",
+    "touch ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia/user-config.fish",
+]
+[[components.entries]]
+src = "fish"
+dest = "$XDG_CONFIG_HOME/fish"
+
+[[components]]
+name = "foot"
+default = true
+packages = ["foot", "fish", "ttf-jetbrains-mono-nerd"]
+[[components.entries]]
+src = "foot"
+dest = "$XDG_CONFIG_HOME/foot"
+
+[[components]]
+name = "fastfetch"
+default = true
+packages = ["fastfetch"]
+[[components.entries]]
+src = "fastfetch"
+dest = "$XDG_CONFIG_HOME/fastfetch"
+
+[[components]]
+name = "btop"
+default = true
+packages = ["btop"]
+post_install = ["killall -USR2 btop 2>/dev/null || true"]
+post_update = ["killall -USR2 btop 2>/dev/null || true"]
+[[components.entries]]
+src = "btop"
+dest = "$XDG_CONFIG_HOME/btop"
+
+[[components]]
+name = "micro"
+default = true
+packages = ["micro"]
+[[components.entries]]
+src = "micro"
+dest = "$XDG_CONFIG_HOME/micro"
+
+[[components]]
+name = "thunar"
+default = true
+packages = ["thunar"]
+[[components.entries]]
+src = "thunar"
+dest = "$XDG_CONFIG_HOME/Thunar"
+
+[[components]]
+name = "starship"
+default = true
+packages = ["starship"]
+[[components.entries]]
+src = "starship.toml"
+dest = "$XDG_CONFIG_HOME/starship.toml"
+
+[[components]]
+name = "firefox"
+default = true
+packages = ["firefox", "local:packages/caelestia-firefox-theme"]
+post_package = ["bash $CAELESTIA_DOTS/firefox/init_firefox.sh"]
+[[components.entries]]
+src = "firefox/userChrome.css"
+dest = "$HOME/.mozilla/firefox/*.default*/chrome/userChrome.css"
+[[components.entries]]
+src = "firefox/user.js"
+dest = "$HOME/.mozilla/firefox/*.default*/user.js"
+
+[[components]]
+name = "gtk"
+default = true
+packages = ["adw-gtk-theme", "papirus-icon-theme", "papirus-folders"]
+
+[[components]]
+name = "qt"
+default = true
+packages = ["qtengine", "darkly-bin", "papirus-icon-theme", "papirus-folders"]
+
+[[components]]
+name = "auth"
+default = true
+packages = ["gnome-keyring", "polkit-gnome"]
+
+[[components]]
+name = "network"
+default = true
+packages = ["networkmanager"]
+
+[[components]]
+name = "bluetooth"
+default = true
+packages = ["bluez", "bluez-utils"]
+
+[[components]]
+name = "pipewire"
+default = true
+packages = [
+    "pipewire",
+    "pipewire-pulse",
+    "pipewire-audio",
+    "pipewire-alsa",
+    "pipewire-jack",
+    "wireplumber",
+    "pavucontrol",
+]
+
+[[components]]
+name = "clipboard"
+default = true
+packages = ["wl-clipboard", "cliphist"]
+
+[[components]]
+name = "fonts"
+default = true
+packages = ["noto-fonts", "noto-fonts-cjk", "noto-fonts-emoji"]
+
+[[components]]
+name = "tools"
+default = true
+packages = [
+    "curl",
+    "git",
+    "trash-cli",
+    "jq",
+    "lazygit",
+    "bat",
+    "ripgrep",
+    "ydotool",
+    "hyprpicker",
+    "xdg-user-dirs",
+]
+post_install = ["xdg-user-dirs-update"]
+
+
+# --- Optional components ---
+
+[[components]]
+name = "spotify"
+packages = ["spotify", "spicetify-cli", "spicetify-marketplace-bin"]
+post_install = [
+    "spicetify config current_theme caelestia color_scheme caelestia custom_apps marketplace",
+    "spicetify apply",
+]
+[[components.entries]]
+src = "spicetify"
+dest = "$XDG_CONFIG_HOME/spicetify"
+
+[[components]]
+name = "vscodium"
+packages = ["vscodium-bin", "vscodium-bin-marketplace"]
+post_install = [
+    "codium --install-extension $CAELESTIA_DOTS/vscode/caelestia-vscode-integration/caelestia-vscode-integration-*.vsix",
+]
+[[components.entries]]
+src = "vscode/settings.json"
+dest = "$XDG_CONFIG_HOME/VSCodium/User/settings.json"
+[[components.entries]]
+src = "vscode/keybindings.json"
+dest = "$XDG_CONFIG_HOME/VSCodium/User/keybindings.json"
+[[components.entries]]
+src = "vscode/flags.conf"
+dest = "$XDG_CONFIG_HOME/codium-flags.conf"
+
+[[components]]
+name = "vscode"
+packages = ["code"]
+post_install = [
+    "code --install-extension $CAELESTIA_DOTS/vscode/caelestia-vscode-integration/caelestia-vscode-integration-*.vsix",
+]
+[[components.entries]]
+src = "vscode/settings.json"
+dest = "$XDG_CONFIG_HOME/Code/User/settings.json"
+[[components.entries]]
+src = "vscode/keybindings.json"
+dest = "$XDG_CONFIG_HOME/Code/User/keybindings.json"
+[[components.entries]]
+src = "vscode/flags.conf"
+dest = "$XDG_CONFIG_HOME/code-flags.conf"
+
+[[components]]
+name = "zed"
+packages = ["zed"]
+[[components.entries]]
+src = "zed"
+dest = "$XDG_CONFIG_HOME/zed"
+
+[[components]]
+name = "discord"
+packages = ["equibop"]
+
+[[components]]
+name = "todoist"
+packages = ["todoist-appimage"]
+
+[[components]]
+name = "uwsm"
+packages = ["uwsm"]
+[[components.entries]]
+src = "uwsm"
+dest = "$XDG_CONFIG_HOME/uwsm"
+
+# Zen theming doesn't currently work
+[[components]]
+name = "zen"
+packages = ["zen-browser-bin"]

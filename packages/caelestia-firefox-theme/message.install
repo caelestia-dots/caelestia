@@ -1,0 +1,5 @@
+post_install() {
+    echo '=> This is the native app component of the CaelestiaFox Firefox extension.'
+    echo '=> For the extension to work properly, please install the Firefox extension itself from the url below:'
+    echo '=> https://addons.mozilla.org/en-US/firefox/addon/caelestiafox'
+}

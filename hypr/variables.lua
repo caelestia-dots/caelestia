@@ -7,9 +7,10 @@ return {
 
     -- Apps
     terminal                   = "foot",
-    browser                    = "zen-browser",
+    browser                    = "firefox",
     editor                     = "codium",
     fileExplorer               = "thunar",
+    audioSettings              = "pavucontrol",
 
     -- Touchpad
     touchpadDisableTyping      = true,
@@ -31,7 +32,7 @@ return {
     shadowEnabled              = true,
     shadowRange                = 15,
     shadowRenderPower          = 4,
-    shadowColour               = "rgba(" .. scheme.inversePrimary .. "d4)",
+    shadowColour               = "rgba(" .. scheme.inversePrimary .. "10)",
 
     -- Gaps
     workspaceGaps              = 20,

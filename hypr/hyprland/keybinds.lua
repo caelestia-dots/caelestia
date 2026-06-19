@@ -134,14 +134,11 @@ hl.bind(vars.kbCommunication, hl.dsp.exec_cmd("caelestia toggle communication"))
 hl.bind(vars.kbTodo, hl.dsp.exec_cmd("caelestia toggle todo"))
 
 -- Apps
-hl.bind(vars.kbTerminal, hl.dsp.exec_cmd("app2unit -- " .. vars.terminal))
-hl.bind(vars.kbBrowser, hl.dsp.exec_cmd("app2unit -- " .. vars.browser))
-hl.bind(vars.kbEditor, hl.dsp.exec_cmd("app2unit -- " .. vars.editor))
-hl.bind("SUPER + G", hl.dsp.exec_cmd("app2unit -- github-desktop"))
-hl.bind(vars.kbFileExplorer, hl.dsp.exec_cmd("app2unit -- " .. vars.fileExplorer))
-hl.bind("SUPER + ALT + E", hl.dsp.exec_cmd("app2unit -- nemo"))
-hl.bind("CTRL +ALT + Escape", hl.dsp.exec_cmd("app2unit -- qps"))
-hl.bind("CTRL + ALT + V", hl.dsp.exec_cmd("app2unit -- pavucontrol"))
+hl.bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))
+hl.bind(vars.kbBrowser, hl.dsp.exec_cmd(vars.browser))
+hl.bind(vars.kbEditor, hl.dsp.exec_cmd(vars.editor))
+hl.bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.fileExplorer))
+hl.bind("CTRL + ALT + V", hl.dsp.exec_cmd(vars.audioSettings))
 
 -- Utilities
 hl.bind("Print", hl.dsp.exec_cmd("caelestia screenshot"), { locked = true })
