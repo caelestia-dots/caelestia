@@ -3,6 +3,20 @@
 This is the main repo of the caelestia dots and contains the user configs for
 apps. This repo also includes an install script to install the entire dots.
 
+> [!IMPORTANT]
+> We have switched to using Lua for the Hyprland config!
+> For everyone with a custom `~/.config/caelestia/hypr-user.conf`
+> or `~/.config/caelestia/hypr-vars.conf`, please convert it to Lua
+> either manually, or using one of the available converters online.
+>
+> Usage for `hypr-vars.lua`:
+>
+> ```lua
+> return {
+>   browser = "chromium",
+> }
+> ```
+
 ## Installation
 
 Simply clone this repo and run the install script (you need
