@@ -4,6 +4,13 @@ This is the main repo of the caelestia dots and contains user configs for
 various apps.
 
 > [!IMPORTANT]
+> The legacy `install.fish` script in this repo has been deprecated in favour
+> of the [CLI](https://github.com/caelestia-dots/cli)'s install command.
+>
+> If you have an existing installation with the legacy script, please update
+> the CLI and run the install command to migrate.
+
+> [!IMPORTANT]
 > We have switched to using Lua for the Hyprland config!
 > For everyone with a custom `~/.config/caelestia/hypr-user.conf`
 > or `~/.config/caelestia/hypr-vars.conf`, please convert it to Lua
