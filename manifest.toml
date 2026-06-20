@@ -16,12 +16,7 @@ packages = [
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
 ]
-post_install = [
-    "chmod u+x ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts/wsaction.fish",
-    "hyprctl reload >/dev/null",
-    # Double reload so source files are recognised. This should be removed with luafication
-    "hyprctl reload >/dev/null",
-]
+post_install = ["hyprctl reload >/dev/null"]
 post_update = ["hyprctl reload >/dev/null"]
 [[components.entries]]
 src = "hypr"
