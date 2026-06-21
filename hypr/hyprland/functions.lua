@@ -76,10 +76,143 @@ local function move_actions(win)
     end
 end
 
+-- Toggle function
+local home = os.getenv("HOME")
+local json = require("json") -- all hail rxi
+
+-- Default config & smh merging
+local default_config = {
+    communication = {
+        discord = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
+        whatsapp = { enable = true, match = { { class = "whatsapp" } }, move = true },
+    },
+    music = {
+        spotify = {
+            enable = true,
+            match = { { class = "Spotify" }, { initialTitle = "Spotify" }, { initialTitle = "Spotify Free" } },
+            command = { "spicetify", "watch", "-s" },
+            move = true,
+        },
+        feishin = { enable = true, match = { { class = "feishin" } }, move = true },
+    },
+    sysmon = {
+        btop = {
+            enable = true,
+            match = { { class = "btop", title = "btop" } },
+            command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "'exec btop'" },
+            move = true,
+        },
+    },
+    todo = {
+        todoist = { enable = true, match = { { class = "Todoist" } }, command = { "todoist" }, move = true },
+    },
+}
+
+local function merge(default_conf, user_conf)
+    for category, apps in pairs(user_conf) do
+        default_conf[category] = default_conf[category] or {}
+
+        for app_name, options in pairs(apps) do
+            default_conf[category][app_name] = default_conf[category][app_name] or {}
+
+            for key, value in pairs(options) do
+                default_conf[category][app_name][key] = value
+            end
+        end
+    end
+end
+
+local user_file = io.open(home .. "/.config/caelestia/cli.json", "r") -- Cli.json
+if user_file then
+    local content = user_file:read("*a")
+    user_file:close()
+    local user_config = json.decode(content) or {}
+    merge(default_config, user_config.toggles or {})
+end
+
+-- "if the client is running" etc function
+local function get_clients(clients, app_config, target_special)
+    if (app_config and app_config.match) then
+        for _, window in ipairs(clients) do
+            for _, rule in ipairs(app_config.match) do
+                local is_a_match = true
+
+                for key, expected_value in pairs(rule) do
+                    local actual_value = window[key]
+
+                    if
+                        not actual_value
+                        or not string.find(tostring(actual_value):lower(), tostring(expected_value):lower(), 1, true)
+                    then
+                        is_a_match = false
+                        break -- quick fail
+                    end
+                end
+
+                if is_a_match then
+                    local client_workspace = window.workspace and window.workspace.name
+                    local is_in_its_place = (client_workspace == "special:" .. target_special)
+
+                    return true, is_in_its_place, window
+                end
+            end
+        end
+        return false, false, nil
+    end
+    return false, false, nil
+end
+
+local function spawn_client(app_config)
+    if app_config.command then
+        local command_string = table.concat(app_config.command, " ")
+        hl.dispatch(hl.dsp.exec_cmd(command_string))
+    end
+end
+
+local function move_client(window, special_workspace)
+    if window then
+        hl.dispatch(hl.dsp.window.move({ window = window, workspace = "special:" .. special_workspace }))
+        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways
+    end
+end
+
+local function toggle(special_workspace)
+    local active_workspace = hl.get_active_special_workspace()
+
+    if special_workspace == "specialws" then
+        local fallback_target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
+        return hl.dispatch(hl.dsp.workspace.toggle_special(fallback_target))
+    end
+
+    local apps = default_config[special_workspace]
+    local should_toggle = true
+    if apps then
+        local clients = hl.get_windows() or {}
+
+        for _, app in pairs(apps) do
+            if app.enable then
+                local is_running, is_in_place, target_client = get_clients(clients, app, special_workspace)
+
+                if not is_running and app.command then
+                    spawn_client(app)
+                    should_toggle = false
+                elseif not is_in_place and app.move then
+                    move_client(target_client, special_workspace)
+                end
+            end
+        end
+    end
+    hl.exec_cmd("notify-send " .. tostring(should_toggle))
+    if should_toggle then
+        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways
+    end
+end
+
 return {
     resizer              = resizer,
     resize_by_screen     = resize_by_screen,
     resize_active_window = resize_active_window,
     wsaction             = wsaction,
     move_actions         = move_actions,
+    toggle               = toggle,
 }
