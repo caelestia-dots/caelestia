@@ -78,7 +78,7 @@ end
 
 -- Toggle function
 local home = os.getenv("HOME")
-local json = require("json") -- all hail rxi
+local json = require("hyprland.json") -- all hail rxi
 
 -- Default config & smh merging
 local default_config = {
