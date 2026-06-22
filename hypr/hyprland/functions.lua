@@ -98,8 +98,8 @@ local default_config = {
     sysmon = {
         btop = {
             enable = true,
-            match = { { class = "btop", title = "btop" } },
-            command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "'exec btop'" },
+            match = { { class = "btop", title = "btop", workspace = "special:sysmon" } },
+            command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "exec btop" },
             move = true,
         },
     },
@@ -162,17 +162,26 @@ local function get_clients(clients, app_config, target_special)
     return false, false, nil
 end
 
+local function shell_join(argv) -- uhh praise danny for this
+    local quoted = {}
+
+    for i, arg in ipairs(argv) do
+        quoted[i] = "'" .. tostring(arg):gsub("'", [['"'"']]) .. "'"
+    end
+
+    return table.concat(quoted, " ")
+end
+
 local function spawn_client(app_config)
     if app_config.command then
-        local command_string = table.concat(app_config.command, " ")
-        hl.dispatch(hl.dsp.exec_cmd(command_string))
+        hl.dispatch(hl.dsp.exec_cmd(shell_join(app_config.command)))
     end
 end
 
 local function move_client(window, special_workspace)
     if window then
         hl.dispatch(hl.dsp.window.move({ window = window, workspace = "special:" .. special_workspace }))
-        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways
+        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling not anyways
     end
 end
 
@@ -202,9 +211,8 @@ local function toggle(special_workspace)
             end
         end
     end
-    hl.exec_cmd("notify-send " .. tostring(should_toggle))
     if should_toggle then
-        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways
+        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways except when launching the app
     end
 end
 

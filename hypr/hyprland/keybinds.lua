@@ -74,7 +74,7 @@ hl.bind("SUPER + ALT + S", hl.dsp.window.move({ workspace = "special:special" })
 
 -- Window groups
 hl.bind(vars.kbWindowGroupCycleNext, hl.dsp.window.cycle_next(), { repeating = true })
-hl.bind(vars.kbWindowGroupCyclePrev, hl.dsp.window.cycle_next(), { repeating = true })
+hl.bind(vars.kbWindowGroupCyclePrev, hl.dsp.window.cycle_next({ next = false }), { repeating = true })
 hl.bind("CTRL + ALT + Tab", hl.dsp.group.next(), { repeating = true })
 hl.bind("CTRL + SHIFT + ALT + Tab", hl.dsp.group.prev(), { repeating = true })
 hl.bind(vars.kbToggleGroup, hl.dsp.group.toggle())
