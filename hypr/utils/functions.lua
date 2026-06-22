@@ -78,29 +78,29 @@ end
 
 -- Toggle function
 local home = os.getenv("HOME")
-local json = require("hyprland.json") -- all hail rxi
+local json = require("utils.json") -- all hail rxi
 
 -- Default config & smh merging
 local default_config = {
     communication = {
-        discord = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
+        discord  = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
         whatsapp = { enable = true, match = { { class = "whatsapp" } }, move = true },
     },
     music = {
         spotify = {
-            enable = true,
-            match = { { class = "Spotify" }, { initialTitle = "Spotify" }, { initialTitle = "Spotify Free" } },
+            enable  = true,
+            match   = { { class = "Spotify" }, { initialTitle = "Spotify" }, { initialTitle = "Spotify Free" } },
             command = { "spicetify", "watch", "-s" },
-            move = true,
+            move    = true,
         },
         feishin = { enable = true, match = { { class = "feishin" } }, move = true },
     },
     sysmon = {
         btop = {
-            enable = true,
-            match = { { class = "btop", title = "btop", workspace = "special:sysmon" } },
+            enable  = true,
+            match   = { { class = "btop", title = "btop", workspace = "special:sysmon" } },
             command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "exec btop" },
-            move = true,
+            move    = true,
         },
     },
     todo = {
