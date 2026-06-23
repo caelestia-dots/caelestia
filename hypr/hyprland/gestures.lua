@@ -1,4 +1,5 @@
 local vars = require("variables")
+local fn   = require("utils.functions")
 
 hl.config({
     gestures = {
@@ -17,7 +18,7 @@ hl.gesture({
     fingers   = vars.gestureFingers,
     direction = "down",
     action    = function()
-        hl.exec_cmd("caelestia toggle specialws")
+        fn.toggle("specialws")
     end,
 })
 hl.gesture({
