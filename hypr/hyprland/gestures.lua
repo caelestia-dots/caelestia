@@ -17,9 +17,7 @@ hl.gesture({ fingers = vars.gestureFingers, direction = "up", action = "special"
 hl.gesture({
     fingers   = vars.gestureFingers,
     direction = "down",
-    action    = function()
-        fn.toggle("specialws")
-    end,
+    action    = fn.toggle("specialws"),
 })
 hl.gesture({
     fingers   = vars.gestureFingersMore,
