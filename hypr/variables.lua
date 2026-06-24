@@ -14,7 +14,7 @@ return {
 
     -- Touchpad
     touchpadDisableTyping      = true,
-    touchScrollFactor          = 0.3,
+    touchpadScrollFactor       = 0.3,
     gestureFingers             = 3,
     workspaceSwipeFingers      = 4,
     gestureFingersMore         = 4,
@@ -49,6 +49,7 @@ return {
 
     -- Misc
     volumeStep                 = 10,
+    volumeMax                  = 100,
     cursorTheme                = "sweet-cursors",
     cursorSize                 = 24,
     sleepGestureCmd            = "systemctl suspend-then-hibernate",

@@ -41,27 +41,27 @@ hl.window_rule({
 hl.window_rule({ match = { tag = "opaque_app" }, opaque = true })
 
 -- Sized & Centered Floaters
-hl.window_rule({ match = { class = "foot", title = "nmtui" }, tag = "+float_70_60" })
-hl.window_rule({ match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" }, tag = "+float_70_60" })
-hl.window_rule({ match = { class = "org.gnome.Settings" }, tag = "+float_80_70" })
-hl.window_rule({ match = { class = "nwg-look" }, tag = "+float_60_50" })
+hl.window_rule({ match = { class = "foot", title = "nmtui" }, tag = "+float_60_70" })
+hl.window_rule({ match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" }, tag = "+float_60_70" })
+hl.window_rule({ match = { class = "org.gnome.Settings" }, tag = "+float_70_80" })
+hl.window_rule({ match = { class = "nwg-look" }, tag = "+float_50_60" })
 
 hl.window_rule({
-    match  = { tag = "float_70_60" },
+    match  = { tag = "float_60_70" },
     float  = true,
-    size   = "(monitor_w*0.7) (monitor_h*0.6)",
+    size   = "(monitor_w*0.6) (monitor_h*0.7)",
     center = true,
 })
 hl.window_rule({
-    match  = { tag = "float_80_70" },
+    match  = { tag = "float_70_80" },
     float  = true,
-    size   = "(monitor_w*0.8) (monitor_h*0.7)",
+    size   = "(monitor_w*0.7) (monitor_h*0.8)",
     center = true,
 })
 hl.window_rule({
-    match  = { tag = "float_60_50" },
+    match  = { tag = "float_50_60" },
     float  = true,
-    size   = "(monitor_w*0.6) (monitor_h*0.5)",
+    size   = "(monitor_w*0.5) (monitor_h*0.6)",
     center = true,
 })
 
@@ -78,7 +78,7 @@ hl.window_rule({ match = { class = "steam" }, rounding = 10 })
 -- Picture in picture (resize and move done via script)
 hl.window_rule({
     match             = { title = "Picture(-| )in(-| )[Pp]icture" },
-    move              = "(monitor_w-(window_w*0.2)) (monitor_h-(window_h*0.3))",
+    move              = "(monitor_w*0.98-window_w) (monitor_h*0.97-window_h)",
     pin               = true,
     float             = true,
     keep_aspect_ratio = true,
@@ -101,7 +101,7 @@ hl.window_rule({
     },
     workspace = "special:music",
 })
-hl.window_rule({ match = { initial_title = "Spotify( %(?Free%)?)?" } }) -- Spotify wayland, it has no class for some reason
+hl.window_rule({ match = { initial_title = "Spotify( %(?Free%)?)?" }, workspace = "special:music" }) -- Spotify wayland, it has no class for some reason
 hl.window_rule({ match = { class = "discord|equibop|vesktop|whatsapp" }, workspace = "special:communication" })
 hl.window_rule({ match = { class = "Todoist" }, workspace = "special:todo" })
 
