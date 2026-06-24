@@ -125,19 +125,11 @@ hl.bind(vars.kbToggleWindowFloating, hl.dsp.window.float())
 hl.bind(vars.kbCloseWindow, hl.dsp.window.close())
 
 -- Special workspace toggles
-local binds = {
-    [vars.kbSpecialWs] = "specialws",
-    [vars.kbSystemMonitorWs] = "sysmon",
-    [vars.kbMusicWs] = "music",
-    [vars.kbCommunicationWs] = "communication",
-    [vars.kbTodoWs] = "todo",
-}
-
-for key_combination, special_workspace in pairs(binds) do
-    hl.bind(key_combination, function()
-        fn.toggle(special_workspace)
-    end)
-end
+hl.bind(vars.kbSpecialWs, fn.toggle("specialws"))
+hl.bind(vars.kbSystemMonitorWs, fn.toggle("sysmon"))
+hl.bind(vars.kbMusicWs, fn.toggle("music"))
+hl.bind(vars.kbCommunicationWs, fn.toggle("communication"))
+hl.bind(vars.kbTodoWs, fn.toggle("todo"))
 
 -- Apps
 hl.bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))

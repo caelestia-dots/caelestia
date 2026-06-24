@@ -186,33 +186,35 @@ local function move_client(window, special_workspace)
 end
 
 local function toggle(special_workspace)
-    local active_workspace = hl.get_active_special_workspace()
+    return function()
+        local active_workspace = hl.get_active_special_workspace()
 
-    if special_workspace == "specialws" then
-        local fallback_target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
-        return hl.dispatch(hl.dsp.workspace.toggle_special(fallback_target))
-    end
+        if special_workspace == "specialws" then
+            local fallback_target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
+            return hl.dispatch(hl.dsp.workspace.toggle_special(fallback_target))
+        end
 
-    local apps = default_config[special_workspace]
-    local should_toggle = true
-    if apps then
-        local clients = hl.get_windows() or {}
+        local apps          = default_config[special_workspace]
+        local should_toggle = true
+        if apps then
+            local clients = hl.get_windows() or {}
 
-        for _, app in pairs(apps) do
-            if app.enable then
-                local is_running, is_in_place, target_client = get_clients(clients, app, special_workspace)
+            for _, app in pairs(apps) do
+                if app.enable then
+                    local is_running, is_in_place, target_client = get_clients(clients, app, special_workspace)
 
-                if not is_running and app.command then
-                    spawn_client(app)
-                    should_toggle = false
-                elseif not is_in_place and app.move then
-                    move_client(target_client, special_workspace)
+                    if not is_running and app.command then
+                        spawn_client(app)
+                        should_toggle = false
+                    elseif not is_in_place and app.move then
+                        move_client(target_client, special_workspace)
+                    end
                 end
             end
         end
-    end
-    if should_toggle then
-        hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways except when launching the app
+        if should_toggle then
+            hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways except when launching the app
+        end
     end
 end
 
