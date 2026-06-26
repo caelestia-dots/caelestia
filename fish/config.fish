@@ -2,12 +2,40 @@ if status is-interactive
     # Starship custom prompt
     command -v starship &> /dev/null && starship init fish | source
 
+    # npm global path
+    set -x PATH ~/.npm-global/bin $PATH
+
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source
     command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
 
     # Better ls
     command -v eza &> /dev/null && alias ls='eza --icons --group-directories-first -1'
+
+    # Command not found handler
+    function fish_command_not_found
+        set pkgs (pkgfile --search $argv[1] 2>/dev/null)
+        if test -n "$pkgs"
+            echo "'$argv[1]' not found. It may be in:"
+            echo $pkgs
+            read -P "Would you like to install it? [Y/n] " answer
+            if test "$answer" != n -a "$answer" != N
+                sudo pacman -S $argv[1]
+            end
+        else
+            set aur_pkgs (yay -Ss $argv[1] 2>/dev/null | grep -E "^aur/" | head -5)
+            if test -n "$aur_pkgs"
+                echo "'$argv[1]' not found in repos. Found in AUR:"
+                echo $aur_pkgs
+                read -P "Would you like to install from AUR? [Y/n] " answer
+                if test "$answer" != n -a "$answer" != N
+                    yay -S $argv[1] --noconfirm
+                end
+            else
+                echo "'$argv[1]': command not found"
+            end
+        end
+    end
 
     # Abbrs
     abbr lg 'lazygit'
@@ -26,7 +54,6 @@ if status is-interactive
     abbr gbd 'git branch -d'
     abbr gco 'git checkout'
     abbr gsh 'git show'
-
     abbr l 'ls'
     abbr ll 'ls -l'
     abbr la 'ls -a'
