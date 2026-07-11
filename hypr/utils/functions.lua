@@ -28,7 +28,7 @@ local function resize_by_screen(x, y)
 end
 
 local function resize_active_window(x, y)
-    return function()
+    return function() -- returning the function so hl reloads everytime correctly
         local win = hl.get_active_window()
         if win and win.size then
             local w = (win.size.x * (x / 100)) or 800
@@ -82,7 +82,7 @@ end
 
 -- Toggle function
 local home = os.getenv("HOME")
-local json = require("utils.json") -- all hail rxi
+local json = require("utils.json") -- rxi's peak library
 
 -- Default config & smh merging
 local default_config = {
@@ -102,13 +102,13 @@ local default_config = {
     sysmon = {
         btop = {
             enable  = true,
-            match   = { { class = "btop", title = "btop", workspace = "special:sysmon" } },
+            match   = { { class = "btop", title = "btop", workspace = { name = "special:sysmon" } } },
             command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "exec btop" },
             move    = true,
         },
     },
     todo = {
-        todoist = { enable = true, match = { { class = "Todoist" } }, command = { "todoist" }, move = true },
+        todoist = { enable = true, match = { { class = "todoist" } }, command = { "todoist" }, move = true },
     },
 }
 
@@ -126,16 +126,17 @@ local function merge(default_conf, user_conf)
     end
 end
 
-local user_file = io.open(home .. "/.config/caelestia/cli.json", "r") -- Cli.json
-if user_file then
-    local content = user_file:read("*a")
-    user_file:close()
-    local recognized, user_conf = pcall(json.decode, content)
-    if not recognized or type(user_conf) ~= "table" then
-        hl.exec_cmd("caelestia shell toaster error 'Error' 'check your cli.json again BAKA BAKA' info")
+local function deep_match(actual, expected)
+    if type(expected) == "table" then
+        for key, sub_expected in pairs(expected) do
+            if not deep_match(actual[key], sub_expected) then
+                return false
+            end
+        end
+        return true
+    else
+        return actual and string.find(tostring(actual), tostring(expected), 1, true)
     end
-    local user_config = (recognized and type(user_conf) == "table") and user_conf.toggles or {}
-    merge(default_config, user_config)
 end
 
 -- "if the client is running" etc function
@@ -145,23 +146,16 @@ local function get_clients(clients, app_config, target_special)
         for _, window in ipairs(clients) do
             for _, rule in ipairs(app_config.match) do
                 local is_a_match = true
-
                 for key, expected_value in pairs(rule) do
-                    local actual_value = window[key]
-
-                    if
-                        not actual_value
-                        or not string.find(tostring(actual_value):lower(), tostring(expected_value):lower(), 1, true)
-                    then
+                    if not deep_match(window[key], expected_value) then
                         is_a_match = false
-                        break -- quick fail
+                        break
                     end
                 end
-
                 if is_a_match then
                     local client_workspace = window.workspace and window.workspace.name
                     table.insert(matched_clients, {
-                        window      = window,
+                        window = window,
                         is_in_place = (client_workspace == "special:" .. target_special),
                     })
                     break
@@ -175,11 +169,9 @@ end
 
 local function shell_join(argv) -- uhh praise danny for this
     local quoted = {}
-
     for i, arg in ipairs(argv) do
         quoted[i] = "'" .. tostring(arg):gsub("'", [['"'"']]) .. "'"
     end
-
     return table.concat(quoted, " ")
 end
 
@@ -200,8 +192,20 @@ local function toggle(special_workspace)
     return function()
         if special_workspace == "specialws" then
             local active_workspace = hl.get_active_special_workspace()
-            local fated_target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
+            local fated_target     = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
             return hl.dispatch(hl.dsp.workspace.toggle_special(fated_target))
+        end
+
+        local user_file = io.open(home .. "/.config/caelestia/cli.json", "r") -- Cli.json
+        if user_file then
+            local content = user_file:read("*a")
+            user_file:close()
+            local recognized, user_conf = pcall(json.decode, content)
+            if not recognized or type(user_conf) ~= "table" then
+                hl.exec_cmd("caelestia shell toaster error 'Error' 'check your cli.json again BAKA BAKA' info")
+            end
+            local user_config = (recognized and type(user_conf) == "table") and user_conf.toggles or {}
+            merge(default_config, user_config)
         end
 
         local apps          = default_config[special_workspace]
