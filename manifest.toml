@@ -222,7 +222,7 @@ dest = "$XDG_CONFIG_HOME/zed"
 
 [[components]]
 name = "discord"
-packages = ["equibop"]
+packages = ["equibop-bin"]
 
 [[components]]
 name = "todoist"

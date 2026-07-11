@@ -91,7 +91,19 @@ hl.window_rule({ match = { class = "^(ueberzugpp_.*)$" }, float = true, no_initi
 hl.window_rule({ match = { class = "fusion360.exe", title = "Fusion360|(Marking Menu)" }, no_blur = true })
 
 -- Ugh xwayland popups
-hl.window_rule({ match = { xwayland = true, title = "win[0-9]+" }, no_dim = true, no_shadow = true, rounding = 10 })
+hl.window_rule({ match = { xwayland = true, title = "win[0-9]+" }, tag = "+xwl_popup" })
+hl.window_rule({
+    match = { xwayland = true, title = "", class = "", initial_title = "", initial_class = "" },
+    tag   = "+xwl_popup",
+})
+hl.window_rule({
+    match     = { tag = "xwl_popup" },
+    no_dim    = true,
+    no_shadow = true,
+    no_blur   = true,
+    opaque    = true,
+    rounding  = 10,
+})
 
 -- Special workspaces
 hl.window_rule({ match = { class = "btop" }, workspace = "special:sysmon" })

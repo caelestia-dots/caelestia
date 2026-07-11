@@ -110,8 +110,8 @@ hl.bind(vars.kbWindowPip, function()
     local a = hl.get_active_window()
     if a then
         local pip = fn.move_actions(a) or {}
-        table.insert(pip, 1, hl.dsp.window.float())
-        table.insert(pip, hl.dsp.window.pin({ window = "address:" .. a.address }))
+        if not a.floating then table.insert(pip, 1, hl.dsp.window.float()) end
+        table.insert(pip, hl.dsp.window.pin({ action = "on", window = "address:" .. a.address }))
 
         for _, x in ipairs(pip) do
             hl.dispatch(x)
