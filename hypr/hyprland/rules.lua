@@ -42,7 +42,7 @@ hl.window_rule({ match = { tag = "opaque_app" }, opaque = true })
 
 -- Sized & Centered Floaters
 hl.window_rule({ match = { class = "foot", title = "nmtui" }, tag = "+float_60_70" })
-hl.window_rule({ match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" }, tag = "+float_60_70" })
+hl.window_rule({ match = { class = "yad-icon-browser" }, tag = "+float_60_70" })
 hl.window_rule({ match = { class = "org.gnome.Settings" }, tag = "+float_70_80" })
 hl.window_rule({ match = { class = "nwg-look" }, tag = "+float_50_60" })
 
@@ -63,6 +63,18 @@ hl.window_rule({
     float  = true,
     size   = "(monitor_w*0.5) (monitor_h*0.6)",
     center = true,
+})
+
+-- Pavucontrol
+hl.window_rule({ match = { class = "org.pulseaudio.pavucontrol" }, tag = "+pavucontrol" })
+hl.window_rule({
+    match  = { tag = "pavucontrol" },
+    float  = true,
+    size   = "(monitor_w*0.4) (monitor_h*0.5)",
+    move             = {
+      "(monitor_w - monitor_w*0.4 -" .. vars.windowGapsOut .. ")",
+      "(monitor_h - monitor_h*0.5 -" .. vars.windowGapsOut .. ")",
+    }
 })
 
 -- Games (Steam, Lutris/Wine, Gamescope)
