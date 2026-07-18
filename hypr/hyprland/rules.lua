@@ -109,7 +109,7 @@ hl.window_rule({
 hl.window_rule({ match = { class = "btop" }, workspace = "special:sysmon" })
 hl.window_rule({
     match     = {
-        class = "feishin|Spotify|Supersonic|Cider|com.github.th_ch.youtube_music|Plexamp|com-maxrave-simpmusic-MainKt",
+        class = "feishin|Spotify|Supersonic|Cider|com.github.th-ch.youtube-music|Plexamp|com-maxrave-simpmusic-MainKt",
     },
     workspace = "special:music",
 })
