@@ -146,6 +146,7 @@ hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd("caelestia record -s"))
 hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd("caelestia record"))
 hl.bind("SUPER + SHIFT + ALT + R", hl.dsp.exec_cmd("caelestia record -r"))
 hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("hyprpicker -a"))
+hl.bind("SUPER + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/ocr.fish " .. vars.ocrLang))
 
 -- Volume
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
