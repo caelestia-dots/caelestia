@@ -198,7 +198,7 @@ end
 
 local function move_client(window, special_workspace)
     if window then
-        hl.dispatch(hl.dsp.window.move({ window = window, workspace = "special:" .. special_workspace }))
+        hl.dispatch(hl.dsp.window.move({ window = window, workspace = "special:" .. special_workspace, follow = false }))
     end
 end
 
