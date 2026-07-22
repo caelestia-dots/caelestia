@@ -48,22 +48,22 @@ for i = 1, 10 do
 end
 
 -- Go to workspace -1/+1
-hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "-1" }))
-hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "+1" }))
+hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "-1" }))
+hl.bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "+1" }))
 hl.bind(vars.kbPrevWs, hl.dsp.focus({ workspace = "-1" }), { repeating = true })
 hl.bind(vars.kbNextWs, hl.dsp.focus({ workspace = "+1" }), { repeating = true })
 hl.bind("SUPER + Page_Up", hl.dsp.focus({ workspace = "-1" }), { repeating = true })
 hl.bind("SUPER + Page_down", hl.dsp.focus({ workspace = "+1" }), { repeating = true })
 
 -- Go to workspace group -1/+1
-hl.bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "-10" }))
-hl.bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "+10" }))
+hl.bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "-10" }))
+hl.bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "+10" }))
 
 -- Move window to workspace -1/+1
 hl.bind("SUPER + ALT + Page_Up", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
 hl.bind("SUPER + ALT + Page_Down", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
-hl.bind("SUPER + ALT + mouse_down", hl.dsp.window.move({ workspace = "-1" }))
-hl.bind("SUPER + ALT + mouse_up", hl.dsp.window.move({ workspace = "+1" }))
+hl.bind("SUPER + ALT + mouse_up", hl.dsp.window.move({ workspace = "-1" }))
+hl.bind("SUPER + ALT + mouse_down", hl.dsp.window.move({ workspace = "+1" }))
 hl.bind("CTRL + SUPER + SHIFT + right", hl.dsp.window.move({ workspace = "+1" }), { repeating = true })
 hl.bind("CTRL + SUPER + SHIFT + left", hl.dsp.window.move({ workspace = "-1" }), { repeating = true })
 
