@@ -128,6 +128,15 @@ local function merge(default_conf, user_conf)
     end
 end
 
+-- Get a field from an object. Allows mapping camelCase to snake_case fields.
+local function get_field(obj, key)
+    local value = obj[key]
+    if value == nil and type(key) == "string" then
+        value = obj[(key:gsub("(%u)", "_%1")):lower()] -- Try convert camelCase to snake_case
+    end
+    return value
+end
+
 local function deep_match(actual, expected)
     if type(expected) == "table" then
         if type(actual) ~= "table" and type(actual) ~= "userdata" then
@@ -135,7 +144,7 @@ local function deep_match(actual, expected)
         end
 
         for key, sub_expected in pairs(expected) do
-            if not deep_match(actual[key], sub_expected) then
+            if not deep_match(get_field(actual, key), sub_expected) then
                 return false
             end
         end
@@ -153,7 +162,7 @@ local function get_clients(clients, app_config, target_special)
             for _, rule in ipairs(app_config.match) do
                 local is_a_match = true
                 for key, expected_value in pairs(rule) do
-                    if not deep_match(window[key], expected_value) then
+                    if not deep_match(get_field(window, key), expected_value) then
                         is_a_match = false
                         break
                     end
