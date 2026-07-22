@@ -30,6 +30,9 @@ hl.on("hyprland.start", function()
 end)
 
 -- Resizer listener
+local bitwarden_extension_title = "^Extension: %(Bitwarden Password Manager%) %- Bitwarden"
+local bitwarden_chromium_extension_id = "nngceckbapebfimnlniiiahkandclblb"
+
 hl.on("window.title", function(win)
     local d = {
         hl.dsp.window.float({ action = "on", window = win }),
@@ -38,6 +41,8 @@ hl.on("window.title", function(win)
     local pip = fn.move_actions(win) or {}
 
     fn.resizer(win, "Bitwarden", 20, 54, d, true, "class")
+    fn.resizer(win, bitwarden_extension_title, 20, 54, d, false)
+    fn.resizer(win, bitwarden_chromium_extension_id, 20, 54, d, true, "class")
     fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
 end)
 
@@ -49,5 +54,7 @@ hl.on("window.open", function(win)
     local pip = fn.move_actions(win) or {}
 
     fn.resizer(win, "Bitwarden", 20, 54, d, true, "class")
+    fn.resizer(win, bitwarden_extension_title, 20, 54, d, false)
+    fn.resizer(win, bitwarden_chromium_extension_id, 20, 54, d, true, "class")
     fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
 end)
