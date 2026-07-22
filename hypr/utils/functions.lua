@@ -199,21 +199,21 @@ end
 local function move_client(window, special_workspace)
     if window then
         hl.dispatch(hl.dsp.window.move({ window = window, workspace = "special:" .. special_workspace }))
-        hl.dispatch(hl.dsp.focus({ workspace = "special:" .. special_workspace })) -- we used to toggle...
     end
 end
 
 local function toggle(special_workspace)
     return function()
+        local active_workspace = hl.get_active_special_workspace()
+
         if special_workspace == "specialws" then
-            local active_workspace = hl.get_active_special_workspace()
-            local fated_target     = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
+            local fated_target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
             return hl.dispatch(hl.dsp.workspace.toggle_special(fated_target))
         end
 
         local config = default_config()
 
-        local user_file = io.open(config_dir .. "/caelestia/cli.json", "r") -- Cli.json
+        local user_file = io.open(config_dir .. "/caelestia/cli.json", "r") -- CLI config
         if user_file then
             local content = user_file:read("*a")
             user_file:close()
@@ -229,8 +229,7 @@ local function toggle(special_workspace)
             end
         end
 
-        local apps          = config[special_workspace]
-        local should_toggle = true
+        local apps = config[special_workspace]
         if apps then
             local clients = hl.get_windows() or {}
 
@@ -240,20 +239,21 @@ local function toggle(special_workspace)
 
                     if not is_running and app.command then
                         spawn_client(app, special_workspace)
-                        should_toggle = false
                     elseif is_running then
                         for _, target_client in ipairs(target_clients) do
                             if not target_client.is_in_place and app.move then
                                 move_client(target_client.window, special_workspace)
-                                should_toggle = false
                             end
                         end
                     end
                 end
             end
         end
-        if should_toggle then
-            hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace)) -- toggling anyways except when launching the app
+
+        if active_workspace and active_workspace.name == "special:" .. special_workspace then
+            hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace))
+        else
+            hl.dispatch(hl.dsp.focus({ workspace = "special:" .. special_workspace }))
         end
     end
 end
