@@ -81,8 +81,9 @@ local function move_actions(win)
 end
 
 -- Toggle function
-local home = os.getenv("HOME")
-local json = require("utils.json") -- rxi's peak library
+local home           = os.getenv("HOME")
+local config_dir     = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
+local json           = require("utils.json") -- rxi's peak library
 
 -- Default config & smh merging
 local default_config = {
@@ -200,7 +201,7 @@ local function toggle(special_workspace)
             return hl.dispatch(hl.dsp.workspace.toggle_special(fated_target))
         end
 
-        local user_file = io.open(home .. "/.config/caelestia/cli.json", "r") -- Cli.json
+        local user_file = io.open(config_dir .. "/caelestia/cli.json", "r") -- Cli.json
         if user_file then
             local content = user_file:read("*a")
             user_file:close()
