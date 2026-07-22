@@ -128,6 +128,10 @@ end
 
 local function deep_match(actual, expected)
     if type(expected) == "table" then
+        if type(actual) ~= "table" and type(actual) ~= "userdata" then
+            return false
+        end
+
         for key, sub_expected in pairs(expected) do
             if not deep_match(actual[key], sub_expected) then
                 return false
