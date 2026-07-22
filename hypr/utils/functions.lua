@@ -83,7 +83,7 @@ end
 -- Toggle function
 local home       = os.getenv("HOME")
 local config_dir = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
-local json       = require("utils.json")     -- rxi's peak library
+local json       = require("utils.json") -- rxi's peak library
 
 -- Default config
 local function default_config()
@@ -209,12 +209,16 @@ local function toggle(special_workspace)
         if user_file then
             local content = user_file:read("*a")
             user_file:close()
-            local recognized, user_conf = pcall(json.decode, content)
-            if not recognized or type(user_conf) ~= "table" then
-                hl.exec_cmd("caelestia shell toaster error 'Error' 'check your cli.json again BAKA BAKA' info")
+            local recognized, conf_or_error = pcall(json.decode, content)
+            if recognized and type(conf_or_error) == "table" then
+                merge(config, conf_or_error.toggles or {})
+            else
+                -- Invalid cli.json: notify and fall back to defaults.
+                -- conf_or_error holds the parse error (string) or a non-table value on success.
+                local reason = recognized and "Expected a JSON object" or tostring(conf_or_error):gsub("^.-:%d+: ", "")
+                hl.exec_cmd("caelestia shell toaster error " ..
+                    shell_join({ "Failed to parse CLI config", reason }) .. " info")
             end
-            local user_config = (recognized and type(user_conf) == "table") and user_conf.toggles or {}
-            merge(config, user_config)
         end
 
         local apps          = config[special_workspace]
