@@ -81,37 +81,39 @@ local function move_actions(win)
 end
 
 -- Toggle function
-local home           = os.getenv("HOME")
-local config_dir     = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
-local json           = require("utils.json") -- rxi's peak library
+local home       = os.getenv("HOME")
+local config_dir = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
+local json       = require("utils.json")     -- rxi's peak library
 
--- Default config & smh merging
-local default_config = {
-    communication = {
-        discord  = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
-        whatsapp = { enable = true, match = { { class = "whatsapp" } }, move = true },
-    },
-    music = {
-        spotify = {
-            enable  = true,
-            match   = { { class = "Spotify" }, { initial_title = "Spotify" }, { initial_title = "Spotify Free" } },
-            command = { "spicetify", "watch", "-s" },
-            move    = true,
+-- Default config
+local function default_config()
+    return {
+        communication = {
+            discord  = { enable = true, match = { { class = "discord" } }, command = { "discord" }, move = true },
+            whatsapp = { enable = true, match = { { class = "whatsapp" } }, move = true },
         },
-        feishin = { enable = true, match = { { class = "feishin" } }, move = true },
-    },
-    sysmon = {
-        btop = {
-            enable  = true,
-            match   = { { class = "btop", title = "btop", workspace = { name = "special:sysmon" } } },
-            command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "exec btop" },
-            move    = true,
+        music = {
+            spotify = {
+                enable  = true,
+                match   = { { class = "Spotify" }, { initial_title = "Spotify" }, { initial_title = "Spotify Free" } },
+                command = { "spicetify", "watch", "-s" },
+                move    = true,
+            },
+            feishin = { enable = true, match = { { class = "feishin" } }, move = true },
         },
-    },
-    todo = {
-        todoist = { enable = true, match = { { class = "todoist" } }, command = { "todoist" }, move = true },
-    },
-}
+        sysmon = {
+            btop = {
+                enable  = true,
+                match   = { { class = "btop", title = "btop", workspace = { name = "special:sysmon" } } },
+                command = { "foot", "-a", "btop", "-T", "btop", "fish", "-C", "exec btop" },
+                move    = true,
+            },
+        },
+        todo = {
+            todoist = { enable = true, match = { { class = "todoist" } }, command = { "todoist" }, move = true },
+        },
+    }
+end
 
 local function merge(default_conf, user_conf)
     for category, apps in pairs(user_conf) do
@@ -201,6 +203,8 @@ local function toggle(special_workspace)
             return hl.dispatch(hl.dsp.workspace.toggle_special(fated_target))
         end
 
+        local config = default_config()
+
         local user_file = io.open(config_dir .. "/caelestia/cli.json", "r") -- Cli.json
         if user_file then
             local content = user_file:read("*a")
@@ -210,10 +214,10 @@ local function toggle(special_workspace)
                 hl.exec_cmd("caelestia shell toaster error 'Error' 'check your cli.json again BAKA BAKA' info")
             end
             local user_config = (recognized and type(user_conf) == "table") and user_conf.toggles or {}
-            merge(default_config, user_config)
+            merge(config, user_config)
         end
 
-        local apps          = default_config[special_workspace]
+        local apps          = config[special_workspace]
         local should_toggle = true
         if apps then
             local clients = hl.get_windows() or {}
