@@ -39,6 +39,7 @@ local function apply_resizer_rules(win)
 
     fn.resizer(win, "Bitwarden", 20, 54, bitwarden_actions, true, "class")
     fn.resizer(win, "^Extension: %(Bitwarden Password Manager%) %- Bitwarden", 20, 54, bitwarden_actions, false)
+    -- Bitwarden Chromium extension ID
     fn.resizer(win, "nngceckbapebfimnlniiiahkandclblb", 20, 54, bitwarden_actions, true, "class")
     fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip_actions, false)
 end
