@@ -225,7 +225,7 @@ local function toggle(special_workspace)
                 -- conf_or_error holds the parse error (string) or a non-table value on success.
                 local reason = recognized and "Expected a JSON object" or tostring(conf_or_error):gsub("^.-:%d+: ", "")
                 hl.exec_cmd("caelestia shell toaster error " ..
-                    shell_join({ "Failed to parse CLI config", reason }) .. " info")
+                    shell_join({ "Failed to parse CLI config", reason }) .. " error")
             end
         end
 
