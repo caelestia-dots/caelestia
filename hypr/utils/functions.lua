@@ -251,16 +251,21 @@ local function toggle(special_workspace)
             return hl.dispatch(hl.dsp.workspace.toggle_special(target))
         end
 
+        local on_correct_ws = active_workspace and active_workspace.name == "special:" .. special_workspace
+
+        -- Focus workspace before apps
+        if not on_correct_ws then
+            hl.dispatch(hl.dsp.focus({ workspace = "special:" .. special_workspace }))
+        end
+
         local apps = load_toggle_config()[special_workspace]
         if apps then
             place_apps(apps, special_workspace)
         end
 
-        -- Hide the special workspace if it's already active, otherwise focus it.
-        if active_workspace and active_workspace.name == "special:" .. special_workspace then
+        -- Hide workspace if already active
+        if on_correct_ws then
             hl.dispatch(hl.dsp.workspace.toggle_special(special_workspace))
-        else
-            hl.dispatch(hl.dsp.focus({ workspace = "special:" .. special_workspace }))
         end
     end
 end
