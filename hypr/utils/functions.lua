@@ -41,15 +41,23 @@ local function resize_active_window(x, y)
     end
 end
 
-local function resizer(window, pattern, x_percent, y_percent, actions, exact)
-    if (window and window.title) and string.find(window.title, pattern, 1, exact) then
+local function resizer(window, pattern, x_percent, y_percent, actions, exact, field)
+    local value = window and window[field or "title"]
+    if value and string.find(value, pattern, 1, exact) then
         local disp = (type(actions) == "table") and actions or { actions }
         for _, x in ipairs(disp) do
             hl.dispatch(x)
         end
 
-        hl.dispatch(hl.dsp.window.resize(resize_by_screen(x_percent, y_percent)))
-        hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true" }))
+        -- Target the matched window explicitly. Without window=, resize/set_prop
+        -- act on the currently focused window instead, mangling whatever tiled
+        -- window happened to be focused when this matched.
+        local sz = resize_by_screen(x_percent, y_percent)
+        if sz then
+            sz.window = window
+            hl.dispatch(hl.dsp.window.resize(sz))
+        end
+        hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true", window = window }))
     end
 end
 

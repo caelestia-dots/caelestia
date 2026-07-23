@@ -29,25 +29,20 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("caelestia shell -d")
 end)
 
--- Resizer listener
-hl.on("window.title", function(win)
-    local d = {
+-- Resizer listeners
+local function apply_resizer_rules(win)
+    local bitwarden_actions = {
         hl.dsp.window.float({ action = "on", window = win }),
         hl.dsp.window.center({ window = win }),
     }
-    local pip = fn.move_actions(win) or {}
+    local pip_actions = fn.move_actions(win) or {}
 
-    fn.resizer(win, "Bitwarden", 20, 54, d, true)
-    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
-end)
+    fn.resizer(win, "Bitwarden", 20, 54, bitwarden_actions, true, "class")
+    fn.resizer(win, "^Extension: %(Bitwarden Password Manager%) %- Bitwarden", 20, 54, bitwarden_actions, false)
+    -- Bitwarden Chromium extension ID
+    fn.resizer(win, "nngceckbapebfimnlniiiahkandclblb", 20, 54, bitwarden_actions, true, "class")
+    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip_actions, false)
+end
 
-hl.on("window.open", function(win)
-    local d = {
-        hl.dsp.window.float({ action = "on", window = win }),
-        hl.dsp.window.center({ window = win }),
-    }
-    local pip = fn.move_actions(win) or {}
-
-    fn.resizer(win, "Bitwarden", 20, 54, d, true)
-    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip, false)
-end)
+hl.on("window.title", apply_resizer_rules)
+hl.on("window.open", apply_resizer_rules)
