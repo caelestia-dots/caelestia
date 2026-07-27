@@ -81,7 +81,6 @@ tagged_rule(float_tag, {
     "blueman-manager",                    -- Bluetooth GUI
     "com.github.GradienceTeam.Gradience", -- GTK themer (deprecated)
     "feh|imv|swappy",                     -- Image viewers
-    "system-config-printer",              -- Printer config
     "org.quickshell",                     -- Quickshell
 }, "class")
 tagged_rule(float_tag, {
@@ -112,7 +111,8 @@ tagged_rule(float_70_80_tag, {
 
 -- 50% x 60%
 tagged_rule(float_50_60_tag, {
-    "nwg-look", -- GTK theme manager
+    "nwg-look",              -- GTK theme manager
+    "system-config-printer", -- Printer config
 }, "class")
 
 
