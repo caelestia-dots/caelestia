@@ -34,23 +34,6 @@ local music_player_tag = "music_player"
 local communication_app_tag = "communication_app"
 local todo_app_tag = "todo_app"
 
-create_tag(opaque_tag, { opaque = true })
-create_tag(float_tag, { float = true })
-create_tag(float_50_60_tag, { float = true, size = "(monitor_w*0.5) (monitor_h*0.6)", center = true })
-create_tag(float_60_70_tag, { float = true, size = "(monitor_w*0.6) (monitor_h*0.7)", center = true })
-create_tag(float_70_80_tag, { float = true, size = "(monitor_w*0.7) (monitor_h*0.8)", center = true })
-create_tag(game_tag, { immediate = true, idle_inhibit = "always" })
-create_tag(xwl_popup_tag, {
-    no_dim = true,
-    no_shadow = true,
-    no_blur = true,
-    opaque = true,
-    rounding = math.min(10, vars.windowRounding), -- Popups are usually small, so we want to limit the rounding
-})
-create_tag(system_monitor_tag, { workspace = "special:sysmon" })
-create_tag(music_player_tag, { workspace = "special:music" })
-create_tag(communication_app_tag, { workspace = "special:communication" })
-create_tag(todo_app_tag, { workspace = "special:todo" })
 
 ----------------------
 ---- Window rules ----
@@ -70,6 +53,7 @@ hl.window_rule({
     float             = true,
     keep_aspect_ratio = true,
 })
+
 
 ----------------------
 ---- Tagged rules ----
@@ -186,6 +170,30 @@ tagged_rule(float_tag, {
     { class = "com-atlauncher-App", title = "ATLauncher Console" },
     { class = "PandoraLauncher",    title = "Minecraft Game Output" },
 })
+
+
+-------------------------
+---- Tag definitions ----
+-------------------------
+-- These have to come after all uses of window tagging. Thank you Hyprland...
+
+create_tag(opaque_tag, { opaque = true })
+create_tag(float_tag, { float = true })
+create_tag(float_50_60_tag, { float = true, size = "(monitor_w*0.5) (monitor_h*0.6)", center = true })
+create_tag(float_60_70_tag, { float = true, size = "(monitor_w*0.6) (monitor_h*0.7)", center = true })
+create_tag(float_70_80_tag, { float = true, size = "(monitor_w*0.7) (monitor_h*0.8)", center = true })
+create_tag(game_tag, { immediate = true, idle_inhibit = "always" })
+create_tag(xwl_popup_tag, {
+    no_dim = true,
+    no_shadow = true,
+    no_blur = true,
+    opaque = true,
+    rounding = math.min(10, vars.windowRounding), -- Popups are usually small, so we want to limit the rounding
+})
+create_tag(system_monitor_tag, { workspace = "special:sysmon" })
+create_tag(music_player_tag, { workspace = "special:music" })
+create_tag(communication_app_tag, { workspace = "special:communication" })
+create_tag(todo_app_tag, { workspace = "special:todo" })
 
 
 -------------------------
