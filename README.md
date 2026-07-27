@@ -67,13 +67,15 @@ There aren't really any usage instructions... these are a set of dotfiles.
 
 Here's a list of useful keybinds though:
 
--   `Super` - open launcher
--   `Super` + `#` - switch to workspace `#`
--   `Super` `Alt` + `#` - move window to workspace `#`
--   `Super` + `T` - open terminal (foot)
--   `Super` + `W` - open browser (zen)
--   `Super` + `C` - open IDE (vscodium)
--   `Super` + `S` - toggle special workspace or close current special workspace
--   `Ctrl` `Alt` + `Delete` - open session menu
--   `Ctrl` `Super` + `Space` - toggle media play state
--   `Ctrl` `Super` `Alt` + `R` - restart the shell
+| Keybind                        | Action                                                      |
+| ------------------------------ | ----------------------------------------------------------- |
+| `Super`                        | Open launcher                                               |
+| `Super` + `#`                  | Switch to workspace `#`                                     |
+| `Super` + `Alt` + `#`          | Move window to workspace `#`                                |
+| `Super` + `T`                  | Open terminal (default: foot)                               |
+| `Super` + `W`                  | Open browser (default: firefox)                             |
+| `Super` + `C`                  | Open IDE (default: vscodium)                                |
+| `Super` + `S`                  | Toggle special workspace or close current special workspace |
+| `Ctrl` + `Alt` + `Delete`      | Open session menu                                           |
+| `Ctrl` + `Super` + `Space`     | Toggle media play state                                     |
+| `Ctrl` + `Super` + `Alt` + `R` | Restart the shell                                           |
