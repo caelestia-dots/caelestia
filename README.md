@@ -70,10 +70,10 @@ Here's a list of useful keybinds though:
 -   `Super` - open launcher
 -   `Super` + `#` - switch to workspace `#`
 -   `Super` `Alt` + `#` - move window to workspace `#`
--   `Super` + `T` - open terminal (foot)
--   `Super` + `W` - open browser (zen)
--   `Super` + `C` - open IDE (vscodium)
+-   `Super` + `T` - open terminal (default: foot)
+-   `Super` + `W` - open browser (default: firefox)
+-   `Super` + `C` - open IDE (default: vscodium)
 -   `Super` + `S` - toggle special workspace or close current special workspace
--   `Ctrl` `Alt` + `Delete` - open session menu
--   `Ctrl` `Super` + `Space` - toggle media play state
--   `Ctrl` `Super` `Alt` + `R` - restart the shell
+-   `Ctrl` + `Alt` + `Delete` - open session menu
+-   `Ctrl` + `Super` + `Space` - toggle media play state
+-   `Ctrl` + `Super` + `Alt` + `R` - restart the shell
