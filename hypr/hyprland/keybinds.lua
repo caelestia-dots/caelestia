@@ -7,16 +7,34 @@ local release          = { release = true }
 local repeating        = { repeating = true }
 local locked_repeating = { locked = true, repeating = true }
 
+local function repeating_unless_mouse(key)
+    return not normalize_keybind(key):find("mouse", 1, true) and repeating or nil
+end
+
+local function normalize_keybind(key)
+    return key:gsub("%s+", ""):lower()
+end
+
 local function create_bind(keybinds, action, flags)
     local keys = type(keybinds) == "string" and { keybinds } or keybinds
+    local get_flags = type(flags) == "function" and flags or function()
+        return flags
+    end
 
-    for _, keybind in ipairs(keybinds) do
-        hl.bind(keybind, action, flags)
+    for _, key in ipairs(keys) do
+        hl.bind(key, action, get_flags(key))
     end
 end
 
 -- Launcher
-create_bind("SUPER + SUPER_L", hl.dsp.global("caelestia:launcher"), release)
+local launcher_default = normalize_keybind("SUPER + SUPER_L")
+create_bind(
+    vars.kbLauncher,
+    hl.dsp.global("caelestia:launcher"),
+    function(key)
+        return normalize_keybind(key) == launcher_default and release or nil
+    end
+)
 
 -- Misc
 create_bind(vars.kbSession, hl.dsp.global("caelestia:session"))
@@ -48,41 +66,29 @@ for i = 1, 10 do
 end
 
 -- Go to workspace -1/+1
-create_bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "-1" }))
-create_bind("SUPER + mouse_down", hl.dsp.focus({ workspace = "+1" }))
-create_bind({ vars.kbPrevWs, "SUPER + Page_Up" }, hl.dsp.focus({ workspace = "-1" }), repeating)
-create_bind({ vars.kbNextWs, "SUPER + Page_Down" }, hl.dsp.focus({ workspace = "+1" }), repeating)
+create_bind(vars.kbPrevWs, hl.dsp.focus({ workspace = "-1" }), repeating_unless_mouse)
+create_bind(vars.kbNextWs, hl.dsp.focus({ workspace = "+1" }), repeating_unless_mouse)
 
 -- Go to workspace group -1/+1
 create_bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "-10" }))
 create_bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "+10" }))
 
 -- Move window to workspace -1/+1
-create_bind("SUPER + ALT + mouse_up", hl.dsp.window.move({ workspace = "-1" }))
-create_bind("SUPER + ALT + mouse_down", hl.dsp.window.move({ workspace = "+1" }))
-create_bind(
-    { "SUPER + ALT + Page_Down", "CTRL + SUPER + SHIFT + right" },
-    hl.dsp.window.move({ workspace = "+1" }),
-    repeating
-)
-create_bind(
-    { "SUPER + ALT + Page_Up", "CTRL + SUPER + SHIFT + left" },
-    hl.dsp.window.move({ workspace = "-1" }),
-    repeating
-)
+create_bind(vars.kbMoveWinToWsNext, hl.dsp.window.move({ workspace = "+1" }), repeating_unless_mouse)
+create_bind(vars.kbMoveWinToWsPrev, hl.dsp.window.move({ workspace = "-1" }), repeating_unless_mouse)
 
 -- Move window to/from special workspace
-create_bind({ vars.kbMoveWinToWsSpecial, "CTRL + SUPER + SHIFT + up" }, hl.dsp.window.move({ workspace = "special:special" }))
-create_bind("CTRL + SUPER + SHIFT + down", hl.dsp.window.move({ workspace = "e+0" }))
+create_bind(vars.kbMoveWinToWsSpecial, hl.dsp.window.move({ workspace = "special:special" }))
+create_bind(vars.kbMoveWinFromWsSpecial, hl.dsp.window.move({ workspace = "e+0" }))
 
 -- Window groups
-create_bind(vars.kbWindowGroupCycleNext, hl.dsp.window.cycle_next(), repeating)
-create_bind(vars.kbWindowGroupCyclePrev, hl.dsp.window.cycle_next({ next = false }), repeating)
-create_bind("CTRL + ALT + Tab", hl.dsp.group.next(), repeating)
-create_bind("CTRL + SHIFT + ALT + Tab", hl.dsp.group.prev(), repeating)
+create_bind(vars.kbWindowCycleNext, hl.dsp.window.cycle_next(), repeating)
+create_bind(vars.kbWindowCyclePrev, hl.dsp.window.cycle_next({ next = false }), repeating)
+create_bind(vars.kbWindowGroupCycleNext, hl.dsp.group.next(), repeating)
+create_bind(vars.kbWindowGroupCyclePrev, hl.dsp.group.prev(), repeating)
 create_bind(vars.kbToggleGroup, hl.dsp.group.toggle())
 create_bind(vars.kbUngroup, hl.dsp.window.move({ out_of_group = true }))
-create_bind("SUPER + SHIFT + Comma", hl.dsp.group.lock_active())
+create_bind(vars.kbGroupLockActive, hl.dsp.group.lock_active())
 
 -- Window actions
 for _, dir in ipairs({ "left", "right", "up", "down" }) do
@@ -90,15 +96,15 @@ for _, dir in ipairs({ "left", "right", "up", "down" }) do
     create_bind("SUPER + SHIFT + " .. dir, hl.dsp.window.move({ direction = dir }))
 end
 
-create_bind({ "SUPER + Minus", "SUPER + ALT + left" }, fn.resize_active_window(-10, 0), repeating)
-create_bind({ "SUPER + Equal", "SUPER + ALT + right" }, fn.resize_active_window(10, 0), repeating)
-create_bind({ "SUPER + SHIFT + Minus", "SUPER + ALT + up" }, fn.resize_active_window(0, -10), repeating)
-create_bind({ "SUPER + SHIFT + Equal", "SUPER + ALT + down" }, fn.resize_active_window(0, 10), repeating)
+create_bind(vars.kbWindowDecreaseWidth, fn.resize_active_window(-10, 0), repeating)
+create_bind(vars.kbWindowIncreaseWidth, fn.resize_active_window(10, 0), repeating)
+create_bind(vars.kbWindowDecreaseHeight, fn.resize_active_window(0, -10), repeating)
+create_bind(vars.kbWindowIncreaseHeight, fn.resize_active_window(0, 10), repeating)
 
 create_bind({ vars.kbMoveWindow, "SUPER + mouse:272" }, hl.dsp.window.drag(), mouse)
 create_bind({ vars.kbResizeWindow, "SUPER + mouse:273" }, hl.dsp.window.resize(), mouse)
-create_bind("CTRL + SUPER + Backslash", hl.dsp.window.center())
-create_bind("CTRL + SUPER + ALT + Backslash", function()
+create_bind(vars.kbCenterWindow, hl.dsp.window.center())
+create_bind(vars.kbNormalizeWindow, function()
     hl.dispatch(hl.dsp.window.resize(fn.resize_by_screen(55, 70)))
     hl.dispatch(hl.dsp.window.center())
 end)
@@ -180,7 +186,7 @@ create_bind(vars.kbClipboard, hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboa
 create_bind(vars.kbClipboardDel, hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard -d"))
 create_bind(vars.kbEmoji, hl.dsp.exec_cmd("pkill fuzzel || caelestia emoji -p"))
 create_bind(
-    "CTRL + SHIFT + ALT + V",
+    vars.kbClipboardPasteLatest,
     hl.dsp.exec_cmd('sleep 0.5s && ydotool type -d 1 "$(cliphist list | head -1 | cliphist decode)"'),
     locked
 )

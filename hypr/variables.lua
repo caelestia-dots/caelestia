@@ -61,26 +61,39 @@ return {
     -- Workspaces
     kbMoveWinToWs              = "SUPER + ALT",
     kbMoveWinToWsGroup         = "CTRL + SUPER + ALT",
-    kbMoveWinToWsSpecial       = "SUPER + ALT + S",
+    kbMoveWinToWsSpecial       = { "SUPER + ALT + S", "CTRL + SUPER + SHIFT + Up" },
+    kbMoveWinFromWsSpecial     = "CTRL + SUPER + SHIFT + Down",
+    kbMoveWinToWsNext          = { "SUPER + ALT + mouse_down", "SUPER + ALT + Page_Down", "CTRL + SUPER + SHIFT + Right" },
+    kbMoveWinToWsPrev          = { "SUPER + ALT + mouse_up", "SUPER + ALT + Page_Up", "CTRL + SUPER + SHIFT + Left" },
     kbGoToWs                   = "SUPER",
     kbGoToWsGroup              = "CTRL + SUPER",
-    kbNextWs                   = "CTRL + SUPER + Right",
-    kbPrevWs                   = "CTRL + SUPER + Left",
+    kbNextWs                   = { "SUPER + mouse_down", "CTRL + SUPER + Right", "SUPER + Page_Down" },
+    kbPrevWs                   = { "SUPER + mouse_up", "CTRL + SUPER + Left", "SUPER + Page_Up" },
 
     -- Window Group
-    kbWindowGroupCycleNext     = "ALT + TAB",
-    kbWindowGroupCyclePrev     = "SHIFT + ALT + TAB",
+    kbWindowCycleNext          = "ALT + TAB",
+    kbWindowCyclePrev          = "SHIFT + ALT + TAB",
+    kbWindowGroupCycleNext     = "CTRL + ALT + TAB",
+    kbWindowGroupCyclePrev     = "CTRL + SHIFT + ALT + TAB",
     kbUngroup                  = "SUPER + U",
     kbToggleGroup              = "SUPER + Comma",
+    kbGroupLockActive          = "SUPER + SHIFT + Comma",
 
-    -- Window Action
+    -- Window Actions
+    kbWindowDecreaseWidth      = { "SUPER + Minus", "SUPER + ALT + Left" },
+    kbWindowIncreaseWidth      = { "SUPER + Equal", "SUPER + ALT + Right" },
+    kbWindowDecreaseHeight     = { "SUPER + SHIFT + Minus", "SUPER + ALT + Up" },
+    kbWindowIncreaseHeight     = { "SUPER + SHIFT + Equal", "SUPER + ALT + Down" },
+
     kbMoveWindow               = "SUPER + Z",
     kbResizeWindow             = "SUPER + X",
-    kbWindowPip                = "SUPER + ALT + backslash",
+    kbCenterWindow             = "CTRL + SUPER + Backslash",
+    kbNormalizeWindow          = "CTRL + SUPER + ALT + Backslash",
+    kbWindowPip                = "SUPER + ALT + Backslash",
     kbPinWindow                = "SUPER + P",
     kbWindowFullscreen         = "SUPER + F",
     kbWindowBorderedFullscreen = "SUPER + ALT + F",
-    kbToggleWindowFloating     = "SUPER + ALT + space",
+    kbToggleWindowFloating     = "SUPER + ALT + Space",
     kbCloseWindow              = "SUPER + Q",
 
     -- Special workspaces toggles
@@ -114,6 +127,7 @@ return {
     kbVolumeMute               = "SUPER + SHIFT + M",
 
     -- Misc
+    kbLauncher                 = "SUPER + SUPER_L",
     kbSession                  = "CTRL + ALT + Delete",
     kbShowSidebar              = "SUPER + N",
     kbClearNotifs              = "CTRL + ALT + C",
@@ -125,5 +139,6 @@ return {
     -- Clipboard and emoji picker
     kbClipboard                = "SUPER + V",
     kbClipboardDel             = "SUPER + ALT + V",
+    kbClipboardPasteLatest     = "CTRL + SHIFT + ALT + V",
     kbEmoji                    = "SUPER + Period",
 }
