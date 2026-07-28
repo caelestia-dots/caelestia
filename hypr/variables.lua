@@ -10,7 +10,7 @@ return {
     browser                    = "firefox",
     editor                     = "codium",
     fileExplorer               = "thunar",
-    audioSettings              = "pavucontrol",
+    audioSettings              = "pwvucontrol",
 
     -- Touchpad
     touchpadDisableTyping      = true,
