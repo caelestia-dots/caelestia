@@ -136,7 +136,7 @@ return {
     kbShowPanels               = "SUPER + K",
     kbLock                     = "SUPER + L",
     kbRestoreLock              = "SUPER + ALT + L",
-    kbSleepGestureCmd          = "SUPER + SHIFT + L",
+    kbSleep                    = "SUPER + SHIFT + L",
 
     -- Clipboard and emoji picker
     kbClipboard                = "SUPER + V",

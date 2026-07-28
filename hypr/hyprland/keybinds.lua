@@ -181,7 +181,7 @@ create_bind(
 )
 
 -- Sleep
-create_bind(vars.kbSleepGestureCmd, hl.dsp.exec_cmd(vars.sleepGestureCmd), locked)
+create_bind(vars.kbSleep, hl.dsp.exec_cmd(vars.sleepGestureCmd), locked)
 
 -- Clipboard and emoji picker
 create_bind(vars.kbClipboard, hl.dsp.exec_cmd("pkill fuzzel || caelestia clipboard"))
