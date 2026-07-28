@@ -69,6 +69,8 @@ return {
     kbGoToWsGroup              = "CTRL + SUPER",
     kbNextWs                   = { "SUPER + mouse_down", "CTRL + SUPER + Right", "SUPER + Page_Down" },
     kbPrevWs                   = { "SUPER + mouse_up", "CTRL + SUPER + Left", "SUPER + Page_Up" },
+    kbNextWsGroup              = "CTRL + SUPER + mouse_down",
+    kbPrevWsGroup              = "CTRL + SUPER + mouse_up",
 
     -- Window Group
     kbWindowCycleNext          = "ALT + TAB",

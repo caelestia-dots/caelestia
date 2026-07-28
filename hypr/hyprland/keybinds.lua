@@ -70,8 +70,8 @@ create_bind(vars.kbPrevWs, hl.dsp.focus({ workspace = "-1" }), repeating_unless_
 create_bind(vars.kbNextWs, hl.dsp.focus({ workspace = "+1" }), repeating_unless_mouse)
 
 -- Go to workspace group -1/+1
-create_bind("CTRL + SUPER + mouse_up", hl.dsp.focus({ workspace = "-10" }))
-create_bind("CTRL + SUPER + mouse_down", hl.dsp.focus({ workspace = "+10" }))
+create_bind(vars.kbPrevWsGroup, hl.dsp.focus({ workspace = "-10" }), repeating_unless_mouse)
+create_bind(vars.kbNextWsGroup, hl.dsp.focus({ workspace = "+10" }), repeating_unless_mouse)
 
 -- Move window to workspace -1/+1
 create_bind(vars.kbMoveWinToWsNext, hl.dsp.window.move({ workspace = "+1" }), repeating_unless_mouse)
