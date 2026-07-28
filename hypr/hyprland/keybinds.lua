@@ -1,18 +1,20 @@
 local vars = require("variables")
 local fn   = require("utils.functions")
 
+
+-- Flags
 local locked           = { locked = true }
 local mouse            = { mouse = true }
 local release          = { release = true }
 local repeating        = { repeating = true }
 local locked_repeating = { locked = true, repeating = true }
 
-local function repeating_unless_mouse(key)
-    return not normalize_keybind(key):find("mouse", 1, true) and repeating or nil
+local function normalise_keybind(key)
+    return key:gsub("%s+", ""):lower()
 end
 
-local function normalize_keybind(key)
-    return key:gsub("%s+", ""):lower()
+local function repeating_unless_mouse(key)
+    return not normalise_keybind(key):find("mouse", 1, true) and repeating or nil
 end
 
 local function create_bind(keybinds, action, flags)
@@ -27,12 +29,12 @@ local function create_bind(keybinds, action, flags)
 end
 
 -- Launcher
-local launcher_default = normalize_keybind("SUPER + SUPER_L")
+local launcher_default = normalise_keybind("SUPER + SUPER_L")
 create_bind(
     vars.kbLauncher,
     hl.dsp.global("caelestia:launcher"),
     function(key)
-        return normalize_keybind(key) == launcher_default and release or nil
+        return normalise_keybind(key) == launcher_default and release or nil
     end
 )
 
