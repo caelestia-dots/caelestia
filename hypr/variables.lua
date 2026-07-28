@@ -58,15 +58,19 @@ return {
     ---- KEYBINDS ----
     ------------------
 
-    -- Workspaces
+    -- Modifier only, the actual binds will be mod + 0-9. These should be strings and not arrays.
+    kbGoToWs                   = "SUPER",
+    kbGoToWsGroup              = "CTRL + SUPER",
     kbMoveWinToWs              = "SUPER + ALT",
     kbMoveWinToWsGroup         = "CTRL + SUPER + ALT",
+
+    -- All the following binds can be either an array of binds to bind multiple keys, or a single string.
+
+    -- Workspaces
     kbMoveWinToWsSpecial       = { "SUPER + ALT + S", "CTRL + SUPER + SHIFT + Up" },
     kbMoveWinFromWsSpecial     = "CTRL + SUPER + SHIFT + Down",
     kbMoveWinToWsNext          = { "SUPER + ALT + mouse_down", "SUPER + ALT + Page_Down", "CTRL + SUPER + SHIFT + Right" },
     kbMoveWinToWsPrev          = { "SUPER + ALT + mouse_up", "SUPER + ALT + Page_Up", "CTRL + SUPER + SHIFT + Left" },
-    kbGoToWs                   = "SUPER",
-    kbGoToWsGroup              = "CTRL + SUPER",
     kbNextWs                   = { "SUPER + mouse_down", "CTRL + SUPER + Right", "SUPER + Page_Down" },
     kbPrevWs                   = { "SUPER + mouse_up", "CTRL + SUPER + Left", "SUPER + Page_Up" },
     kbNextWsGroup              = "CTRL + SUPER + mouse_down",
