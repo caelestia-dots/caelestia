@@ -61,6 +61,7 @@ return {
     -- Workspaces
     kbMoveWinToWs              = "SUPER + ALT",
     kbMoveWinToWsGroup         = "CTRL + SUPER + ALT",
+    kbMoveWinToWsSpecial       = "SUPER + ALT + S",
     kbGoToWs                   = "SUPER",
     kbGoToWsGroup              = "CTRL + SUPER",
     kbNextWs                   = "CTRL + SUPER + Right",
@@ -94,6 +95,23 @@ return {
     kbBrowser                  = "SUPER + W",
     kbEditor                   = "SUPER + C",
     kbFileExplorer             = "SUPER + E",
+    kbAudioSettings            = "CTRL + ALT + V",
+
+    -- Utilities
+    kbScreenshot               = "Print",
+    kbScreenshotFreeze         = "SUPER + SHIFT + S",
+    kbScreenshotRegion         = "SUPER + SHIFT + ALT + S",
+    kbRecord                   = "CTRL + ALT + R",
+    kbRecordSound              = "SUPER + ALT + R",
+    kbRecordRegion             = "SUPER + SHIFT + ALT + R",
+    kbColorPicker              = "SUPER + SHIFT + C",
+
+    -- Media
+    kbMediaToggle              = "CTRL + SUPER + Space",
+    kbMediaNext                = "CTRL + SUPER + Equal",
+    kbMediaPrev                = "CTRL + SUPER + Minus",
+    kbMediaStop                = "CTRL + SUPER + Backspace",
+    kbVolumeMute               = "SUPER + SHIFT + M",
 
     -- Misc
     kbSession                  = "CTRL + ALT + Delete",
@@ -102,4 +120,10 @@ return {
     kbShowPanels               = "SUPER + K",
     kbLock                     = "SUPER + L",
     kbRestoreLock              = "SUPER + ALT + L",
+    kbSleepGestureCmd          = "SUPER + SHIFT + L",
+
+    -- Clipboard and emoji picker
+    kbClipboard                = "SUPER + V",
+    kbClipboardDel             = "SUPER + ALT + V",
+    kbEmoji                    = "SUPER + Period",
 }
