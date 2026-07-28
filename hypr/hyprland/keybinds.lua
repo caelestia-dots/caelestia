@@ -173,6 +173,10 @@ create_bind({ vars.kbMediaToggle, "XF86AudioPlay", "XF86AudioPause" }, hl.dsp.gl
 create_bind({ vars.kbMediaNext, "XF86AudioNext" }, hl.dsp.global("caelestia:mediaNext"), locked)
 create_bind({ vars.kbMediaPrev, "XF86AudioPrev" }, hl.dsp.global("caelestia:mediaPrev"), locked)
 create_bind({ vars.kbMediaStop, "XF86AudioStop" }, hl.dsp.global("caelestia:mediaStop"), locked)
+create_bind(vars.kbMediaSeekFiveFW, hl.dsp.global("caelestia:mediaSeekForward"), locked)
+create_bind(vars.kbMediaSeekFiveBW, hl.dsp.global("caelestia:mediaSeekBackward"), locked)
+create_bind(vars.kbMediaSeekTenFW, hl.dsp.global("caelestia:mediaSeekForwardLong"), locked)
+create_bind(vars.kbMediaSeekTenBW, hl.dsp.global("caelestia:mediaSeekBackwardLong"), locked)
 
 -- Volume
 create_bind({ vars.kbVolumeMute, "XF86AudioMute" }, hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), locked)
