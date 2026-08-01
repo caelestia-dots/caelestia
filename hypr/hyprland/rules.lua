@@ -61,14 +61,13 @@ hl.window_rule({
 
 -- Opaque apps
 tagged_rule(opaque_tag, {
-    "foot",                                   -- Terminal
-    "equibop",                                -- Discord client
-    "org.quickshell",                         -- Quickshell
-    "feh|imv|swappy",                         -- Image viewers
-    "krita|gimp|inkscape|darktable",          -- Image editors
-    "resolve|kdenlive|shotcut",               -- Video editors
-    "blender|godot",                          -- 3D editors
-    "(steam_app_(default|[0-9]+))|gamescope", -- Games
+    "foot",                          -- Terminal
+    "equibop",                       -- Discord client
+    "org.quickshell",                -- Quickshell
+    "feh|imv|swappy",                -- Image viewers
+    "krita|gimp|inkscape|darktable", -- Image editors
+    "resolve|kdenlive|shotcut",      -- Video editors
+    "blender|godot",                 -- 3D editors
 }, "class")
 
 
@@ -182,7 +181,7 @@ create_tag(float_tag, { float = true })
 create_tag(float_50_60_tag, { float = true, size = "(monitor_w*0.5) (monitor_h*0.6)", center = true })
 create_tag(float_60_70_tag, { float = true, size = "(monitor_w*0.6) (monitor_h*0.7)", center = true })
 create_tag(float_70_80_tag, { float = true, size = "(monitor_w*0.7) (monitor_h*0.8)", center = true })
-create_tag(game_tag, { immediate = true, idle_inhibit = "always" })
+create_tag(game_tag, { opaque = true, immediate = true, idle_inhibit = "always" })
 create_tag(xwl_popup_tag, {
     no_dim = true,
     no_shadow = true,
