@@ -121,7 +121,7 @@ tagged_rule(game_tag, {
     "steam_app_[0-9]+",  -- Steam games
     "steam_app_default", -- Lutris games
     "gamescope",         -- Gamescope
-})
+}, "class")
 
 
 -- Xwayland popups
@@ -138,7 +138,7 @@ tagged_rule(music_player_tag, {
     "Spotify",                                                     -- Spotify
     "Cider",                                                       -- Apple music
     "com.github.th-ch.youtube-music|com-maxrave-simpmusic-MainKt", -- YouTube music
-})
+}, "class")
 tagged_rule(music_player_tag, {
     "Spotify|Spotify Free" -- Spotify wayland, it has no class for some reason
 }, "initial_title")
