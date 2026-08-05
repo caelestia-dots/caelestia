@@ -1,6 +1,29 @@
 local vars = require("variables")
 local fn   = require("utils.functions")
 
+-- Cursors 
+local function apply_cursors()
+    hl.exec_cmd("hyprctl setcursor " .. vars.cursorTheme .. " " .. vars.cursorSize)
+    
+    hl.exec_cmd("hyprctl keyword env XCURSOR_THEME," .. vars.cursorTheme)
+    hl.exec_cmd("hyprctl keyword env XCURSOR_SIZE," .. vars.cursorSize)
+    
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme " .. vars.cursorTheme)
+    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. vars.cursorSize)
+    
+    hl.exec_cmd(string.format(
+        "printf 'Xcursor.theme: %s\\nXcursor.size: %s\\n' | xrdb -merge", 
+        vars.cursorTheme, vars.cursorSize
+    ))
+    
+    hl.exec_cmd(string.format(
+        "mkdir -p ~/.local/share/icons/default && printf '[Icon Theme]\\nName=Default\\nComment=Default Cursor Theme\\nInherits=%s\\n' > ~/.local/share/icons/default/index.theme",
+        vars.cursorTheme
+    ))
+end
+
+apply_cursors()
+
 hl.on("hyprland.start", function()
     -- Keyring and auth
     hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
@@ -12,19 +35,6 @@ hl.on("hyprland.start", function()
 
     -- Auto delete trash 30 days old
     hl.exec_cmd("trash-empty 30")
-
-    -- Cursors
-    hl.exec_cmd("hyprctl setcursor " .. vars.cursorTheme .. " " .. vars.cursorSize)
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme " .. vars.cursorTheme)
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. vars.cursorSize)
-    hl.exec_cmd(string.format(
-        "printf 'Xcursor.theme: %s\\nXcursor.size: %s\\n' | xrdb -merge", 
-        vars.cursorTheme, vars.cursorSize
-    ))
-    hl.exec_cmd(string.format(
-        "mkdir -p ~/.local/share/icons/default && printf '[Icon Theme]\\nName=Default\\nComment=Default Cursor Theme\\nInherits=%s\\n' > ~/.local/share/icons/default/index.theme",
-        vars.cursorTheme
-    ))
 
     -- Location provider and night light
     hl.exec_cmd("/usr/lib/geoclue-2.0/demos/agent")
