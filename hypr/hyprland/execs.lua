@@ -17,6 +17,14 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprctl setcursor " .. vars.cursorTheme .. " " .. vars.cursorSize)
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme " .. vars.cursorTheme)
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. vars.cursorSize)
+    hl.exec_cmd(string.format(
+        "printf 'Xcursor.theme: %s\\nXcursor.size: %s\\n' | xrdb -merge", 
+        vars.cursorTheme, vars.cursorSize
+    ))
+    hl.exec_cmd(string.format(
+        "mkdir -p ~/.local/share/icons/default && printf '[Icon Theme]\\nName=Default\\nComment=Default Cursor Theme\\nInherits=%s\\n' > ~/.local/share/icons/default/index.theme",
+        vars.cursorTheme
+    ))
 
     -- Location provider and night light
     hl.exec_cmd("/usr/lib/geoclue-2.0/demos/agent")
