@@ -36,8 +36,6 @@ local function apply_cursors()
     os.execute(shell_cmd)
 
     hl.exec_cmd("hyprctl setcursor '" .. theme .. "' " .. size)
-    hl.exec_cmd("hyprctl keyword env XCURSOR_THEME,'" .. theme .. "'")
-    hl.exec_cmd("hyprctl keyword env XCURSOR_SIZE," .. size)
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme '" .. theme .. "'")
     hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-size " .. size)
     
