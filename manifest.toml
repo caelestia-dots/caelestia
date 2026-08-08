@@ -137,7 +137,7 @@ packages = [
     "pipewire-alsa",
     "pipewire-jack",
     "wireplumber",
-    "pavucontrol",
+    "pwvucontrol",
 ]
 
 [[components]]
