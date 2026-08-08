@@ -38,14 +38,14 @@ body:
 
     - type: textarea
       attributes:
-          label: "3a. Describe the issue"
+          label: "3. Describe the issue"
           placeholder: "Describe your issue here!"
       validations:
           required: true
 
     - type: textarea
       attributes:
-          label: "3b. Logs content"
+          label: "4. Logs content"
           description: |
               **Tips for pasting logs:**
               1. Use `LANG=C LC_ALL=C` to get the output of a command in English.
