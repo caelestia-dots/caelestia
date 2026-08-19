@@ -137,7 +137,7 @@ packages = [
     "pipewire-alsa",
     "pipewire-jack",
     "wireplumber",
-    "pavucontrol",
+    "pwvucontrol",
 ]
 
 [[components]]
@@ -219,6 +219,16 @@ packages = ["zed"]
 [[components.entries]]
 src = "zed"
 dest = "$XDG_CONFIG_HOME/zed"
+
+[[components]]
+name = "nvim"
+packages = ["neovim"]
+[[components.entries]]
+src = "nvim/colors/caelestia.lua"
+dest = "$XDG_CONFIG_HOME/nvim/colors/caelestia.lua"
+[[components.entries]]
+src = "nvim/lua/plugins/caelestia.lua"
+dest = "$XDG_CONFIG_HOME/nvim/lua/plugins/caelestia.lua"
 
 [[components]]
 name = "discord"
