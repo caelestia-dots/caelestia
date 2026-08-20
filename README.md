@@ -1,28 +1,22 @@
 # caelestia
 
-This is the main repo of the caelestia dots and contains user configs for
+This is the main repo of the Caelestia dotfiles and contains user configs for
 various apps.
 
 > [!IMPORTANT]
-> The legacy `install.fish` script in this repo has been deprecated in favour
-> of the [CLI](https://github.com/caelestia-dots/cli)'s install command.
+> The legacy `install.fish` script in this repo has been removed in favour
+> of the [CLI][cli-repo]'s install command.
 >
 > If you have an existing installation with the legacy script, please update
-> the CLI and run the install command to migrate.
+> the CLI and run the install command to complete the migration.
 
 > [!IMPORTANT]
 > We have switched to using Lua for the Hyprland config!
 > For everyone with a custom `~/.config/caelestia/hypr-user.conf`
 > or `~/.config/caelestia/hypr-vars.conf`, please convert it to Lua
-> either manually, or using one of the available converters online.
+> either manually or using one of the available converters online.
 >
-> Usage for `hypr-vars.lua`:
->
-> ```lua
-> return {
->   browser = "chromium",
-> }
-> ```
+> For more information on using these files, see the [Configuring](#configuring) section.
 
 ## Installation (Arch Linux)
 
@@ -60,16 +54,62 @@ Use `caelestia update` to perform a full system update and update the dots.
 > These dots do not contain a login manager (for now), so you must install a
 > login manager yourself unless you want to log in from a TTY. I recommend
 > [`greetd`](https://sr.ht/~kennylevinsen/greetd) with
-> [`tuigreet`](https://github.com/apognu/tuigreet), however you can use
+> [`tuigreet`](https://github.com/apognu/tuigreet); however, you can use
 > any login manager you want.
 
-There aren't really any usage instructions... these are a set of dotfiles.
+## Configuring
 
-## Default Keybinds
+> [!CAUTION]
+> You should never modify any files inside `~/.config/hypr/`, as this will cause conflicts during updates to the dots.
+>
+> Any personal changes should be made in `~/.config/caelestia/hypr-user.lua` or `hypr-vars.lua`, as
+> the installation/update workflows never modify these files. Writing your own changes to files in `~/.config/hypr/`
+> will prevent new updates from being applied, and you will have to reconcile conflicts every time you update manually.
+
+### hypr-vars.lua
+
+Most default Hyprland values can be modified by overriding variables in `~/.config/caelestia/hypr-vars.lua`. You can use this file to set
+default apps, keybinds, mouse cursor, window decorations, and much more.
+Use the [variables.lua](hypr/variables.lua) file as a reference for all available variables and their default values.
+
+Example usage for `hypr-vars.lua`:
+
+```lua
+return {
+  -- Changing default apps:
+  browser          = "zen-browser",    -- Change default browser to Zen
+  editor           = "code",           -- Change default editor to Code
+
+  -- Changing window/decoration properties:
+  blurEnabled      = false,            -- Disable window blur
+  windowBorderSize = 3,                -- Increase window border size (default: 1)
+
+  -- Changing keybinds:
+  kbTerminal       = "SUPER + Return", -- Change the keybind for opening terminal
+}
+```
+
+### hypr-user.lua
+
+You can put any custom Hyprland configuration in `~/.config/caelestia/hypr-user.lua`. This file is loaded at the end of the Hyprland
+loading sequence. This allows you to customise the behavior of Hyprland outside of the premade configs, including monitor layout, additional
+keybinds, and window rules. It is preferable to use `hypr-vars.lua` for changes to options that the dots already manage
+(e.g. keybinds, window borders, etc.). Still, for configuration that isn't covered by dots or needs to be managed outside variables,
+any changes should be made in `hypr-user.lua`.
+You can read more about configuring Hyprland on their [wiki](https://wiki.hypr.land/Configuring/Start/).
+
+### Additional configuration
+
+Caelestia is a multifaceted ecosystem comprising the dotfiles (this repo), the [shell][shell-repo], and the [CLI][cli-repo].
+The shell’s configuration is managed by `~/.config/caelestia/shell.json`, which modifies the shell’s behavior.
+The CLI config file (`~/.config/caelestia/cli.json`) lets you adjust the CLI’s theming and handling of special workspaces.
+You can find more information on configuring the shell and the CLI in their respective repos.
+
+## Default keybinds
 
 > [!TIP]
-> All keybinds can be customized by overriding the corresponding `kb*` variables in `~/.config/caelestia/hypr-vars.lua` (excluding the shell restart/kill binds).
-> Reference [`hypr/variables.lua`](hypr/variables.lua) for available options.
+> All keybinds can be customised by overriding their corresponding variables in `hypr-vars.lua` (excluding the shell restart/kill binds).
+> See [Configuring](#configuring) for more information.
 
 ### Launcher
 
@@ -216,3 +256,6 @@ There aren't really any usage instructions... these are a set of dotfiles.
 | -------------------------- | ------------- |
 | `Ctrl + Super + Alt + R`   | Restart shell |
 | `Ctrl + Super + Shift + R` | Kill shell    |
+
+[shell-repo]: https://github.com/caelestia-dots/shell
+[cli-repo]: https://github.com/caelestia-dots/cli
