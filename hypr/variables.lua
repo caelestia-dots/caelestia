@@ -124,6 +124,7 @@ return {
     kbRecordSound              = "SUPER + ALT + R",
     kbRecordRegion             = "SUPER + SHIFT + ALT + R",
     kbColorPicker              = "SUPER + SHIFT + C",
+    kbCheatSheet               = "SUPER + Slash",
 
     -- Media
     kbMediaToggle              = "CTRL + SUPER + Space",

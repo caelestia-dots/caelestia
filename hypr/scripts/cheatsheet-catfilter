@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+data="$1"
+state="$2"
+action="$3"
+
+mapfile -t cats < <(awk -F'|' '{print $3}' "$data" | awk '!seen[$0]++')
+cats=("All" "${cats[@]}")
+n=${#cats[@]}
+
+idx=$(cat "$state" 2>/dev/null || echo 0)
+[ "$idx" -ge "$n" ] 2>/dev/null && idx=0
+
+case "$action" in
+    next) idx=$(( (idx + 1) % n )); echo "$idx" > "$state" ;;
+    prev) idx=$(( (idx - 1 + n) % n )); echo "$idx" > "$state" ;;
+esac
+
+cat_name="${cats[$idx]}"
+
+case "$action" in
+    next|prev|list)
+        if [ "$cat_name" = "All" ]; then
+            awk -F'|' '{printf "%-32s %-46s\t%s\n", $1, $2, $3}' "$data"
+        else
+            awk -F'|' -v c="$cat_name" '$3 == c {printf "%-32s %-46s\t%s\n", $1, $2, $3}' "$data"
+        fi
+        ;;
+    name)
+        echo "$cat_name"
+        ;;
+    menu)
+        for i in "${!cats[@]}"; do
+            if [ "$i" -eq "$idx" ]; then
+                printf "\033[1;35m▶ %s\033[0m\n" "${cats[$i]}"
+            else
+                printf "  %s\n" "${cats[$i]}"
+            fi
+        done
+        ;;
+esac

@@ -223,3 +223,6 @@ create_bind(
         " -a 'Shell' -A 'Test1=I got it!' -A 'Test2=Another action'"
     )
 )
+
+-- Cheatsheet
+create_bind(vars.kbCheatsheet, hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-cheatsheet"))

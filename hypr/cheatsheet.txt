@@ -1,0 +1,81 @@
+Super (tap)|Open launcher|Launcher
+Super + K|Show all panels|Launcher
+Ctrl Alt + Delete|Session menu|Launcher
+Super + N|Toggle sidebar|Launcher
+Ctrl Alt + C|Clear notifications|Launcher
+Super + L|Lock session|Launcher
+Super Alt + L|Restore shell + lock|Launcher
+Ctrl Super Shift + R|Kill shell|Launcher
+Ctrl Super Alt + R|Restart shell|Launcher
+Super + /|Open keybind cheatsheet|Launcher
+Super + 0-9|Go to workspace|Workspaces
+Super Alt + 0-9|Move window to workspace|Workspaces
+Ctrl Super + 0-9|Go to workspace group|Workspaces
+Ctrl Super Alt + 0-9|Move window to workspace group|Workspaces
+Super + Scroll|Prev/next workspace|Workspaces
+Ctrl Super + Left/Right|Prev/next workspace|Workspaces
+Super + PageUp/PageDown|Prev/next workspace|Workspaces
+Ctrl Super + Scroll|Prev/next workspace group|Workspaces
+Super + Tab|Cycle next active workspace|Workspaces
+Super Shift + Tab|Cycle prev active workspace|Workspaces
+Super + S|Toggle special workspace|Special Workspaces
+Ctrl Shift + Escape|Toggle sysmon workspace|Special Workspaces
+Super + M|Toggle music workspace|Special Workspaces
+Super + C|Toggle communication workspace|Special Workspaces
+Super + R|Toggle todo workspace|Special Workspaces
+Ctrl Super Shift + Up|Move window to special workspace|Special Workspaces
+Ctrl Super Shift + Down|Move window from special workspace|Special Workspaces
+Super + Arrows|Focus direction|Window Focus
+Super Shift + Arrows|Move window direction|Window Focus
+Super Alt + PageUp/PageDown|Move window +/- workspace|Window Focus
+Super + mouse Up/Down|Move window +/- workspace|Window Focus
+Ctrl Super Shift + Left/Right|Move window +/- workspace|Window Focus
+Super + Minus/Equal|Resize width|Window Resize
+Super Shift + Minus/Equal|Resize height|Window Resize
+Super Alt + Left/Right|Resize width|Window Resize
+Super Alt + Up/Down|Resize height|Window Resize
+Super + Z|Drag window (mouse)|Window Resize
+Super + X|Resize window (mouse)|Window Resize
+Ctrl Super + Backslash|Center window|Window Resize
+Ctrl Super Alt + Backslash|Resize 55x70 + center|Window Resize
+Alt + Tab|Cycle next in group|Window Groups
+Shift Alt + Tab|Cycle prev in group|Window Groups
+Ctrl Alt + Tab|Next group|Window Groups
+Ctrl Shift Alt + Tab|Prev group|Window Groups
+Super + Comma|Toggle group|Window Groups
+Super + U|Remove window from group|Window Groups
+Super Shift + Comma|Lock active group|Window Groups
+Super Alt + Backslash|Toggle picture-in-picture|Window Actions
+Super + P|Pin window|Window Actions
+Super + F|Fullscreen|Window Actions
+Super Alt + F|Maximize (bordered fullscreen)|Window Actions
+Super Alt + Space|Toggle floating|Window Actions
+Super + Q|Close window|Window Actions
+Super + T|Terminal|Apps
+Super + W|Browser|Apps
+Super + E|File explorer|Apps
+Super Alt + C|Editor|Apps
+Ctrl Alt + V|Audio settings|Apps
+Print|Screenshot|Utilities
+Super Shift + S|Screenshot (freeze)|Utilities
+Super Shift Alt + S|Screenshot (region)|Utilities
+Super Alt + R|Record screen|Utilities
+Ctrl Alt + R|Record screen (with audio)|Utilities
+Super Shift Alt + R|Record region|Utilities
+Super Shift + C|Color picker (hyprpicker)|Utilities
+Super + V|Clipboard manager|Utilities
+Super Alt + V|Delete clipboard entry|Utilities
+Super + Period|Emoji picker|Utilities
+Ctrl Shift Alt + V|Type last clipboard entry|Utilities
+Ctrl Super + Space|Play/pause media|Media
+Ctrl Super + Equal|Next track|Media
+Ctrl Super + Minus|Previous track|Media
+XF86AudioPlay/Pause|Play/pause media|Media
+XF86AudioNext|Next track|Media
+XF86AudioPrev|Previous track|Media
+XF86AudioStop|Stop media|Media
+XF86MonBrightnessUp/Down|Brightness +/-|Media
+XF86AudioRaiseVolume/LowerVolume|Volume +/-|Media
+XF86AudioMute|Mute audio sink|Media
+XF86AudioMicMute|Mute microphone|Media
+Super Shift + L|Sleep gesture|Sleep

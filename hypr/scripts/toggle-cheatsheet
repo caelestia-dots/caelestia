@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if pkill -f 'app-id=cheatsheet'; then
+    exit 0
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec foot --app-id=cheatsheet -e "${SCRIPT_DIR}/cheatsheet-fzf"

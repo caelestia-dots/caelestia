@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DATA="${SCRIPT_DIR}/../cheatsheet.txt"
+FILTER="${SCRIPT_DIR}/cheatsheet-catfilter"
+STATE=$(mktemp /tmp/cheatsheet-cat.XXXXXX)
+echo 0 > "$STATE"
+trap 'rm -f "$STATE"' EXIT
+
+selected=$("$FILTER" "$DATA" "$STATE" list | fzf \
+    --delimiter=$'\t' \
+    --with-nth=1 \
+    --preview "$FILTER $DATA $STATE menu" \
+    --preview-window=right:30%:wrap:border-rounded \
+    --header=' Type to filter · Tab/Shift-Tab: class · Enter copies · Esc closes' \
+    --header-first \
+    --border=rounded \
+    --margin=2%,4% \
+    --padding=1 \
+    --layout=reverse \
+    --info=inline-right \
+    --scrollbar='│' \
+    --prompt=' ⌨  ' \
+    --pointer=' ▶' \
+    --marker=' ✓' \
+    --bind "tab:execute-silent($FILTER $DATA $STATE next)+reload($FILTER $DATA $STATE list)+refresh-preview" \
+    --bind "btab:execute-silent($FILTER $DATA $STATE prev)+reload($FILTER $DATA $STATE list)+refresh-preview" \
+    --color='bg+:#2a2438,bg:-1,fg:#cdd6f4,fg+:#f5e0dc' \
+    --color='hl:#f38ba8,hl+:#f38ba8,pointer:#89b4fa,marker:#a6e3a1' \
+    --color='prompt:#cba6f7,spinner:#f9e2af,header:#94e2d5' \
+    --color='border:#585b70,preview-border:#585b70,preview-fg:#cdd6f4' \
+    --color='info:#6c7086,scrollbar:#585b70')
+
+if [ -n "$selected" ]; then
+    key=$(printf '%s' "$selected" | cut -f1 | sed 's/ *$//')
+    printf '%s' "$key" | wl-copy
+    notify-send -a Cheatsheet "Copied" "$key"
+fi
