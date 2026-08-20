@@ -70,7 +70,7 @@ Use `caelestia update` to perform a full system update and update the dots.
 
 Most default Hyprland values can be modified by overriding variables in `~/.config/caelestia/hypr-vars.lua`. You can use this file to set
 default apps, keybinds, mouse cursor, window decorations, and much more.
-Use the [variables.lua](hypr/variables.lua) file as a reference for all available variables and their default values.
+Use the [`variables.lua`](hypr/variables.lua) file as a reference for all available variables and their default values.
 
 Example usage for `hypr-vars.lua`:
 
