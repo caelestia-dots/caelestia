@@ -245,6 +245,13 @@ packages = ["uwsm"]
 src = "uwsm"
 dest = "$XDG_CONFIG_HOME/uwsm"
 
+[[components]]
+name = "opencode"
+packages = ["opencode"]
+[[components.entries]]
+src = "opencode/plugins/notify.js"
+dest = "$XDG_CONFIG_HOME/opencode/plugins/notify.js"
+
 # Zen theming doesn't currently work
 [[components]]
 name = "zen"
