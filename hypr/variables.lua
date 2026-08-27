@@ -109,6 +109,36 @@ return {
     kbCommunicationWs          = "SUPER + D",
     kbTodoWs                   = "SUPER + R",
 
+    -- Special workspaces app selectors
+
+    -- For each special workspace the selector is a table where the key is the field (class, initial_title, etc...) to match on and the value is an array of possible matches.
+
+    systemMonitorApps          = {
+        ["class"] = { "btop" },
+    },
+    musicApps            = {
+        ["class"] = {
+            "feishin|Supersonic|Plexamp",                                  -- Self hosted
+            "Spotify",                                                     -- Spotify
+            "Cider",                                                       -- Apple music
+            "com.github.th-ch.youtube-music|com-maxrave-simpmusic-MainKt", -- YouTube music
+        },
+        ["initial_title"] = {
+            "Spotify|Spotify Free" -- Spotify wayland, it has no class for some reason
+        },
+    },
+    communicationApps          = {
+        ["class"] = {
+            "discord|equibop|vesktop", -- Discord clients
+            "whatsapp"                 -- Whatsapp
+        },
+    },
+    todoApps                   = {
+        ["class"] = {
+            "todoist" -- Todoist
+        },
+    },
+
     -- Apps
     kbTerminal                 = "SUPER + T",
     kbBrowser                  = "SUPER + W",
