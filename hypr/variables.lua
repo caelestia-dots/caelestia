@@ -62,6 +62,7 @@ return {
     kbGoToWs                   = "SUPER",
     kbGoToWsGroup              = "CTRL + SUPER",
     kbMoveWinToWs              = "SUPER + ALT",
+    kbMoveWinToWsSilent        = "SUPER + SHIFT"
     kbMoveWinToWsGroup         = "CTRL + SUPER + ALT",
 
     -- All the following binds can be either an array of binds to bind multiple keys, or a single string.
