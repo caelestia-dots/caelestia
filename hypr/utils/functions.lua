@@ -9,7 +9,7 @@ local function wsaction(action, range, i)
 
             if action == "move" then
                 return hl.dispatch(hl.dsp.window.move({ workspace = z }))
-            if action == "move_silent" then
+            elseif action == "move_silent" then
                 return hl.dispatch(hl.dsp.window.move({ workspace = z, follow = false }))
             else
                 return hl.dispatch(hl.dsp.focus({ workspace = z }))
