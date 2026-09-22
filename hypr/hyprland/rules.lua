@@ -171,6 +171,15 @@ tagged_rule(float_tag, {
     { class = "PandoraLauncher",    title = "Minecraft Game Output" },
 })
 
+-- Make browsers non-transparent when watching YouTube or Picture-in-Picture
+hl.window_rule({
+    match = {
+        class = "firefox|Brave-browser|chromium|google-chrome|zen-alpha|microsoft-edge|Vivaldi",
+        title = ".*(YouTube|Picture(-| )in(-| )[Pp]icture).*",
+    },
+    tag = "+opaque",
+    opacity = "1.0 override",
+})
 
 -------------------------
 ---- Tag definitions ----
