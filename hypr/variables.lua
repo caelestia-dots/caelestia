@@ -43,6 +43,7 @@ return {
     -- Window styling
     windowOpacity              = 0.95,
     windowRounding             = 15,
+    windowRoundingPower        = 2,
     windowBorderSize           = 1,
     activeWindowBorderColour   = "rgba(" .. scheme.primary .. "e6)",
     inactiveWindowBorderColour = "rgba(" .. scheme.onSurfaceVariant .. "11)",
