@@ -54,6 +54,7 @@ return {
     cursorTheme                = "sweet-cursors",
     cursorSize                 = 24,
     sleepGestureCmd            = "systemctl suspend-then-hibernate",
+    specialWsCloseAny          = true,
 
     ------------------
     ---- KEYBINDS ----
