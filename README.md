@@ -156,14 +156,14 @@ You can find more information on configuring the shell and the CLI in their resp
 
 | Keybind                                       | Action                                       |
 | --------------------------------------------- | -------------------------------------------- |
-| `Super + Minus`, `Super + Alt + Left`         | Decrease window width                        |
-| `Super + Equal`, `Super + Alt + Right`        | Increase window width                        |
-| `Super + Shift + Minus`, `Super + Alt + Up`   | Decrease window height                       |
-| `Super + Shift + Minus`, `Super + Alt + Down` | Increase window height                       |
+| `Super + Minus`, `Super + Alt + Left`         | Move window split left                       |
+| `Super + Equal`, `Super + Alt + Right`        | Move window split right                      |
+| `Super + Shift + Minus`, `Super + Alt + Up`   | Move window split up                         |
+| `Super + Shift + Equal`, `Super + Alt + Down` | Move window split down                       |
 | `Super + Left/Right/Up/Down`                  | Focus window in direction                    |
 | `Super + Shift + Left/Right/Up/Down`          | Move window in direction                     |
-| `Super + LMB drag`, `Super + Z + LMB`         | Move window (drag)                           |
-| `Super + RMB drag`, `Super + X + LMB`         | Resize window (drag)                         |
+| `Super + LMB`, `Super + Z + LMB`              | Move window (drag)                           |
+| `Super + RMB`, `Super + X + LMB`              | Resize window (drag)                         |
 | `Ctrl + Super + Backslash`                    | Center window                                |
 | `Ctrl + Super + Alt + Backslash`              | Resize window to 55×70% of screen and center |
 | `Super + Alt + Backslash`                     | Picture-in-picture mode                      |
@@ -209,7 +209,7 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Ctrl + Alt + R`          | Record fullscreen   |
 | `Super + Alt + R`         | Record with sound   |
 | `Super + Shift + Alt + R` | Record region       |
-| `Super + Shift + C`       | Color picker        |
+| `Super + Shift + C`       | Colour picker       |
 
 ---
 
