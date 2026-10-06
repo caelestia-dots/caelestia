@@ -159,7 +159,7 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Super + Minus`, `Super + Alt + Left`         | Decrease window width                        |
 | `Super + Equal`, `Super + Alt + Right`        | Increase window width                        |
 | `Super + Shift + Minus`, `Super + Alt + Up`   | Decrease window height                       |
-| `Super + Shift + Minus`, `Super + Alt + Down` | Increase window height                       |
+| `Super + Shift + Equal`, `Super + Alt + Down` | Increase window height                       |
 | `Super + Left/Right/Up/Down`                  | Focus window in direction                    |
 | `Super + Shift + Left/Right/Up/Down`          | Move window in direction                     |
 | `Super + LMB drag`, `Super + Z + LMB`         | Move window (drag)                           |
