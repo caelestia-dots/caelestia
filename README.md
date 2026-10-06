@@ -166,11 +166,11 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Super + RMB`, `Super + X + LMB`              | Resize window (drag)                         |
 | `Ctrl + Super + Backslash`                    | Center window                                |
 | `Ctrl + Super + Alt + Backslash`              | Resize window to 55×70% of screen and center |
-| `Super + Alt + Backslash`                     | Picture-in-picture mode                      |
-| `Super + P`                                   | Pin window                                   |
-| `Super + F`                                   | Fullscreen window                            |
-| `Super + Alt + F`                             | Fullscreen window (bordered)                 |
-| `Super + Alt + Space`                         | Toggle floating for window                   |
+| `Super + Alt + Backslash`                     | Enable picture-in-picture mode for window    |
+| `Super + P`                                   | Toggle pinned mode for window                |
+| `Super + F`                                   | Toggle fullscreen mode for window            |
+| `Super + Alt + F`                             | Toggle maximised mode for window             |
+| `Super + Alt + Space`                         | Toggle floating mode for window              |
 | `Super + Q`                                   | Close window                                 |
 
 ---
