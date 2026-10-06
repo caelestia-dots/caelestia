@@ -159,7 +159,7 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Super + Minus`, `Super + Alt + Left`         | Decrease window width                        |
 | `Super + Equal`, `Super + Alt + Right`        | Increase window width                        |
 | `Super + Shift + Minus`, `Super + Alt + Up`   | Decrease window height                       |
-| `Super + Shift + Equal`, `Super + Alt + Down` | Increase window height                       |
+| `Super + Shift + Minus`, `Super + Alt + Down` | Increase window height                       |
 | `Super + Left/Right/Up/Down`                  | Focus window in direction                    |
 | `Super + Shift + Left/Right/Up/Down`          | Move window in direction                     |
 | `Super + LMB drag`, `Super + Z + LMB`         | Move window (drag)                           |
@@ -168,8 +168,8 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Ctrl + Super + Alt + Backslash`              | Resize window to 55×70% of screen and center |
 | `Super + Alt + Backslash`                     | Picture-in-picture mode                      |
 | `Super + P`                                   | Pin window                                   |
-| `Super + F`                                   | Fullscreen window                            |
-| `Super + Alt + F`                             | Fullscreen window (bordered)                 |
+| `Super + F`                                   | Toggle fullscreen window                     |
+| `Super + Alt + F`                             | Toggle fullscreen window (bordered)          |
 | `Super + Alt + Space`                         | Toggle floating for window                   |
 | `Super + Q`                                   | Close window                                 |
 
