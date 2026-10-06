@@ -5,6 +5,9 @@ post_install = [
 ]
 post_update = ["caelestia shell -k; sleep 1; caelestia shell -d >/dev/null"]
 
+[packages_by_distro]
+cachyos = ["mainstream-quickshell-git"]
+
 # --- Core components ---
 
 [[components]]
@@ -16,7 +19,7 @@ packages = [
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
 ]
-post_install = ["hyprctl reload >/dev/null"]
+post_install = ["mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia", "hyprctl reload >/dev/null"]
 post_update = ["hyprctl reload >/dev/null"]
 [[components.entries]]
 src = "hypr"
