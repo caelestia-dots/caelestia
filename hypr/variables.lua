@@ -54,6 +54,7 @@ return {
     cursorTheme                = "sweet-cursors",
     cursorSize                 = 24,
     sleepGestureCmd            = "systemctl suspend-then-hibernate",
+    ocrLang                    = "eng", -- tesseract language(s); override in user config (e.g. "eng+rus")
 
     ------------------
     ---- KEYBINDS ----
