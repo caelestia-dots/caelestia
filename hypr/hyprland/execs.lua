@@ -30,7 +30,7 @@ hl.on("hyprland.start", function()
 end)
 
 -- Resizer listeners
-local function apply_resizer_rules(win, on_rule_update)
+local function apply_resizer_rules(win)
     local match_str = function(pattern, field, exact)
         return function(w)
             return w[field] and string.find(w[field], pattern, 1, exact)
@@ -50,9 +50,8 @@ local function apply_resizer_rules(win, on_rule_update)
         end
     end
 
-    local float = hl.dsp.window.float({ action = "on", window = win })
-    local float_center = on_rule_update and float or {
-        float,
+    local float_center = {
+        hl.dsp.window.float({ action = "on", window = win }),
         hl.dsp.window.center({ window = win }),
     }
     local pip_actions = fn.move_actions(win) or {}
@@ -73,5 +72,31 @@ end
 
 hl.on("window.class", apply_resizer_rules)
 hl.on("window.title", apply_resizer_rules)
-hl.on("window.update_rules", function(win) apply_resizer_rules(win, true) end)
 hl.on("window.open", apply_resizer_rules)
+
+
+-- Tag shenanigans, there is no way to only detect when a window's tags change
+local lastTags = {}
+
+local function tag_key(tags)
+    local copy = {}
+    for _, tag in ipairs(tags) do
+        copy[#copy + 1] = tag:gsub("%*$", "")
+    end
+    table.sort(copy)
+    return table.concat(copy, "\0")
+end
+
+hl.on("window.update_rules", function(win)
+    local id = win.stable_id
+    local key = tag_key(win.tags)
+    if lastTags[id] == key then
+        return
+    end
+    lastTags[id] = key
+    apply_resizer_rules(win)
+end)
+
+hl.on("window.close", function(win)
+    lastTags[win.stable_id] = nil
+end)

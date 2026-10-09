@@ -56,7 +56,6 @@ local function resizer(window, val_fn, x_percent, y_percent, actions)
             sz.window = window
             hl.dispatch(hl.dsp.window.resize(sz))
         end
-        hl.dispatch(hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true", window = window }))
     end
 end
 
@@ -83,6 +82,7 @@ local function move_actions(win)
         return {
             hl.dsp.window.resize({ x = x_resize, y = y_resize, window = win }),
             hl.dsp.window.move({ x = move_x, y = move_y, relative = false, window = win }),
+            hl.dsp.window.set_prop({ prop = "keep_aspect_ratio", value = "true", window = win })
         }
     end
 end
