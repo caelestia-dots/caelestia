@@ -30,21 +30,48 @@ hl.on("hyprland.start", function()
 end)
 
 -- Resizer listeners
-local function apply_resizer_rules(win)
-    local float_center = {
-        hl.dsp.window.float({ action = "on", window = win }),
+local function apply_resizer_rules(win, on_rule_update)
+    local match_str = function(pattern, field, exact)
+        return function(w)
+            return w[field] and string.find(w[field], pattern, 1, exact)
+        end
+    end
+    local match_title = function(pattern, exact) return match_str(pattern, "title", exact) end
+    local match_class = function(pattern, exact) return match_str(pattern, "class", exact) end
+
+    local match_tag = function(tag)
+        return function(w)
+            for _, t in ipairs(w.tags) do
+                if t == tag or t == tag .. "*" then
+                    return true
+                end
+            end
+            return false
+        end
+    end
+
+    local float = hl.dsp.window.float({ action = "on", window = win })
+    local float_center = on_rule_update and float or {
+        float,
         hl.dsp.window.center({ window = win }),
     }
     local pip_actions = fn.move_actions(win) or {}
 
     -- Bitwarden
-    fn.resizer(win, "Bitwarden", 20, 54, float_center, true, "class")                                       -- Native app
-    fn.resizer(win, "^Extension: %(Bitwarden Password Manager%) %- Bitwarden", 20, 54, float_center, false) -- Firefox
-    fn.resizer(win, "nngceckbapebfimnlniiiahkandclblb", 20, 54, float_center, true, "class")                -- Chromium
+    fn.resizer(win, match_class("Bitwarden", true), 20, 54, float_center)                                                -- Native app
+    fn.resizer(win, match_title("^Extension: %(Bitwarden Password Manager%) %- Bitwarden", false), 20, 54, float_center) -- Firefox
+    fn.resizer(win, match_class("nngceckbapebfimnlniiiahkandclblb", true), 20, 54, float_center)                         -- Chromium
 
     -- Picture in picture
-    fn.resizer(win, "Picture[- ]in[- ][Pp]icture", 0, 0, pip_actions, false)
+    fn.resizer(win, match_title("Picture[- ]in[- ][Pp]icture", false), 0, 0, pip_actions)
+
+    -- Tags, because window rules are unreliable
+    fn.resizer(win, match_tag("float_60_70"), 60, 70, float_center)
+    fn.resizer(win, match_tag("float_70_80"), 70, 80, float_center)
+    fn.resizer(win, match_tag("float_50_60"), 50, 60, float_center)
 end
 
+hl.on("window.class", apply_resizer_rules)
 hl.on("window.title", apply_resizer_rules)
+hl.on("window.update_rules", function(win) apply_resizer_rules(win, true) end)
 hl.on("window.open", apply_resizer_rules)

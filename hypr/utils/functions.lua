@@ -41,9 +41,8 @@ local function resize_active_window(x, y)
     end
 end
 
-local function resizer(window, pattern, x_percent, y_percent, actions, exact, field)
-    local value = window and window[field or "title"]
-    if value and string.find(value, pattern, 1, exact) then
+local function resizer(window, val_fn, x_percent, y_percent, actions)
+    if window and val_fn(window) then
         local disp = (type(actions) == "table") and actions or { actions }
         for _, x in ipairs(disp) do
             hl.dispatch(x)
