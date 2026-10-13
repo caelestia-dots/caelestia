@@ -80,12 +80,11 @@ create_bind(
     release
 )
 
-for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    create_bind(extend_keybind(vars.kbGoToWs, key), fn.wsaction("focus", "", i))
-    create_bind(extend_keybind(vars.kbMoveWinToWs, key), fn.wsaction("move", "", i))
-    create_bind(extend_keybind(vars.kbGoToWsGroup, key), fn.wsaction("focus", "group", i))
-    create_bind(extend_keybind(vars.kbMoveWinToWsGroup, key), fn.wsaction("move", "group", i))
+for i = 1, vars.wsGroupSize do
+    create_bind(extend_keybind(vars.kbGoToWs, "code:" .. tostring(i+9)), fn.wsaction("focus", "", i))
+    create_bind(extend_keybind(vars.kbMoveWinToWs, "code:" .. tostring(i+9)), fn.wsaction("move", "", i))
+    create_bind(extend_keybind(vars.kbGoToWsGroup, "code:" .. tostring(i+9)), fn.wsaction("focus", "group", i))
+    create_bind(extend_keybind(vars.kbMoveWinToWsGroup, "code:" .. tostring(i+9)), fn.wsaction("move", "group", i))
 end
 
 -- Go to workspace -1/+1
@@ -93,8 +92,8 @@ create_bind(vars.kbPrevWs, hl.dsp.focus({ workspace = "-1" }), repeating_unless_
 create_bind(vars.kbNextWs, hl.dsp.focus({ workspace = "+1" }), repeating_unless_mouse)
 
 -- Go to workspace group -1/+1
-create_bind(vars.kbPrevWsGroup, hl.dsp.focus({ workspace = "-10" }), repeating_unless_mouse)
-create_bind(vars.kbNextWsGroup, hl.dsp.focus({ workspace = "+10" }), repeating_unless_mouse)
+create_bind(vars.kbPrevWsGroup, hl.dsp.focus({ workspace = "-" .. tostring(vars.wsGroupSize) }), repeating_unless_mouse)
+create_bind(vars.kbNextWsGroup, hl.dsp.focus({ workspace = "+" .. tostring(vars.wsGroupSize) }), repeating_unless_mouse)
 
 -- Move window to workspace -1/+1
 create_bind(vars.kbMoveWinToWsNext, hl.dsp.window.move({ workspace = "+1" }), repeating_unless_mouse)
