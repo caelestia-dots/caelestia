@@ -13,6 +13,13 @@ local function tagged_rule(tag, matches, field)
     end
 end
 
+-- Tags a table of window matches. See `variables.lua` for the table format.
+local function multi_tagged_rule(tag, matches_table)
+    for field, matches in pairs(matches_table) do
+        tagged_rule(tag, matches, field)
+    end
+end
+
 local function create_tag(tag, rules)
     local rule = { match = { tag = tag } }
     for k, v in pairs(rules) do
@@ -135,24 +142,10 @@ tagged_rule(xwl_popup_tag, {
 
 
 -- Special workspaces
-tagged_rule(system_monitor_tag, { "btop" }, "class")
-tagged_rule(music_player_tag, {
-    "feishin|Supersonic|Plexamp",                                  -- Self hosted
-    "Spotify",                                                     -- Spotify
-    "Cider",                                                       -- Apple music
-    "com.github.th-ch.youtube-music|com-maxrave-simpmusic-MainKt", -- YouTube music
-}, "class")
-tagged_rule(music_player_tag, {
-    "Spotify|Spotify Free" -- Spotify wayland, it has no class for some reason
-}, "initial_title")
-tagged_rule(communication_app_tag, {
-    "discord|equibop|vesktop", -- Discord clients
-    "whatsapp"                 -- Whatsapp
-}, "class")
-tagged_rule(todo_app_tag, {
-    "todoist" -- Todoist
-}, "class")
-
+multi_tagged_rule(system_monitor_tag, vars.systemMonitorApps)
+multi_tagged_rule(music_player_tag, vars.musicApps)
+multi_tagged_rule(communication_app_tag, vars.communicationApps)
+multi_tagged_rule(todo_app_tag, vars.todoApps)
 
 -----------------------
 ---- Per app rules ----
