@@ -86,6 +86,7 @@ for i = 1, 10 do
     create_bind(extend_keybind(vars.kbMoveWinToWs, key), fn.wsaction("move", "", i))
     create_bind(extend_keybind(vars.kbGoToWsGroup, key), fn.wsaction("focus", "group", i))
     create_bind(extend_keybind(vars.kbMoveWinToWsGroup, key), fn.wsaction("move", "group", i))
+    create_bind(extend_keybind(vars.kbMoveWinToWsSilent, key), fn.wsaction("move_silent", "", i))
 end
 
 -- Go to workspace -1/+1
