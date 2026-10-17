@@ -1,0 +1,17 @@
+btop
+fastfetch
+firefox
+fish
+foot
+hypr
+micro
+spicetify
+starship
+thunar
+uwsm
+vscode
+zed
+zen
+
+manifest
+packages
