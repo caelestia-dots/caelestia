@@ -62,7 +62,7 @@ local function apply_resizer_rules(win)
     fn.resizer(win, match_class("nngceckbapebfimnlniiiahkandclblb", true), 20, 54, float_center)                         -- Chromium
 
     -- Picture in picture
-    fn.resizer(win, match_title("Picture[- ]in[- ][Pp]icture", false), 0, 0, pip_actions)
+    fn.resizer(win, match_title("^Picture[- ]in[- ][Pp]icture$", false), 0, 0, pip_actions)
 
     -- Tags, because window rules are unreliable
     fn.resizer(win, match_tag("float_60_70"), 60, 70, float_center)
