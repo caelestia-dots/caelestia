@@ -121,20 +121,21 @@ You can find more information on configuring the shell and the CLI in their resp
 
 ### Workspaces
 
-| Keybind                                                                                | Action                               |
-| -------------------------------------------------------------------------------------- | ------------------------------------ |
-| `Super + 1~9, 0`                                                                       | Go to workspace 1~10                 |
-| `Super + Alt + 1~9, 0`                                                                 | Move window to workspace 1~10        |
-| `Ctrl + Super + 1~9, 0`                                                                | Go to workspace group (×10)          |
-| `Ctrl + Super + Alt + 1~9, 0`                                                          | Move window to workspace group       |
-| `Super + Alt + S`, `Ctrl + Super + Shift + Up`                                         | Move window to special workspace     |
-| `Ctrl + Super + Shift + Down`                                                          | Move window out of special workspace |
-| `Super + Alt + Scroll Down`, `Super + Alt + Page_Down`, `Ctrl + Super + Shift + Right` | Move window to next workspace        |
-| `Super + Alt + Scroll Up`, `Super + Alt + Page_Up`, `Ctrl + Super + Shift + Left`      | Move window to previous workspace    |
-| `Super + Scroll Down`, `Ctrl + Super + Right`, `Super + Page_Down`                     | Go to next workspace                 |
-| `Super + Scroll Up`, `Ctrl + Super + Left`, `Super + Page_Up`                          | Go to previous workspace             |
-| `Ctrl + Super + Scroll Down`                                                           | Go to next workspace group           |
-| `Ctrl + Super + Scroll Up`                                                             | Go to previous workspace group       |
+| Keybind                                                                                | Action                                   |
+| -------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `Super + 1~9, 0`                                                                       | Go to workspace 1~10                     |
+| `Super + Alt + 1~9, 0`                                                                 | Move window to workspace 1~10            |
+| `Ctrl + Super + 1~9, 0`                                                                | Go to workspace group (×10)              |
+| `Super + Shift + 1~9, 0`                                                               | Move window to workspace 1~10 (silently) |
+| `Ctrl + Super + Alt + 1~9, 0`                                                          | Move window to workspace group           |
+| `Super + Alt + S`, `Ctrl + Super + Shift + Up`                                         | Move window to special workspace         |
+| `Ctrl + Super + Shift + Down`                                                          | Move window out of special workspace     |
+| `Super + Alt + Scroll Down`, `Super + Alt + Page_Down`, `Ctrl + Super + Shift + Right` | Move window to next workspace            |
+| `Super + Alt + Scroll Up`, `Super + Alt + Page_Up`, `Ctrl + Super + Shift + Left`      | Move window to previous workspace        |
+| `Super + Scroll Down`, `Ctrl + Super + Right`, `Super + Page_Down`                     | Go to next workspace                     |
+| `Super + Scroll Up`, `Ctrl + Super + Left`, `Super + Page_Up`                          | Go to previous workspace                 |
+| `Ctrl + Super + Scroll Down`                                                           | Go to next workspace group               |
+| `Ctrl + Super + Scroll Up`                                                             | Go to previous workspace group           |
 
 ---
 
