@@ -236,6 +236,7 @@ You can find more information on configuring the shell and the CLI in their resp
 | `Super + L`           | Lock screen               |
 | `Super + Alt + L`     | Restore shell lockscreen  |
 | `Super + Shift + L`   | Run sleep command         |
+| `Super + Slash`       | Open keybind cheatsheet   |
 
 ---
 
