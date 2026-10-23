@@ -22,8 +22,12 @@ local function resize_by_screen(x, y)
     local screen = hl.get_active_monitor()
     if screen and type(screen.width) == "number" and type(screen.height) == "number" then
         if not (x == 0 and y == 0) then
-            local w = (x and x > 0) and math.floor(screen.width * x / 100) or screen.width
-            local h = (y and y > 0) and math.floor(screen.height * y / 100) or screen.height
+            -- screen.width/height are in physical pixels, resize takes logical ones
+            local scale = (type(screen.scale) == "number" and screen.scale > 0) and screen.scale or 1
+            local sw    = screen.width / scale
+            local sh    = screen.height / scale
+            local w     = (x and x > 0) and math.floor(sw * x / 100) or math.floor(sw)
+            local h     = (y and y > 0) and math.floor(sh * y / 100) or math.floor(sh)
             return { x = w, y = h, relative = false }
         end
     end
