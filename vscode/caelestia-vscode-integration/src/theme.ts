@@ -43,7 +43,6 @@ export default ({
     surfaceContainerHigh,
     surfaceContainerHighest,
     outline,
-    shadow,
 }: {
     [k: string]: string;
 }) => ({
@@ -53,7 +52,7 @@ export default ({
         focusBorder: primary,
         foreground: onSurface,
         disabledForeground: outline,
-        "widget.shadow": `${shadow}80`,
+        "widget.shadow": "#00000080",
         "selection.background": `${primary}66`,
         descriptionForeground: onSurface,
         errorForeground: error,
