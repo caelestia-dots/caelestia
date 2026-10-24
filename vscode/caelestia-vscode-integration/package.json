@@ -2,7 +2,7 @@
     "name": "caelestia-vscode-integration",
     "displayName": "caelestia-vscode-integration",
     "description": "VSCode integration for caelestia dotfiles",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "publisher": "soramanew",
     "engines": {
         "vscode": "^1.96.0"
@@ -38,11 +38,11 @@
         "tinycolor2": "^1.6.0"
     },
     "devDependencies": {
-        "@types/node": "20.x",
+        "@types/node": "26.x",
         "@types/tinycolor2": "^1.4.6",
-        "@types/vscode": "^1.96.0",
-        "@vscode/vsce": "^3.2.1",
-        "typescript": "^5.7.2"
+        "@types/vscode": "~1.96.0",
+        "@vscode/vsce": "^4.0.0",
+        "typescript": "^7.0.2"
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./"
