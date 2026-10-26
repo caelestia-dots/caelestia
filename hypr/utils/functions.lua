@@ -93,6 +93,7 @@ end
 local home       = os.getenv("HOME")
 local config_dir = os.getenv("XDG_CONFIG_HOME") or (home .. "/.config")
 local json       = require("utils.json") -- rxi's peak library
+local vars       = require("variables")
 
 -- Default config
 local function default_config()
@@ -254,9 +255,10 @@ local function toggle(special_workspace)
     return function()
         local active_workspace = hl.get_active_special_workspace()
 
-        -- Generic special workspace toggle: close if any is open, or open "special"
+        -- Generic special workspace toggle: close if any is open (if configured), or toggle "special"
         if special_workspace == "specialws" then
-            local target = active_workspace and active_workspace.name:gsub("^special:", "") or "special"
+            local close_any = vars.specialWsCloseAny == nil or vars.specialWsCloseAny
+            local target = close_any and active_workspace and active_workspace.name:gsub("^special:", "") or "special"
             return hl.dispatch(hl.dsp.workspace.toggle_special(target))
         end
 
