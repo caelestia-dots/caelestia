@@ -18,16 +18,14 @@ local function wsaction(action, range, i)
     end
 end
 
-local function resize_by_screen(x, y)
-    local screen = hl.get_active_monitor()
-    if screen and type(screen.width) == "number" and type(screen.height) == "number" then
+local function resize_by_screen(x, y, screen)
+    screen = screen or hl.get_active_monitor()
+    local size = screen and screen.mode
+
+    if size and type(size.width) == "number" and type(size.height) == "number" then
         if not (x == 0 and y == 0) then
-            -- screen.width/height are in physical pixels, resize takes logical ones
-            local scale = (type(screen.scale) == "number" and screen.scale > 0) and screen.scale or 1
-            local sw    = screen.width / scale
-            local sh    = screen.height / scale
-            local w     = (x and x > 0) and math.floor(sw * x / 100) or math.floor(sw)
-            local h     = (y and y > 0) and math.floor(sh * y / 100) or math.floor(sh)
+            local w = (x and x > 0) and math.floor(size.width * x / 100) or math.floor(size.width)
+            local h = (y and y > 0) and math.floor(size.height * y / 100) or math.floor(size.height)
             return { x = w, y = h, relative = false }
         end
     end
