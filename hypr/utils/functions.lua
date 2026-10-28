@@ -55,7 +55,7 @@ local function resizer(window, val_fn, x_percent, y_percent, actions)
         -- Target the matched window explicitly. Without window=, resize/set_prop
         -- act on the currently focused window instead, mangling whatever tiled
         -- window happened to be focused when this matched.
-        local sz = resize_by_screen(x_percent, y_percent)
+        local sz = resize_by_screen(x_percent, y_percent, window.monitor)
         if sz then
             sz.window = window
             hl.dispatch(hl.dsp.window.resize(sz))
