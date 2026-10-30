@@ -43,6 +43,7 @@ return {
     -- Window styling
     windowOpacity              = 0.95,
     windowRounding             = 15,
+    windowRoundingPower        = 2,
     windowBorderSize           = 1,
     activeWindowBorderColour   = "rgba(" .. scheme.primary .. "e6)",
     inactiveWindowBorderColour = "rgba(" .. scheme.onSurfaceVariant .. "11)",
@@ -53,6 +54,7 @@ return {
     cursorTheme                = "sweet-cursors",
     cursorSize                 = 24,
     sleepGestureCmd            = "systemctl suspend-then-hibernate",
+    specialWsCloseAny          = true,
 
     ------------------
     ---- KEYBINDS ----
@@ -62,6 +64,7 @@ return {
     kbGoToWs                   = "SUPER",
     kbGoToWsGroup              = "CTRL + SUPER",
     kbMoveWinToWs              = "SUPER + ALT",
+    kbMoveWinToWsSilent        = "SUPER + SHIFT",
     kbMoveWinToWsGroup         = "CTRL + SUPER + ALT",
 
     -- All the following binds can be either an array of binds to bind multiple keys, or a single string.

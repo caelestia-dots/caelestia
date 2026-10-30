@@ -100,6 +100,9 @@ tagged_rule(float_60_70_tag, {
     { title = "(Save|Export) Image", class = "gimp" }, -- GIMP export/save
 })
 tagged_rule(float_60_70_tag, {
+    { title = "Blender File View", class = "blender" }, -- Blender file dialogs
+})
+tagged_rule(float_60_70_tag, {
     "org.pulseaudio.pavucontrol|com.saivert.pwvucontrol", -- Audio control
     "yad-icon-browser",                                   -- GTK icon browser
 }, "class")
