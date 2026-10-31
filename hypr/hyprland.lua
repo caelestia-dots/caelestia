@@ -8,14 +8,15 @@ local function maybe_create(file, content)
 
     if f then
         f:close()
-        return
+        return true
     end
 
     f = io.open(file, "w")
-    if f then
-        if content then f:write(content) end
-        f:close()
-    end
+    if not f then return false end
+
+    if content then f:write(content) end
+    f:close()
+    return true
 end
 
 -- Copy src to dst, but only if dst doesn't already exist
@@ -41,8 +42,11 @@ end
 maybe_copy(hypr .. "/scheme/default.lua", hypr .. "/scheme/current.lua")
 
 -- User variables
-maybe_create(home .. "/.config/caelestia/hypr-vars.lua", "return {}\n")
-local overrides = require("hypr-vars")
+local overrides = maybe_create(
+    home .. "/.config/caelestia/hypr-vars.lua",
+    "return {}\n"
+) and require("hypr-vars") or {}
+
 if type(overrides) == "table" then
     local vars = require("variables")
     for k, v in pairs(overrides) do
@@ -72,5 +76,6 @@ require("hyprland.gestures")
 require("hyprland.keybinds")
 
 -- User configs
-maybe_create(home .. "/.config/caelestia/hypr-user.lua")
-require("hypr-user")
+if maybe_create(home .. "/.config/caelestia/hypr-user.lua") then
+    require("hypr-user")
+end
