@@ -18,12 +18,14 @@ local function wsaction(action, range, i)
     end
 end
 
-local function resize_by_screen(x, y)
-    local screen = hl.get_active_monitor()
-    if screen and type(screen.width) == "number" and type(screen.height) == "number" then
+local function resize_by_screen(x, y, screen)
+    screen = screen or hl.get_active_monitor()
+    local size = screen and screen.mode
+
+    if size and type(size.width) == "number" and type(size.height) == "number" then
         if not (x == 0 and y == 0) then
-            local w = (x and x > 0) and math.floor(screen.width * x / 100) or screen.width
-            local h = (y and y > 0) and math.floor(screen.height * y / 100) or screen.height
+            local w = (x and x > 0) and math.floor(size.width * x / 100) or math.floor(size.width)
+            local h = (y and y > 0) and math.floor(size.height * y / 100) or math.floor(size.height)
             return { x = w, y = h, relative = false }
         end
     end
@@ -53,7 +55,7 @@ local function resizer(window, val_fn, x_percent, y_percent, actions)
         -- Target the matched window explicitly. Without window=, resize/set_prop
         -- act on the currently focused window instead, mangling whatever tiled
         -- window happened to be focused when this matched.
-        local sz = resize_by_screen(x_percent, y_percent)
+        local sz = resize_by_screen(x_percent, y_percent, window.monitor)
         if sz then
             sz.window = window
             hl.dispatch(hl.dsp.window.resize(sz))
@@ -62,11 +64,12 @@ local function resizer(window, val_fn, x_percent, y_percent, actions)
 end
 
 local function move_actions(win)
-    local screen = hl.get_active_monitor()
+    local screen = win and win.monitor or hl.get_active_monitor()
+    local size = screen and screen.mode
 
-    if screen and screen.width and screen.height and win and win.size then
-        local monitor_height = screen.height / screen.scale
-        local monitor_width  = screen.width / screen.scale
+    if size and win and win.size then
+        local monitor_height = size.height
+        local monitor_width  = size.width
 
         local scale_factor   = (monitor_height / 4) / win.size.y
 
