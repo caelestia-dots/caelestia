@@ -16,8 +16,14 @@ packages = [
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
 ]
-post_install = ["hyprctl reload >/dev/null"]
-post_update = ["hyprctl reload >/dev/null"]
+post_install = [
+    "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia",
+    "hyprctl reload >/dev/null"
+]
+post_update = [
+    "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/caelestia",
+    "hyprctl reload >/dev/null"
+]
 [[components.entries]]
 src = "hypr"
 dest = "$XDG_CONFIG_HOME/hypr"
