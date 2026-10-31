@@ -10,7 +10,7 @@ local function wsaction(action, range, i)
         end
 
         local slot  = (id - 1) % 10 + 1
-        local z     = range == "group" and ((i - 1) * 10 + slot) or (math.floor((id - 1) / 10) * 10 + 1)
+        local z     = range == "group" and ((i - 1) * 10 + slot) or (math.floor((id - 1) / 10) * 10 + i)
 
         if action == "move" then
             return hl.dispatch(hl.dsp.window.move({ workspace = z }))
