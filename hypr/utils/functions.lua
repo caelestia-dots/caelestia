@@ -1,19 +1,23 @@
 local function wsaction(action, range, i)
     return function()
         local activews = hl.get_active_workspace()
-        if activews then
-            local id = activews.id
-            local s  = (i - 1) * 10 + (id % 10)
-            local t  = math.floor((id - 1) / 10) * 10 + i
-            local z  = (range == "group") and s or t
+        if not activews then return end
 
-            if action == "move" then
-                return hl.dispatch(hl.dsp.window.move({ workspace = z }))
-            elseif action == "move_silent" then
-                return hl.dispatch(hl.dsp.window.move({ workspace = z, follow = false }))
-            else
-                return hl.dispatch(hl.dsp.focus({ workspace = z }))
-            end
+        local id = activews.id
+        if type(id) ~= "number" or id < 1 then
+            -- Named workspaces have no numbered group, fall back to the first one.
+            id = 1
+        end
+
+        local slot  = (id - 1) % 10 + 1
+        local z     = range == "group" and ((i - 1) * 10 + slot) or (math.floor((id - 1) / 10) * 10 + 1)
+
+        if action == "move" then
+            return hl.dispatch(hl.dsp.window.move({ workspace = z }))
+        elseif action == "move_silent" then
+            return hl.dispatch(hl.dsp.window.move({ workspace = z, follow = false }))
+        else
+            return hl.dispatch(hl.dsp.focus({ workspace = z }))
         end
     end
 end
