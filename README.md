@@ -98,6 +98,42 @@ keybinds, and window rules. It is preferable to use `hypr-vars.lua` for changes 
 any changes should be made in `hypr-user.lua`.
 You can read more about configuring Hyprland on their [wiki](https://wiki.hypr.land/Configuring/Start/).
 
+#### Moonlight shortcuts and Alt+Shift
+
+If you use multiple keyboard layouts with the XKB option `grp:alt_shift_toggle`,
+Moonlight's `Ctrl+Alt+Shift` shortcuts can stop working because the layout switch
+consumes a modifier. This option is not enabled by the default Caelestia config.
+
+Remove `grp:alt_shift_toggle` from your configuration. To keep Alt+Shift for
+switching layouts, add this to `~/.config/caelestia/hypr-user.lua`:
+
+```lua
+hl.config({ input = { kb_options = "" } })
+
+local function cycle_keyboard_layout()
+    for _, keyboard in ipairs(hl.get_devices()) do
+        if keyboard.type == "keyboard" and keyboard.main and keyboard.active_layout_index then
+            local _, separators = keyboard.layout:gsub(",", "")
+            -- Use one absolute index so newly connected devices cannot drift apart.
+            hl.exec_cmd("hyprctl switchxkblayout all " .. ((keyboard.active_layout_index + 1) % (separators + 1)))
+            return
+        end
+    end
+end
+
+for _, key in ipairs({ "Shift_L", "Shift_R", "Alt_L", "Alt_R" }) do
+    hl.bind("ALT + SHIFT + " .. key, cycle_keyboard_layout, {
+        locked = true,
+        non_consuming = true,
+        dont_inhibit = true,
+    })
+end
+```
+
+Keep your existing `kb_layout` setting. If you use other XKB options, retain them
+in `kb_options` instead of the empty string above. These binds also work on the
+lock screen and when an application inhibits shortcuts.
+
 ### Additional configuration
 
 Caelestia is a multifaceted ecosystem comprising the dotfiles (this repo), the [shell][shell-repo], and the [CLI][cli-repo].
