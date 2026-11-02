@@ -58,6 +58,8 @@ create_bind(
         return normalise_keybind(key) == launcher_default and release or nil
     end
 )
+create_bind("SUPER + mouse_up", hl.dsp.global("caelestia:launcherInterrupt"))
+create_bind("SUPER + mouse_down", hl.dsp.global("caelestia:launcherInterrupt"))
 
 -- Misc
 create_bind(vars.kbSession, hl.dsp.global("caelestia:session"))
