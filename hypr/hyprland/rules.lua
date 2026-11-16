@@ -165,6 +165,9 @@ tagged_rule(xwl_popup_tag, { { class = "steam", title = "" } })
 -- Ueberzugpp
 hl.window_rule({ match = { class = "ueberzugpp_.*" }, float = true, no_initial_focus = true })
 
+-- Classless/titleless popups (e.g. SourceGit tooltips): never steal focus
+hl.window_rule({ match = { class = "^$", title = "^$" }, no_focus = true, no_initial_focus = true })
+
 -- Autodesk Fusion 360
 hl.window_rule({ match = { class = "fusion360.exe", title = "Fusion360|(Marking Menu)" }, no_blur = true })
 
