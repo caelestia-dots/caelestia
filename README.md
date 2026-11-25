@@ -242,12 +242,11 @@ You can find more information on configuring the shell and the CLI in their resp
 
 ### Clipboard / Emoji
 
-| Keybind                  | Action                               |
-| ------------------------ | ------------------------------------ |
-| `Super + V`              | Open clipboard history               |
-| `Super + Alt + V`        | Open clipboard history (delete mode) |
-| `Ctrl + Shift + Alt + V` | Paste latest clipboard entry         |
-| `Super + Period`         | Open emoji picker                    |
+| Keybind                  | Action                       |
+| ------------------------ | ---------------------------- |
+| `Super + V`              | Open clipboard history       |
+| `Ctrl + Shift + Alt + V` | Paste latest clipboard entry |
+| `Super + Period`         | Open emoji picker            |
 
 ---
 
